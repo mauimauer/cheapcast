@@ -1,0 +1,28 @@
+<html>
+
+<script src="https://www.gstatic.com/cast/js/receiver/1.0/cast_receiver.js">
+</script>
+<script type="text/javascript">
+
+    var receiver = new cast.receiver.Receiver(
+            'App ID', [cast.receiver.RemoteMedia.NAMESPACE],
+            "",
+            5);
+    var remoteMedia = new cast.receiver.RemoteMedia();
+    remoteMedia.addChannelFactory(
+            receiver.createChannelFactory(cast.receiver.RemoteMedia.NAMESPACE));
+
+    receiver.start();
+
+    window.addEventListener('load', function() {
+        var elem = document.getElementById('vid');
+        remoteMedia.setMediaElement(elem);
+    });
+
+</script>
+
+<body>
+<video id="vid" style="position:absolute;top:0;left:0;height:100%;width:100%" />
+</body>
+
+</html>
