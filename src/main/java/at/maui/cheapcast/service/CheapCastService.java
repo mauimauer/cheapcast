@@ -9,13 +9,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import at.maui.cheapcast.Const;
 import at.maui.cheapcast.Installation;
 import at.maui.cheapcast.R;
 import at.maui.cheapcast.Utils;
 import at.maui.cheapcast.activity.CastActivity;
-import at.maui.cheapcast.activity.HelloAndroidActivity;
+import at.maui.cheapcast.activity.PreferenceActivity;
 import at.maui.cheapcast.chromecast.*;
 import at.maui.cheapcast.ssdp.SSDP;
 import org.eclipse.jetty.server.AbstractHttpConnection;
@@ -54,8 +55,18 @@ public class CheapCastService extends Service {
     private Server mServer;
 
     private boolean mRunning = false;
+    private ICheapCastCallback mCallback;
 
     private final ICheapCastService.Stub mBinder = new ICheapCastService.Stub() {
+        @Override
+        public void addListener(ICheapCastCallback cb) throws RemoteException {
+            mCallback = cb;
+        }
+
+        @Override
+        public void removeListener() throws RemoteException {
+            mCallback = null;
+        }
     };
 
     @Override
@@ -89,6 +100,23 @@ public class CheapCastService extends Service {
         Log.d(LOG_TAG, String.format("Registered app: %s",app.getName()));
     }
 
+    public void renderAppStatus(HttpServletResponse httpServletResponse, App app) throws IOException {
+
+        String appDesc = Const.APP_INFO;
+        appDesc = appDesc.replaceAll("#name#", app.getName());
+        appDesc = appDesc.replaceAll("#connectionSvcURL#", app.getConnectionSvcURL());
+        appDesc = appDesc.replaceAll("#protocols#", app.getProtocols());
+        appDesc = appDesc.replaceAll("#state#", app.getState());
+        appDesc = appDesc.replaceAll("#link#", app.getLink());
+
+        httpServletResponse.setContentType("application/xml;charset=utf-8");
+        httpServletResponse.setHeader("Access-Control-Allow-Method", "GET, POST, DELETE, OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Expose-Headers", "Location");
+        httpServletResponse.setHeader("Cache-control", "no-cache, must-revalidate, no-store");
+        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+        httpServletResponse.getWriter().print(appDesc);
+    }
+
     public App getApp(String appName) {
         return mRegisteredApps.get(appName);
     }
@@ -102,7 +130,7 @@ public class CheapCastService extends Service {
                 .setContentTitle("CheapCast")
                 .setContentText("Service enabled.");
 
-        Intent i = new Intent(this, HelloAndroidActivity.class);
+        Intent i = new Intent(this, PreferenceActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
@@ -232,22 +260,23 @@ public class CheapCastService extends Service {
                 }
             } else if(httpServletRequest.getPathInfo().startsWith("/apps/") && httpServletRequest.getMethod().equals("GET")) {
                 String appName = httpServletRequest.getPathInfo().replace("/apps/","");
-                String appDesc = Utils.readAsset(CheapCastService.this, "app.xml");
                 Log.d(LOG_TAG, String.format("GET /apps/%s",appName));
                 App app = mRegisteredApps.get(appName);
 
-                appDesc = appDesc.replaceAll("#name#", app.getName());
-                appDesc = appDesc.replaceAll("#connectionSvcURL#", app.getConnectionSvcURL());
-                appDesc = appDesc.replaceAll("#protocols#", app.getProtocols());
-                appDesc = appDesc.replaceAll("#state#", app.getState());
-                appDesc = appDesc.replaceAll("#link#", app.getLink());
+                renderAppStatus(httpServletResponse, app);
+            } else if(httpServletRequest.getPathInfo().startsWith("/apps/") && httpServletRequest.getMethod().equals("DELETE")) {
+                String appName = httpServletRequest.getPathInfo().replace("/apps/","").replace("/web-1","");
+                App app = mRegisteredApps.get(appName);
+                app.stop();
 
-                httpServletResponse.setContentType("application/xml;charset=utf-8");
-                httpServletResponse.setHeader("Access-Control-Allow-Method", "GET, POST, DELETE, OPTIONS");
-                httpServletResponse.setHeader("Access-Control-Expose-Headers", "Location");
-                httpServletResponse.setHeader("Cache-control", "no-cache, must-revalidate, no-store");
-                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-                httpServletResponse.getWriter().print(appDesc);
+                if(mCallback != null)
+                    try {
+                        mCallback.onAppStopped(appName);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                renderAppStatus(httpServletResponse, app);
             } else if(httpServletRequest.getPathInfo().startsWith("/apps/") && httpServletRequest.getMethod().equals("POST")) {
                 String appName = httpServletRequest.getPathInfo().replace("/apps/","");
                 Log.d(LOG_TAG, String.format("POST /apps/%s",appName));
@@ -306,4 +335,5 @@ public class CheapCastService extends Service {
             ((Request) httpServletRequest).setHandled(true);
         }
     };
+
 }

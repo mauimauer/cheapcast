@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.Cheapcast" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_cheapcast</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Cheapcast</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Cheapcast</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Cheapcast</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Cheapcast</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Cheapcast</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_cheapcast</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_cheapcast</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Cheapcast</item>
+
+                <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Cheapcast.Widget</item>
+
+    </style>
+
+    <style name="ActionBar.Solid.Cheapcast" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_cheapcast</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_cheapcast</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_cheapcast</item>
+        <item name="progressBarStyle">@style/ProgressBar.Cheapcast</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Cheapcast" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/ab_transparent_cheapcast</item>
+        <item name="progressBarStyle">@style/ProgressBar.Cheapcast</item>
+    </style>
+	
+    <style name="PopupMenu.Cheapcast" parent="@style/Widget.Sherlock.ListPopupWindow">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_cheapcast</item>	
+    </style>
+	
+    <style name="DropDownListView.Cheapcast" parent="@style/Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_cheapcast</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Cheapcast" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_cheapcast</item>
+    </style>
+	
+    <style name="DropDownNav.Cheapcast" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_cheapcast</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_cheapcast</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_cheapcast</item>
+    </style>
+    
+    <style name="ProgressBar.Cheapcast" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_cheapcast</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Cheapcast" parent="@style/Widget.Sherlock.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_cheapcast</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Cheapcast.Widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/PopupMenu.Cheapcast</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Cheapcast</item>
+    </style>
+
+</resources>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Maven: classworlds:classworlds:1.1-alpha-2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

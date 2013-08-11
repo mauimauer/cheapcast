@@ -33,4 +33,19 @@ public class Const {
             "            </serviceList>\n" +
             "        </device>\n" +
             "    </root>";
+
+    public static final String APP_INFO = "<?xml version='1.0' encoding='UTF-8'?>\n" +
+            "    <service xmlns='urn:dial-multiscreen-org:schemas:dial'>\n" +
+            "        <name>#name#</name>\n" +
+            "        <options allowStop='true'/>\n" +
+            "        <activity-status xmlns='urn:chrome.google.com:cast'>\n" +
+            "            <description>Legacy</description>\n" +
+            "        </activity-status>\n" +
+            "        <servicedata xmlns='urn:chrome.google.com:cast'>\n" +
+            "            <connectionSvcURL>#connectionSvcURL#</connectionSvcURL>\n" +
+            "            <protocols>#protocols#</protocols>\n" +
+            "        </servicedata>\n" +
+            "        <state>#state#</state>\n" +
+            "        #link#\n" +
+            "    </service>";
 }

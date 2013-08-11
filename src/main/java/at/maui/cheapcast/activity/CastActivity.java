@@ -1,19 +1,20 @@
 package at.maui.cheapcast.activity;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Handler;
+import android.os.*;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.webkit.*;
 import android.widget.FrameLayout;
 import android.widget.VideoView;
 import at.maui.cheapcast.R;
+import at.maui.cheapcast.service.CheapCastService;
+import at.maui.cheapcast.service.ICheapCastCallback;
+import at.maui.cheapcast.service.ICheapCastService;
 import at.maui.cheapcast.ws.WebSocketFactory;
 
 
@@ -23,9 +24,33 @@ public class CastActivity extends Activity {
     public static final String LOG_TAG_JS = "JS-CastActivity";
 
     private WebView mWebView;
-    Runnable patchMusic;
+    private Runnable patchMusic;
     private Handler mHandler = new Handler();
+    private PowerManager mPowerManager;
+    private PowerManager.WakeLock mWakeLock;
 
+    private ICheapCastService mCheapCastService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        // Called when the connection with the service is established
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // Following the example above for an AIDL interface,
+            // this gets an instance of the IRemoteInterface, which we can use to call on the service
+            Log.d(LOG_TAG, "Connected to CheapCastService");
+            mCheapCastService = ICheapCastService.Stub.asInterface(service);
+            try {
+                mCheapCastService.addListener(mCallback);
+            } catch (RemoteException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            load();
+        }
+
+        // Called when the connection with the service disconnects unexpectedly
+        public void onServiceDisconnected(ComponentName className) {
+            Log.d(LOG_TAG, "Disconnected from CheapCastService");
+            mCheapCastService = null;
+        }
+    };
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -47,6 +72,10 @@ public class CastActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_cast);
+
+        mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "cheapcast");
+        mWakeLock.acquire();
 
         mWebView = (WebView)findViewById(R.id.webView);
 
@@ -78,41 +107,8 @@ public class CastActivity extends Activity {
             public void onPageFinished(WebView view, String url)
             {
                 Log.d(LOG_TAG,url+" finished");
-               /* mWebView.loadUrl("javascript:(function() { " +
-                        "var global = window;"+
-                        "var WebSocket = global.WebSocket = function(url, protocol) {" +
-                        "this.socket = WebSocketFactory.getInstance(url);" +
-                        "this.bufferedAmount = 0;" +
-                        "this.extensions = '';" +
-                        "this.__events = {};" +
-                        "if (!protocols) { protocols = []; } else if (typeof protocols == 'string') { this.protocol = [protocol]; }" +
-                        "this.readyState = 0;" +
-                        "this.binaryType = 'blob';"+
-                        "this.url = url;" +
-                        "if(this.socket) { WebSocket.store[this.socket.getId()] = this; } else { throw new Error('Websocket instantiation failed! Address might be wrong.'); }" +
-                        "};" +
-                        "WebSocket.store = {};" +
-                        "WebSocket.onmessage = function (evt) { WebSocket.store[evt._target]['onmessage'].call(global, evt); };" +
-                        "WebSocket.onopen = function (evt) { WebSocket.store[evt._target]['onopen'].call(global); };" +
-                        "WebSocket.onclose = function (evt) { WebSocket.store[evt._target]['onclose'].call(global); };" +
-                        "WebSocket.onerror = function (evt) { WebSocket.store[evt._target]['onerror'].call(global, evt); };" +
-                        "WebSocket.onreadystate = function (evt) { WebSocket.store[evt._target]['onreadystate'].call(global, evt); };" +
-                        "WebSocket.__handleEvent = function (evt) { WebSocket.store[evt._target]['__handleEvent'].call(global, evt); };" +
-                        "WebSocket.prototype.send = function(data) { this.socket.send(data); return true; };" +
-                        "WebSocket.prototype.close  = function() { this.socket.close(); };" +
-                        "WebSocket.prototype.getReadyState = function() { return this.socket.getReadyState(); };" +
-                        "WebSocket.prototype.addEventListener = function(type, listener, useCapture) { if (!(type in this.__events)) { this.__events[type] = []; } this.__events[type].push(listener); };" +
-                        "WebSocket.prototype.dispatchEvent = function(event) { var events = this.__events[event.type] || []; for (var i = 0; i < events.length; ++i) { events[i](event); } var handler = this['on' + event.type]; if (handler) handler.apply(this, [event]); };" +
-                        "WebSocket.prototype.removeEventListener = function(type, listener, useCapture) { if (!(type in this.__events)) return; var events = this.__events[type]; for (var i = events.length - 1; i >= 0; --i) { if (events[i] === listener) { events.splice(i, 1); break; } } };" +
-                        "WebSocket.prototype.onopen = function(msg) { console.log('onopen not implemented.'); };" +
-                        "WebSocket.prototype.onmessage = function(msg) { console.log('onmessage not implemented.'); };" +
-                        "WebSocket.prototype.onerror = function(msg) { console.log('onerror not implemented.'); };" +
-                        "WebSocket.prototype.onreadystate = function(msg) { this.readyState = parseInt(msg.data); };" +
-                        "WebSocket.prototype.onclose  = function(msg) { console.log('onclose not implemented.'); };" +
-                        "WebSocket.prototype.__handleEvent  = function(msg) { console.log('onclose not implemented.'); };" +
-                        "})()");  */
 
-                        injectWebsocket(view);
+                injectWebsocket(view);
 
                 view.loadUrl("javascript:(function() { " +
                         "if(skyjam) skyjam.cast.Player.BUFFERING_SPINNER_TIMEOUT_MS_ = 9000;"+
@@ -157,11 +153,24 @@ public class CastActivity extends Activity {
 
 
         mWebView.addJavascriptInterface(new WebSocketFactory(mWebView), "WebSocketFactory");
-        injectWebsocket(mWebView);
-        mWebView.loadUrl(getIntent().getDataString());
         //mWebView.loadUrl("javascript:var output='This string is defined before html loaded.'");
 
+        Intent serviceIntent = new Intent(CastActivity.this, CheapCastService.class);
+        bindService(serviceIntent, mConnection, 0);
         //mWebView.loadUrl("file:///android_asset/test2.html");
+    }
+
+    public void load() {
+        injectWebsocket(mWebView);
+        mWebView.loadUrl(getIntent().getDataString());
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+            finish();
+
+        return super.onKeyDown(keyCode, event);    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     private void injectWebsocket(WebView webView) {
@@ -199,5 +208,33 @@ public class CastActivity extends Activity {
                 "WebSocket.prototype.onclose  = function(msg) { console.log('onclose not implemented.'); };" +
                 //"WebSocket.prototype.__handleEvent  = function(msg) { console.log('onclose not implemented.'); };" +
                 "})()");
+    }
+
+    private ICheapCastCallback mCallback = new ICheapCastCallback.Stub() {
+
+        @Override
+        public void onAppStopped(String appName) throws RemoteException {
+            CastActivity.this.finish();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mHandler.removeCallbacks(patchMusic);
+
+        if(mWakeLock.isHeld()) {
+            mWakeLock.release();
+            mWakeLock = null;
+        }
+
+        if(mConnection != null)
+            unbindService(mConnection);
+
+        mWebView.stopLoading();
+        mWebView.loadUrl("");
+        mWebView.reload();
+        mWebView = null;
     }
 }

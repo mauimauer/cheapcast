@@ -1,10 +1,13 @@
 package at.maui.cheapcast.chromecast;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class App {
 
+    public static final String LOG_TAG = "ChromeCast-App";
     private String mName, mState, mLink, mConnectionSvcURL, mReceiverUrl;
     private ArrayList<String> mProtocols;
 
@@ -111,6 +114,7 @@ public class App {
 
     public void removeReceiver(ReceiverSocket receiver) {
         mReceivers.remove(receiver);
+        Log.d(LOG_TAG, String.format("%d ReceiverSockets remaining.", mReceivers.size()));
     }
 
     public void addRemote(SessionSocket session) {
@@ -119,6 +123,7 @@ public class App {
 
     public void removeRemote(SessionSocket session) {
         mRemotes.remove(session);
+        Log.d(LOG_TAG, String.format("%d SessionSockets remaining.", mRemotes.size()));
     }
 
     public LinkedList<String> getMessageBuffer() {

@@ -1,5 +1,7 @@
 package at.maui.cheapcast.service;
 
+import at.maui.cheapcast.service.ICheapCastCallback;
+
 /**
  * Created with IntelliJ IDEA.
  * User: maui
@@ -8,4 +10,7 @@ package at.maui.cheapcast.service;
  * To change this template use File | Settings | File Templates.
  */
 interface ICheapCastService {
+
+    void addListener(ICheapCastCallback cb);
+    void removeListener();
 }
