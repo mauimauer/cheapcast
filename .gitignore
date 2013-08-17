@@ -1,3 +1,6 @@
 *.iml
 target
 default.properties
+gen-external-apklibs
+.idea
+out
