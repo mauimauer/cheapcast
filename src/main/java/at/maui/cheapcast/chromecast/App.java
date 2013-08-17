@@ -24,6 +24,12 @@ public class App {
         }
     }
 
+    public App(String name, String receiverUrl, ArrayList<String> protocols) {
+        this(name, receiverUrl);
+
+        mProtocols = protocols;
+    }
+
     public App(String name, String receiverUrl) {
         mName = name;
         mReceiverUrl = receiverUrl;
@@ -31,7 +37,7 @@ public class App {
         mLink = "";
         mConnectionSvcURL = "";
         mProtocols = new ArrayList<String>();
-
+        mProtocols.add("ramp");
         mRemotes = new ArrayList<SessionSocket>();
         mReceivers = new ArrayList<ReceiverSocket>();
         mMessageBuffer = new LinkedList<String>();
@@ -47,6 +53,14 @@ public class App {
             }
             return p;
         }
+    }
+
+    public String getProtocolList() {
+        String p = "";
+        for(String proto : mProtocols) {
+            p += String.format(" %s ", proto);
+        }
+        return p;
     }
 
     public String getState() {
@@ -98,6 +112,8 @@ public class App {
         mConnectionSvcURL = "";
         mLink = "";
         mMessageBuffer.clear();
+        mReceivers.clear();
+        mRemotes.clear();
     }
 
     public ConnectionSocket getControlChannel() {
@@ -106,6 +122,14 @@ public class App {
 
     public void setControlChannel(ConnectionSocket mControlChannel) {
         this.mControlChannel = mControlChannel;
+    }
+
+    public ArrayList<ReceiverSocket> getReceivers() {
+        return mReceivers;
+    }
+
+    public ArrayList<SessionSocket> getRemotes() {
+        return mRemotes;
     }
 
     public void addReceiver(ReceiverSocket receiver) {

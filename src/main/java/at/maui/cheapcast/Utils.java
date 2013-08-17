@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.wifi.WifiManager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -73,6 +75,30 @@ public class Utils {
                 return addr;
         }
         return null;
+    }
+
+    public static String readerToString(BufferedReader reader) {
+        StringBuffer rawBody = new StringBuffer();
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null)
+                rawBody.append(line);
+        } catch (Exception e) { /*report an error*/ }
+        return rawBody.toString();
+    }
+
+    public static String inputStreamToString(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+
+        is.close();
+
+        return sb.toString();
     }
 
     public static String readAsset(Context context, String assetPath) throws IOException {

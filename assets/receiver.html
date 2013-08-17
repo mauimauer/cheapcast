@@ -1,0 +1,6155 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CV Receiver</title>
+<link rel="icon" href="">
+<style type="text/css">
+    body {
+        background-color: #000000;
+    }
+
+    .activityWrapper {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        text-align: center;
+    }
+
+    .activityWrapper:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em;
+    }
+
+    .activity {
+        display: inline-block;
+        background-color: #000000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .slide {
+        -webkit-transition: opacity 2s ease;
+    }
+
+    .slideBackground {
+        opacity: 0;
+    }
+
+    .slideForeground {
+        opacity: 1;
+    }
+</style>
+<script>var d;
+window.Qm = !0;
+var aa = aa || {}, k = this, ba = function(a, b) {
+    for(var c = a.split("."), e = b || k, f;f = c.shift();) {
+        if(null != e[f]) {
+            e = e[f]
+        }else {
+            return null
+        }
+    }
+    return e
+}, m = function() {
+}, ca = function(a) {
+    a.Pc = function() {
+        return a.pi ? a.pi : a.pi = new a
+    }
+}, da = function(a) {
+    var b = typeof a;
+    if("object" == b) {
+        if(a) {
+            if(a instanceof Array) {
+                return"array"
+            }
+            if(a instanceof Object) {
+                return b
+            }
+            var c = Object.prototype.toString.call(a);
+            if("[object Window]" == c) {
+                return"object"
+            }
+            if("[object Array]" == c || "number" == typeof a.length && "undefined" != typeof a.splice && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("splice")) {
+                return"array"
+            }
+            if("[object Function]" == c || "undefined" != typeof a.call && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("call")) {
+                return"function"
+            }
+        }else {
+            return"null"
+        }
+    }else {
+        if("function" == b && "undefined" == typeof a.call) {
+            return"object"
+        }
+    }
+    return b
+}, n = function(a) {
+    return void 0 !== a
+}, p = function(a) {
+    return"array" == da(a)
+}, ea = function(a) {
+    var b = da(a);
+    return"array" == b || "object" == b && "number" == typeof a.length
+}, q = function(a) {
+    return"string" == typeof a
+}, fa = function(a) {
+    return"number" == typeof a
+}, ga = function(a) {
+    return"function" == da(a)
+}, r = function(a) {
+    var b = typeof a;
+    return"object" == b && null != a || "function" == b
+}, ja = function(a) {
+    return a[ha] || (a[ha] = ++ia)
+}, ha = "closure_uid_" + (1E9 * Math.random() >>> 0), ia = 0, ka = function(a, b, c) {
+    return a.call.apply(a.bind, arguments)
+}, la = function(a, b, c) {
+    if(!a) {
+        throw Error();
+    }
+    if(2 < arguments.length) {
+        var e = Array.prototype.slice.call(arguments, 2);
+        return function() {
+            var c = Array.prototype.slice.call(arguments);
+            Array.prototype.unshift.apply(c, e);
+            return a.apply(b, c)
+        }
+    }
+    return function() {
+        return a.apply(b, arguments)
+    }
+}, s = function(a, b, c) {
+    s = Function.prototype.bind && -1 != Function.prototype.bind.toString().indexOf("native code") ? ka : la;
+    return s.apply(null, arguments)
+}, ma = function(a, b) {
+    var c = Array.prototype.slice.call(arguments, 1);
+    return function() {
+        var b = Array.prototype.slice.call(arguments);
+        b.unshift.apply(b, c);
+        return a.apply(this, b)
+    }
+}, u = Date.now || function() {
+    return+new Date
+}, v = function(a, b) {
+    function c() {
+    }
+    c.prototype = b.prototype;
+    a.f = b.prototype;
+    a.prototype = new c
+};
+Function.prototype.bind = Function.prototype.bind || function(a, b) {
+    if(1 < arguments.length) {
+        var c = Array.prototype.slice.call(arguments, 1);
+        c.unshift(this, a);
+        return s.apply(null, c)
+    }
+    return s(this, a)
+};
+var w = function(a) {
+    Error.captureStackTrace ? Error.captureStackTrace(this, w) : this.stack = Error().stack || "";
+    a && (this.message = String(a))
+};
+v(w, Error);
+w.prototype.name = "CustomError";
+var na = function(a, b) {
+    for(var c = a.split("%s"), e = "", f = Array.prototype.slice.call(arguments, 1);f.length && 1 < c.length;) {
+        e += c.shift() + f.shift()
+    }
+    return e + c.join("%s")
+}, ta = function(a, b) {
+    if(b) {
+        return a.replace(oa, "&amp;").replace(pa, "&lt;").replace(qa, "&gt;").replace(ra, "&quot;")
+    }
+    if(!sa.test(a)) {
+        return a
+    }
+    -1 != a.indexOf("&") && (a = a.replace(oa, "&amp;"));
+    -1 != a.indexOf("<") && (a = a.replace(pa, "&lt;"));
+    -1 != a.indexOf(">") && (a = a.replace(qa, "&gt;"));
+    -1 != a.indexOf('"') && (a = a.replace(ra, "&quot;"));
+    return a
+}, oa = /&/g, pa = /</g, qa = />/g, ra = /\"/g, sa = /[&<>\"]/, ua = function() {
+    return Math.floor(2147483648 * Math.random()).toString(36) + Math.abs(Math.floor(2147483648 * Math.random()) ^ u()).toString(36)
+}, va = function(a, b) {
+    for(var c = 0, e = String(a).replace(/^[\s\xa0]+|[\s\xa0]+$/g, "").split("."), f = String(b).replace(/^[\s\xa0]+|[\s\xa0]+$/g, "").split("."), g = Math.max(e.length, f.length), h = 0;0 == c && h < g;h++) {
+        var l = e[h] || "", t = f[h] || "", D = RegExp("(\\d*)(\\D*)", "g"), E = RegExp("(\\d*)(\\D*)", "g");
+        do {
+            var W = D.exec(l) || ["", "", ""], X = E.exec(t) || ["", "", ""];
+            if(0 == W[0].length && 0 == X[0].length) {
+                break
+            }
+            c = ((0 == W[1].length ? 0 : parseInt(W[1], 10)) < (0 == X[1].length ? 0 : parseInt(X[1], 10)) ? -1 : (0 == W[1].length ? 0 : parseInt(W[1], 10)) > (0 == X[1].length ? 0 : parseInt(X[1], 10)) ? 1 : 0) || ((0 == W[2].length) < (0 == X[2].length) ? -1 : (0 == W[2].length) > (0 == X[2].length) ? 1 : 0) || (W[2] < X[2] ? -1 : W[2] > X[2] ? 1 : 0)
+        }while(0 == c)
+    }
+    return c
+};
+var wa = function(a, b) {
+    b.unshift(a);
+    w.call(this, na.apply(null, b));
+    b.shift()
+};
+v(wa, w);
+wa.prototype.name = "AssertionError";
+var xa = function(a, b, c, e) {
+    var f = "Assertion failed";
+    if(c) {
+        var f = f + (": " + c), g = e
+    }else {
+        a && (f += ": " + a, g = b)
+    }
+    throw new wa("" + f, g || []);
+}, x = function(a, b, c) {
+    a || xa("", null, b, Array.prototype.slice.call(arguments, 2));
+    return a
+}, ya = function(a, b) {
+    throw new wa("Failure" + (a ? ": " + a : ""), Array.prototype.slice.call(arguments, 1));
+}, za = function(a, b, c) {
+    q(a) || xa("Expected string but got %s: %s.", [da(a), a], b, Array.prototype.slice.call(arguments, 2));
+    return a
+}, Aa = function(a, b, c) {
+    r(a) || xa("Expected object but got %s: %s.", [da(a), a], b, Array.prototype.slice.call(arguments, 2));
+    return a
+};
+var y = Array.prototype, Ba = y.indexOf ? function(a, b, c) {
+    x(null != a.length);
+    return y.indexOf.call(a, b, c)
+} : function(a, b, c) {
+    c = null == c ? 0 : 0 > c ? Math.max(0, a.length + c) : c;
+    if(q(a)) {
+        return q(b) && 1 == b.length ? a.indexOf(b, c) : -1
+    }
+    for(;c < a.length;c++) {
+        if(c in a && a[c] === b) {
+            return c
+        }
+    }
+    return-1
+}, Ca = y.forEach ? function(a, b, c) {
+    x(null != a.length);
+    y.forEach.call(a, b, c)
+} : function(a, b, c) {
+    for(var e = a.length, f = q(a) ? a.split("") : a, g = 0;g < e;g++) {
+        g in f && b.call(c, f[g], g, a)
+    }
+}, Da = y.filter ? function(a, b, c) {
+    x(null != a.length);
+    return y.filter.call(a, b, c)
+} : function(a, b, c) {
+    for(var e = a.length, f = [], g = 0, h = q(a) ? a.split("") : a, l = 0;l < e;l++) {
+        if(l in h) {
+            var t = h[l];
+            b.call(c, t, l, a) && (f[g++] = t)
+        }
+    }
+    return f
+}, Ea = y.some ? function(a, b, c) {
+    x(null != a.length);
+    return y.some.call(a, b, c)
+} : function(a, b, c) {
+    for(var e = a.length, f = q(a) ? a.split("") : a, g = 0;g < e;g++) {
+        if(g in f && b.call(c, f[g], g, a)) {
+            return!0
+        }
+    }
+    return!1
+}, Ga = function(a, b, c) {
+    b = Fa(a, b, c);
+    return 0 > b ? null : q(a) ? a.charAt(b) : a[b]
+}, Fa = function(a, b, c) {
+    for(var e = a.length, f = q(a) ? a.split("") : a, g = 0;g < e;g++) {
+        if(g in f && b.call(c, f[g], g, a)) {
+            return g
+        }
+    }
+    return-1
+}, Ia = function(a, b) {
+    var c = Ba(a, b), e;
+    (e = 0 <= c) && Ha(a, c);
+    return e
+}, Ha = function(a, b) {
+    x(null != a.length);
+    return 1 == y.splice.call(a, b, 1).length
+}, Ja = function(a, b, c) {
+    b = Fa(a, b, c);
+    return 0 <= b ? (Ha(a, b), !0) : !1
+}, Ka = function(a) {
+    return y.concat.apply(y, arguments)
+}, La = function(a) {
+    var b = a.length;
+    if(0 < b) {
+        for(var c = Array(b), e = 0;e < b;e++) {
+            c[e] = a[e]
+        }
+        return c
+    }
+    return[]
+}, Ma = function(a, b, c) {
+    x(null != a.length);
+    return 2 >= arguments.length ? y.slice.call(a, b) : y.slice.call(a, b, c)
+};
+var Na = "StopIteration" in k ? k.StopIteration : Error("StopIteration"), Oa = function() {
+};
+Oa.prototype.next = function() {
+    throw Na;
+};
+Oa.prototype.Hd = function() {
+    return this
+};
+var Pa = function(a) {
+    if(a instanceof Oa) {
+        return a
+    }
+    if("function" == typeof a.Hd) {
+        return a.Hd(!1)
+    }
+    if(ea(a)) {
+        var b = 0, c = new Oa;
+        c.next = function() {
+            for(;;) {
+                if(b >= a.length) {
+                    throw Na;
+                }
+                if(b in a) {
+                    return a[b++]
+                }
+                b++
+            }
+        };
+        return c
+    }
+    throw Error("Not implemented");
+}, Qa = function(a, b, c) {
+    if(ea(a)) {
+        try {
+            Ca(a, b, c)
+        }catch(e) {
+            if(e !== Na) {
+                throw e;
+            }
+        }
+    }else {
+        a = Pa(a);
+        try {
+            for(;;) {
+                b.call(c, a.next(), void 0, a)
+            }
+        }catch(f) {
+            if(f !== Na) {
+                throw f;
+            }
+        }
+    }
+};
+var Ra = function(a, b, c) {
+    for(var e in a) {
+        b.call(c, a[e], e, a)
+    }
+}, Sa = function(a) {
+    var b = [], c = 0, e;
+    for(e in a) {
+        b[c++] = a[e]
+    }
+    return b
+}, Ta = function(a) {
+    var b = [], c = 0, e;
+    for(e in a) {
+        b[c++] = e
+    }
+    return b
+}, Ua = "constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf".split(" "), Va = function(a, b) {
+    for(var c, e, f = 1;f < arguments.length;f++) {
+        e = arguments[f];
+        for(c in e) {
+            a[c] = e[c]
+        }
+        for(var g = 0;g < Ua.length;g++) {
+            c = Ua[g], Object.prototype.hasOwnProperty.call(e, c) && (a[c] = e[c])
+        }
+    }
+};
+var z = function(a, b) {
+    this.ja = {};
+    this.A = [];
+    var c = arguments.length;
+    if(1 < c) {
+        if(c % 2) {
+            throw Error("Uneven number of arguments");
+        }
+        for(var e = 0;e < c;e += 2) {
+            this.set(arguments[e], arguments[e + 1])
+        }
+    }else {
+        a && this.jl(a)
+    }
+};
+d = z.prototype;
+d.w = 0;
+d.nc = 0;
+d.bb = function() {
+    return this.w
+};
+d.P = function() {
+    this.kd();
+    for(var a = [], b = 0;b < this.A.length;b++) {
+        a.push(this.ja[this.A[b]])
+    }
+    return a
+};
+d.ua = function() {
+    this.kd();
+    return this.A.concat()
+};
+d.pb = function(a) {
+    return Wa(this.ja, a)
+};
+d.bf = function() {
+    return 0 == this.w
+};
+d.clear = function() {
+    this.ja = {};
+    this.nc = this.w = this.A.length = 0
+};
+d.remove = function(a) {
+    return Wa(this.ja, a) ? (delete this.ja[a], this.w--, this.nc++, this.A.length > 2 * this.w && this.kd(), !0) : !1
+};
+d.kd = function() {
+    if(this.w != this.A.length) {
+        for(var a = 0, b = 0;a < this.A.length;) {
+            var c = this.A[a];
+            Wa(this.ja, c) && (this.A[b++] = c);
+            a++
+        }
+        this.A.length = b
+    }
+    if(this.w != this.A.length) {
+        for(var e = {}, b = a = 0;a < this.A.length;) {
+            c = this.A[a], Wa(e, c) || (this.A[b++] = c, e[c] = 1), a++
+        }
+        this.A.length = b
+    }
+};
+d.get = function(a, b) {
+    return Wa(this.ja, a) ? this.ja[a] : b
+};
+d.set = function(a, b) {
+    Wa(this.ja, a) || (this.w++, this.A.push(a), this.nc++);
+    this.ja[a] = b
+};
+d.jl = function(a) {
+    var b;
+    a instanceof z ? (b = a.ua(), a = a.P()) : (b = Ta(a), a = Sa(a));
+    for(var c = 0;c < b.length;c++) {
+        this.set(b[c], a[c])
+    }
+};
+d.clone = function() {
+    return new z(this)
+};
+d.Xk = function() {
+    return this.Hd(!0)
+};
+d.Hd = function(a) {
+    this.kd();
+    var b = 0, c = this.A, e = this.ja, f = this.nc, g = this, h = new Oa;
+    h.next = function() {
+        for(;;) {
+            if(f != g.nc) {
+                throw Error("The map has changed since the iterator was created");
+            }
+            if(b >= c.length) {
+                throw Na;
+            }
+            var h = c[b++];
+            return a ? h : e[h]
+        }
+    };
+    return h
+};
+var Wa = function(a, b) {
+    return Object.prototype.hasOwnProperty.call(a, b)
+};
+var Xa = function(a) {
+    if("function" == typeof a.P) {
+        return a.P()
+    }
+    if(q(a)) {
+        return a.split("")
+    }
+    if(ea(a)) {
+        for(var b = [], c = a.length, e = 0;e < c;e++) {
+            b.push(a[e])
+        }
+        return b
+    }
+    return Sa(a)
+}, Ya = function(a, b, c) {
+    if("function" == typeof a.forEach) {
+        a.forEach(b, c)
+    }else {
+        if(ea(a) || q(a)) {
+            Ca(a, b, c)
+        }else {
+            var e;
+            if("function" == typeof a.ua) {
+                e = a.ua()
+            }else {
+                if("function" != typeof a.P) {
+                    if(ea(a) || q(a)) {
+                        e = [];
+                        for(var f = a.length, g = 0;g < f;g++) {
+                            e.push(g)
+                        }
+                    }else {
+                        e = Ta(a)
+                    }
+                }else {
+                    e = void 0
+                }
+            }
+            for(var f = Xa(a), g = f.length, h = 0;h < g;h++) {
+                b.call(c, f[h], e && e[h], a)
+            }
+        }
+    }
+};
+var Za, $a, ab, bb, cb = function() {
+    return k.navigator ? k.navigator.userAgent : null
+};
+bb = ab = $a = Za = !1;
+var db;
+if(db = cb()) {
+    var eb = k.navigator;
+    Za = 0 == db.lastIndexOf("Opera", 0);
+    $a = !Za && (-1 != db.indexOf("MSIE") || -1 != db.indexOf("Trident"));
+    ab = !Za && -1 != db.indexOf("WebKit");
+    bb = !Za && !ab && !$a && "Gecko" == eb.product
+}
+var fb = Za, A = $a, gb = bb, B = ab, hb = k.navigator, ib = -1 != (hb && hb.platform || "").indexOf("Mac"), jb = function() {
+    var a = k.document;
+    return a ? a.documentMode : void 0
+}, kb;
+t: {
+    var lb = "", mb;
+    if(fb && k.opera) {
+        var nb = k.opera.version, lb = "function" == typeof nb ? nb() : nb
+    }else {
+        if(gb ? mb = /rv\:([^\);]+)(\)|;)/ : A ? mb = /\b(?:MSIE|rv)\s+([^\);]+)(\)|;)/ : B && (mb = /WebKit\/(\S+)/), mb) {
+            var ob = mb.exec(cb()), lb = ob ? ob[1] : ""
+        }
+    }
+    if(A) {
+        var pb = jb();
+        if(pb > parseFloat(lb)) {
+            kb = String(pb);
+            break t
+        }
+    }
+    kb = lb
+}
+var qb = kb, rb = {}, C = function(a) {
+    return rb[a] || (rb[a] = 0 <= va(qb, a))
+}, sb = k.document, tb = sb && A ? jb() || ("CSS1Compat" == sb.compatMode ? parseInt(qb, 10) : 5) : void 0;
+var ub = function(a, b, c) {
+    c = c || k;
+    var e = c.onerror, f = !!b;
+    B && !C("535.3") && (f = !f);
+    c.onerror = function(b, c, l) {
+        e && e(b, c, l);
+        a({message:b, fileName:c, ni:l});
+        return f
+    }
+}, wb = function(a, b) {
+    try {
+        var c;
+        var e = ba("window.location.href");
+        if(q(a)) {
+            c = {message:a, name:"Unknown error", lineNumber:"Not available", fileName:e, stack:"Not available"}
+        }else {
+            var f, g, h = !1;
+            try {
+                f = a.lineNumber || a.ni || "Not available"
+            }catch(l) {
+                f = "Not available", h = !0
+            }
+            try {
+                g = a.fileName || a.filename || a.sourceURL || k.$googDebugFname || e
+            }catch(t) {
+                g = "Not available", h = !0
+            }
+            c = !h && a.lineNumber && a.fileName && a.stack && a.message && a.name ? a : {message:a.message || "Not available", name:a.name || "UnknownError", lineNumber:f, fileName:g, stack:a.stack || "Not available"}
+        }
+        return"Message: " + ta(c.message) + '\nUrl: <a href="view-source:' + c.fileName + '" target="_new">' + c.fileName + "</a>\nLine: " + c.lineNumber + "\n\nBrowser stack:\n" + ta(c.stack + "-> ") + "[end]\n\nJS stack traversal:\n" + ta(vb(b) + "-> ")
+    }catch(D) {
+        return"Exception trying to expose exception! You win, we lose. " + D
+    }
+}, vb = function(a) {
+    return xb(a || arguments.callee.caller, [])
+}, xb = function(a, b) {
+    var c = [];
+    if(0 <= Ba(b, a)) {
+        c.push("[...circular reference...]")
+    }else {
+        if(a && 50 > b.length) {
+            c.push(yb(a) + "(");
+            for(var e = a.arguments, f = 0;f < e.length;f++) {
+                0 < f && c.push(", ");
+                var g;
+                g = e[f];
+                switch(typeof g) {
+                    case "object":
+                        g = g ? "object" : "null";
+                        break;
+                    case "string":
+                        break;
+                    case "number":
+                        g = String(g);
+                        break;
+                    case "boolean":
+                        g = g ? "true" : "false";
+                        break;
+                    case "function":
+                        g = (g = yb(g)) ? g : "[fn]";
+                        break;
+                    default:
+                        g = typeof g
+                }
+                40 < g.length && (g = g.substr(0, 40) + "...");
+                c.push(g)
+            }
+            b.push(a);
+            c.push(")\n");
+            try {
+                c.push(xb(a.caller, b))
+            }catch(h) {
+                c.push("[exception trying to get caller]\n")
+            }
+        }else {
+            a ? c.push("[...long stack...]") : c.push("[end]")
+        }
+    }
+    return c.join("")
+}, yb = function(a) {
+    if(zb[a]) {
+        return zb[a]
+    }
+    a = String(a);
+    if(!zb[a]) {
+        var b = /function ([^\(]+)/.exec(a);
+        zb[a] = b ? b[1] : "[Anonymous]"
+    }
+    return zb[a]
+}, zb = {};
+var Ab = function(a, b, c, e, f) {
+    this.reset(a, b, c, e, f)
+};
+Ab.prototype.rd = 0;
+Ab.prototype.jf = null;
+Ab.prototype.hf = null;
+var Bb = 0;
+d = Ab.prototype;
+d.reset = function(a, b, c, e, f) {
+    this.rd = "number" == typeof f ? f : Bb++;
+    this.yl = e || u();
+    this.Da = a;
+    this.wl = b;
+    this.vl = c;
+    delete this.jf;
+    delete this.hf
+};
+d.vh = function() {
+    return this.vl
+};
+d.fl = function() {
+    return this.jf
+};
+d.Yl = function(a) {
+    this.jf = a
+};
+d.gl = function() {
+    return this.hf
+};
+d.Zl = function(a) {
+    this.hf = a
+};
+d.We = function() {
+    return this.Da
+};
+d.Vc = function(a) {
+    this.Da = a
+};
+d.getMessage = function() {
+    return this.wl
+};
+d.Fh = function() {
+    return this.yl
+};
+var Cb = function() {
+    x(!0, "Cannot use goog.debug.LogBuffer without defining goog.debug.LogBuffer.CAPACITY.");
+    this.clear()
+}, Db;
+Cb.prototype.Wl = function(a, b, c) {
+    var e = (this.ii + 1) % 5E3;
+    this.ii = e;
+    if(this.ki) {
+        return e = this.hi[e], e.reset(a, b, c), e
+    }
+    this.ki = 4999 == e;
+    return this.hi[e] = new Ab(a, b, c)
+};
+Cb.prototype.clear = function() {
+    this.hi = Array(5E3);
+    this.ii = -1;
+    this.ki = !1
+};
+var Eb = function(a) {
+    this.Yc = a
+};
+Eb.prototype.v = null;
+Eb.prototype.Da = null;
+Eb.prototype.Oa = null;
+Eb.prototype.sa = null;
+var F = function(a, b) {
+    this.name = a;
+    this.value = b
+};
+F.prototype.toString = function() {
+    return this.name
+};
+var Fb = new F("SHOUT", 1200), Gb = new F("SEVERE", 1E3), Hb = new F("WARNING", 900), Ib = new F("INFO", 800), Jb = new F("CONFIG", 700), Kb = new F("FINE", 500), Lb = new F("FINEST", 300);
+d = Eb.prototype;
+d.getName = function() {
+    return this.Yc
+};
+d.kf = function(a) {
+    this.sa || (this.sa = []);
+    this.sa.push(a)
+};
+d.lf = function(a) {
+    var b = this.sa;
+    return!!b && Ia(b, a)
+};
+d.getParent = function() {
+    return this.v
+};
+d.getChildren = function() {
+    this.Oa || (this.Oa = {});
+    return this.Oa
+};
+d.Vc = function(a) {
+    this.Da = a
+};
+d.We = function() {
+    return this.Da
+};
+d.Kh = function() {
+    if(this.Da) {
+        return this.Da
+    }
+    if(this.v) {
+        return this.v.Kh()
+    }
+    ya("Root logger has no level set.");
+    return null
+};
+d.og = function(a) {
+    return a.value >= this.Kh().value
+};
+d.log = function(a, b, c) {
+    this.og(a) && this.jm(this.km(a, b, c))
+};
+d.km = function(a, b, c) {
+    Db || (Db = new Cb);
+    var e = Db.Wl(a, b, this.Yc);
+    c && (e.Yl(c), e.Zl(wb(c, arguments.callee.caller)));
+    return e
+};
+d.wb = function(a, b) {
+    this.log(Gb, a, b)
+};
+d.k = function(a, b) {
+    this.log(Hb, a, b)
+};
+d.info = function(a, b) {
+    this.log(Ib, a, b)
+};
+d.g = function(a, b) {
+    this.log(Kb, a, b)
+};
+d.ie = function(a, b) {
+    this.log(Lb, a, b)
+};
+d.jm = function(a) {
+    var b = "log:" + a.getMessage();
+    k.console && (k.console.timeStamp ? k.console.timeStamp(b) : k.console.markTimeline && k.console.markTimeline(b));
+    k.msWriteProfilerMark && k.msWriteProfilerMark(b);
+    for(b = this;b;) {
+        b.xm(a), b = b.getParent()
+    }
+};
+d.xm = function(a) {
+    if(this.sa) {
+        for(var b = 0, c;c = this.sa[b];b++) {
+            c(a)
+        }
+    }
+};
+d.qm = function(a) {
+    this.v = a
+};
+d.pm = function(a, b) {
+    this.getChildren()[a] = b
+};
+var Mb = {}, Nb = null, Ob = function() {
+    Nb || (Nb = new Eb(""), Mb[""] = Nb, Nb.Vc(Jb))
+}, Pb = function() {
+    Ob();
+    return Nb
+}, G = function(a) {
+    Ob();
+    var b;
+    if(!(b = Mb[a])) {
+        b = new Eb(a);
+        var c = a.lastIndexOf("."), e = a.substr(c + 1), c = G(a.substr(0, c));
+        c.pm(e, b);
+        b.qm(c);
+        Mb[a] = b
+    }
+    return b
+}, Qb = function(a) {
+    return function(b) {
+        (a || Pb()).wb("Error: " + b.message + " (" + b.fileName + " @ Line: " + b.ni + ")")
+    }
+};
+G("cv.CloudDevice");
+var Rb, Sb, Tb, Ub, Vb, Wb, Xb;
+Xb = Wb = Vb = Ub = Tb = Sb = Rb = !1;
+var H = cb();
+H && (-1 != H.indexOf("Firefox") ? Rb = !0 : -1 != H.indexOf("Camino") ? Sb = !0 : -1 != H.indexOf("iPhone") || -1 != H.indexOf("iPod") ? Tb = !0 : -1 != H.indexOf("iPad") ? Ub = !0 : -1 != H.indexOf("Chrome") ? Wb = !0 : -1 != H.indexOf("Android") ? Vb = !0 : -1 != H.indexOf("Safari") && (Xb = !0));
+var Yb = Rb, Zb = Sb, $b = Tb, ac = Ub, bc = Vb, cc = Wb, dc = Xb;
+var ec = function(a) {
+    return(a = a.exec(cb())) ? a[1] : ""
+}, fc = function() {
+    if(Yb) {
+        return ec(/Firefox\/([0-9.]+)/)
+    }
+    if(A || fb) {
+        return qb
+    }
+    if(cc) {
+        return ec(/Chrome\/([0-9.]+)/)
+    }
+    if(dc) {
+        return ec(/Version\/([0-9.]+)/)
+    }
+    if($b || ac) {
+        var a = /Version\/(\S+).*Mobile\/(\S+)/.exec(cb());
+        if(a) {
+            return a[1] + "." + a[2]
+        }
+    }else {
+        if(bc) {
+            return(a = ec(/Android\s+([0-9.]+)/)) ? a : ec(/Version\/([0-9.]+)/)
+        }
+        if(Zb) {
+            return ec(/Camino\/([0-9.]+)/)
+        }
+    }
+    return""
+}();
+var hc = function() {
+    this.videoBitrate = gc.maxVideoBitrate;
+    this.minVideoBitrate = gc.minVideoBitrate;
+    this.maxVideoBitrate = gc.maxVideoBitrate;
+    this.videoQuality = gc.videoQuality;
+    this.minWidth = gc.videoWidth;
+    this.minHeight = gc.videoHeight;
+    this.audioBitrate = gc.audioBitrate;
+    this.useOpus = !0;
+    this.bufferedMode = "on";
+    this.bufferSizeMillis = 500;
+    this.maxFrameRate = 30;
+    this.enablePacing = cc && 0 <= va(fc, 28);
+    this.enableVideoTcp = this.enableAudioTcp = !1;
+    this.enableAudioNack = !0;
+    this.allowAutoResize = !1;
+    this.captureSurface = "tab";
+    this.lowFpsMode = !1;
+    this.autoFeedback = this.zoomModeEnabled = !0;
+    this.updateTimestamp = 0
+};
+hc.prototype.update = function(a) {
+    for(var b in this) {
+        ga(this[b]) || (null != a[b] && da(this[b]) == da(a[b]) ? this[b] = a[b] : G("cv.MirrorTabSettings").k("Failed to load mirror settings for key [" + b + "]:" + a[b]))
+    }
+};
+hc.prototype.gh = function(a) {
+    q(a) && (a = parseInt(a, 10));
+    this.audioBitrate = Math.min(128, Math.max(56, a))
+};
+hc.prototype.rk = function() {
+    return 0 == this.bufferSizeMillis ? 0 : this.enablePacing ? this.bufferSizeMillis + 100 : this.bufferSizeMillis
+};
+var gc = new function(a, b, c, e, f, g, h, l) {
+    this.id = a;
+    this.name = b;
+    this.videoWidth = c;
+    this.videoHeight = e;
+    this.videoResolution = c + "x" + e;
+    this.minVideoBitrate = f;
+    this.maxVideoBitrate = g;
+    this.videoQuality = h;
+    this.audioBitrate = l
+}("high", "High (720p)", 1280, 720, 2E3, 2500, 56, 128);
+var ic = function() {
+};
+v(ic, Error);
+var jc = function() {
+    this.q = "pending";
+    this.sa = [];
+    this.fa = this.nh = void 0
+}, kc = function() {
+    w.call(this, "Multiple attempts to set the state of this Result")
+};
+v(kc, w);
+d = jc.prototype;
+d.I = function() {
+    return this.q
+};
+d.Vd = function() {
+    return this.nh
+};
+d.getError = function() {
+    return this.fa
+};
+d.Sf = function(a, b) {
+    this.jd() ? this.sa.push({$:a, scope:b || null}) : a.call(b, this)
+};
+d.Nh = function(a) {
+    if(this.jd()) {
+        this.nh = a, this.q = "success", this.uh()
+    }else {
+        if(!this.wh()) {
+            throw new kc;
+        }
+    }
+};
+d.yd = function(a) {
+    if(this.jd()) {
+        this.fa = a, this.q = "error", this.uh()
+    }else {
+        if(!this.wh()) {
+            throw new kc;
+        }
+    }
+};
+d.uh = function() {
+    var a = this.sa;
+    this.sa = [];
+    for(var b = 0;b < a.length;b++) {
+        var c = a[b];
+        c.$.call(c.scope, this)
+    }
+};
+d.jd = function() {
+    return"pending" == this.q
+};
+d.cancel = function() {
+    return this.jd() ? (this.yd(new ic), !0) : !1
+};
+d.wh = function() {
+    return"error" == this.q && this.fa instanceof ic
+};
+var I = function() {
+};
+d = I.prototype;
+d.Ye = !1;
+d.Tc = function() {
+    return this.Ye
+};
+d.H = function() {
+    this.Ye || (this.Ye = !0, this.b())
+};
+d.Yd = function(a) {
+    this.wm(ma(lc, a))
+};
+d.wm = function(a, b) {
+    this.uc || (this.uc = []);
+    this.uc.push(s(a, b))
+};
+d.b = function() {
+    if(this.uc) {
+        for(;this.uc.length;) {
+            this.uc.shift()()
+        }
+    }
+};
+var lc = function(a) {
+    a && "function" == typeof a.H && a.H()
+};
+var mc = function() {
+    this.a = G("cv.Setup");
+    this.ka = !1
+};
+v(mc, I);
+mc.prototype.ea = function() {
+    this.ka ? this.a.info("Already been set up. Skipping.") : (this.Uj(), this.ka = !0)
+};
+var nc = function(a) {
+    return window.location.href ? (new J(window.location.href)).Wg().get(a) : null
+};
+var oc = Sa({Rm:"cv", Ym:"ramp", Pm:"cm"}), pc = Sa({Tm:"launch_service", Lm:"activity_service", Km:"activity", Om:"channel_connect_request", Nm:"channel_connect_accepted"}), qc = function(a, b) {
+    this.type = a;
+    this.message = b
+};
+G("cv.ChannelMessage");
+var rc = function(a) {
+    return p(a) && "cm" == a[0] && r(a[1]) && n(a[1].type)
+};
+var sc = function(a, b) {
+    this.eventSequenceId = null;
+    this.activityId = a;
+    this.state = b;
+    this.imageUrl = this.title = this.contentId = null;
+    this.timeProgress = !1;
+    this.error = this.mediaTracks = this.contentInfo = this.muted = this.volume = this.duration = this.position = null;
+    this.hasPause = !0
+}, uc = function() {
+    this.slides = [];
+    this.currentSlideIndex = -1;
+    this.splashSlide = new tc("https://www.google.com/images/srpr/logo4w.png");
+    this.defaultTimerValue = 0
+};
+d = uc.prototype;
+d.update = function(a) {
+    if(!a) {
+        return this
+    }
+    for(var b in this) {
+        "function" != typeof this[b] && b in a && (this[b] = a[b])
+    }
+    return this
+};
+d.ha = function(a) {
+    console.info("[cast.SlideshowParams] " + a)
+};
+d.yj = function(a, b) {
+    this.ha("adding slide " + a);
+    this.slides.push(new tc(a, void 0 === b ? this.defaultTimerValue : b));
+    -1 == this.currentSlideIndex && (this.currentSlideIndex = 0);
+    return!0
+};
+d.Bj = function(a) {
+    if(!this.of(a)) {
+        return!1
+    }
+    this.ha("removing slide " + a);
+    this.slides.splice(a, 1);
+    (this.currentSlideIndex > a || this.currentSlideIndex >= this.bi()) && this.currentSlideIndex--;
+    return!0
+};
+d.next = function() {
+    this.ha("Going to next slide");
+    return this.oe(this.currentSlideIndex + 1)
+};
+d.Aj = function() {
+    this.ha("Going to previous slide");
+    return this.oe(this.currentSlideIndex - 1)
+};
+d.oe = function(a) {
+    this.ha("Jump to slide " + a);
+    return this.of(a) ? (this.currentSlideIndex = a, !0) : !1
+};
+d.bi = function() {
+    return this.slides.length
+};
+d.Mc = function(a) {
+    if(0 == this.slides.length && "undefined" == typeof a) {
+        return this.splashSlide
+    }
+    a = "undefined" == typeof a ? this.currentSlideIndex : a;
+    return this.of(a) ? this.slides[a] : null
+};
+d.of = function(a) {
+    return 0 <= a && a < this.bi()
+};
+var tc = function(a, b, c, e) {
+    this.url = a;
+    this.timer = "undefined" == typeof b ? 0 : b;
+    this.comments = c || "";
+    this.caption = e || ""
+};
+var vc = function(a, b) {
+    this.cmd_id = a;
+    this.type = b
+}, K = function(a, b, c) {
+    null != a && (b[c] = a)
+};
+var wc = function() {
+    this.ui = u()
+}, xc = new wc;
+wc.prototype.set = function(a) {
+    this.ui = a
+};
+wc.prototype.reset = function() {
+    this.set(u())
+};
+wc.prototype.get = function() {
+    return this.ui
+};
+var yc = function(a) {
+    this.dl = a || "";
+    this.el = xc
+};
+d = yc.prototype;
+d.qh = !0;
+d.il = !0;
+d.hl = !0;
+d.$d = !1;
+d.Wf = !1;
+var zc = function(a) {
+    return 10 > a ? "0" + a : String(a)
+}, Ac = function(a, b) {
+    var c = (a.Fh() - b) / 1E3, e = c.toFixed(3), f = 0;
+    if(1 > c) {
+        f = 2
+    }else {
+        for(;100 > c;) {
+            f++, c *= 10
+        }
+    }
+    for(;0 < f--;) {
+        e = " " + e
+    }
+    return e
+}, Bc = function(a) {
+    yc.call(this, a)
+};
+v(Bc, yc);
+Bc.prototype.Il = function(a) {
+    var b = [];
+    b.push(this.dl, " ");
+    if(this.qh) {
+        var c = new Date(a.Fh());
+        b.push("[", zc(c.getFullYear() - 2E3) + zc(c.getMonth() + 1) + zc(c.getDate()) + " " + zc(c.getHours()) + ":" + zc(c.getMinutes()) + ":" + zc(c.getSeconds()) + "." + zc(Math.floor(c.getMilliseconds() / 10)), "] ")
+    }
+    this.il && b.push("[", Ac(a, this.el.get()), "s] ");
+    this.hl && b.push("[", a.vh(), "] ");
+    this.Wf && b.push("[", a.We().name, "] ");
+    b.push(a.getMessage(), "\n");
+    this.$d && a.fl() && b.push(a.gl(), "\n");
+    return b.join("")
+};
+var Cc = function(a, b, c, e, f) {
+    a.log(e ? e : Ib, b);
+    try {
+        a.log(f ? f : Kb, "--the object is " + JSON.stringify(c))
+    }catch(g) {
+    }
+};
+var L = function(a, b) {
+    this.type = a;
+    this.currentTarget = this.target = b
+};
+d = L.prototype;
+d.b = function() {
+};
+d.H = function() {
+};
+d.vb = !1;
+d.defaultPrevented = !1;
+d.xh = !0;
+d.preventDefault = function() {
+    this.defaultPrevented = !0;
+    this.xh = !1
+};
+var Dc = function(a) {
+    Dc[" "](a);
+    return a
+};
+Dc[" "] = m;
+var Ec = function(a, b) {
+    try {
+        return Dc(a[b]), !0
+    }catch(c) {
+    }
+    return!1
+};
+var Fc = !A || A && 9 <= tb, Gc = A && !C("9");
+!B || C("528");
+gb && C("1.9b") || A && C("8") || fb && C("9.5") || B && C("528");
+gb && !C("8") || A && C("9");
+var Hc = function(a, b) {
+    a && this.ea(a, b)
+};
+v(Hc, L);
+Hc.prototype.target = null;
+d = Hc.prototype;
+d.relatedTarget = null;
+d.offsetX = 0;
+d.offsetY = 0;
+d.clientX = 0;
+d.clientY = 0;
+d.screenX = 0;
+d.screenY = 0;
+d.button = 0;
+d.keyCode = 0;
+d.charCode = 0;
+d.ctrlKey = !1;
+d.altKey = !1;
+d.shiftKey = !1;
+d.metaKey = !1;
+d.Ul = !1;
+d.Ue = null;
+d.ea = function(a, b) {
+    var c = this.type = a.type;
+    L.call(this, c);
+    this.target = a.target || a.srcElement;
+    this.currentTarget = b;
+    var e = a.relatedTarget;
+    e ? gb && (Ec(e, "nodeName") || (e = null)) : "mouseover" == c ? e = a.fromElement : "mouseout" == c && (e = a.toElement);
+    this.relatedTarget = e;
+    this.offsetX = B || void 0 !== a.offsetX ? a.offsetX : a.layerX;
+    this.offsetY = B || void 0 !== a.offsetY ? a.offsetY : a.layerY;
+    this.clientX = void 0 !== a.clientX ? a.clientX : a.pageX;
+    this.clientY = void 0 !== a.clientY ? a.clientY : a.pageY;
+    this.screenX = a.screenX || 0;
+    this.screenY = a.screenY || 0;
+    this.button = a.button;
+    this.keyCode = a.keyCode || 0;
+    this.charCode = a.charCode || ("keypress" == c ? a.keyCode : 0);
+    this.ctrlKey = a.ctrlKey;
+    this.altKey = a.altKey;
+    this.shiftKey = a.shiftKey;
+    this.metaKey = a.metaKey;
+    this.Ul = ib ? a.metaKey : a.ctrlKey;
+    this.state = a.state;
+    this.Ue = a;
+    a.defaultPrevented && this.preventDefault();
+    delete this.vb
+};
+d.preventDefault = function() {
+    Hc.f.preventDefault.call(this);
+    var a = this.Ue;
+    if(a.preventDefault) {
+        a.preventDefault()
+    }else {
+        if(a.returnValue = !1, Gc) {
+            try {
+                if(a.ctrlKey || 112 <= a.keyCode && 123 >= a.keyCode) {
+                    a.keyCode = -1
+                }
+            }catch(b) {
+            }
+        }
+    }
+};
+d.jh = function() {
+    return this.Ue
+};
+d.b = function() {
+};
+var Ic = "closure_listenable_" + (1E6 * Math.random() | 0), Jc = function(a) {
+    return!(!a || !a[Ic])
+}, Kc = 0;
+var Lc = function(a, b, c, e, f, g) {
+    this.ub = a;
+    this.proxy = b;
+    this.src = c;
+    this.type = e;
+    this.capture = !!f;
+    this.qd = g;
+    this.key = ++Kc;
+    this.removed = this.od = !1
+};
+Lc.prototype.xd = function() {
+    this.removed = !0;
+    this.qd = this.src = this.proxy = this.ub = null
+};
+var Mc = function(a) {
+    this.src = a;
+    this.Q = {};
+    this.rc = 0
+};
+d = Mc.prototype;
+d.Sl = function() {
+    return this.rc
+};
+d.add = function(a, b, c, e, f) {
+    var g = this.Q[a];
+    g || (g = this.Q[a] = [], this.rc++);
+    var h = Nc(g, b, e, f);
+    -1 < h ? (a = g[h], c || (a.od = !1)) : (a = new Lc(b, null, this.src, a, !!e, f), a.od = c, g.push(a));
+    return a
+};
+d.remove = function(a, b, c, e) {
+    if(!(a in this.Q)) {
+        return!1
+    }
+    var f = this.Q[a];
+    b = Nc(f, b, c, e);
+    return-1 < b ? (f[b].xd(), Ha(f, b), 0 == f.length && (delete this.Q[a], this.rc--), !0) : !1
+};
+d.Uh = function(a) {
+    var b = a.type;
+    if(!(b in this.Q)) {
+        return!1
+    }
+    var c = Ia(this.Q[b], a);
+    c && (a.xd(), 0 == this.Q[b].length && (delete this.Q[b], this.rc--));
+    return c
+};
+d.removeAll = function(a) {
+    var b = 0, c;
+    for(c in this.Q) {
+        if(!a || c == a) {
+            for(var e = this.Q[c], f = 0;f < e.length;f++) {
+                ++b, e[f].xd()
+            }
+            delete this.Q[c];
+            this.rc--
+        }
+    }
+    return b
+};
+d.pc = function(a, b, c, e) {
+    a = this.Q[a];
+    var f = -1;
+    a && (f = Nc(a, b, c, e));
+    return-1 < f ? a[f] : null
+};
+var Nc = function(a, b, c, e) {
+    for(var f = 0;f < a.length;++f) {
+        var g = a[f];
+        if(!g.removed && g.ub == b && g.capture == !!c && g.qd == e) {
+            return f
+        }
+    }
+    return-1
+};
+var Oc = {}, Pc = {}, Qc = {}, Rc = function(a, b, c, e, f) {
+    if(p(b)) {
+        for(var g = 0;g < b.length;g++) {
+            Rc(a, b[g], c, e, f)
+        }
+        return null
+    }
+    c = Sc(c);
+    return Jc(a) ? a.l(b, c, e, f) : Tc(a, b, c, !1, e, f)
+}, Tc = function(a, b, c, e, f, g) {
+    if(!b) {
+        throw Error("Invalid event type");
+    }
+    var h = !!f, l = ja(a), t = Pc[l];
+    t || (Pc[l] = t = new Mc(a));
+    c = t.add(b, c, e, f, g);
+    if(c.proxy) {
+        return c
+    }
+    e = Uc();
+    c.proxy = e;
+    e.src = a;
+    e.ub = c;
+    a.addEventListener ? a.addEventListener(b, e, h) : a.attachEvent(b in Qc ? Qc[b] : Qc[b] = "on" + b, e);
+    return Oc[c.key] = c
+}, Uc = function() {
+    var a = Vc, b = Fc ? function(c) {
+        return a.call(b.src, b.ub, c)
+    } : function(c) {
+        c = a.call(b.src, b.ub, c);
+        if(!c) {
+            return c
+        }
+    };
+    return b
+}, Wc = function(a, b, c, e, f) {
+    if(p(b)) {
+        for(var g = 0;g < b.length;g++) {
+            Wc(a, b[g], c, e, f)
+        }
+        return null
+    }
+    c = Sc(c);
+    return Jc(a) ? a.fc(b, c, e, f) : Tc(a, b, c, !0, e, f)
+}, Xc = function(a, b, c, e, f) {
+    if(p(b)) {
+        for(var g = 0;g < b.length;g++) {
+            Xc(a, b[g], c, e, f)
+        }
+        return null
+    }
+    c = Sc(c);
+    if(Jc(a)) {
+        return a.af(b, c, e, f)
+    }
+    if(!a) {
+        return!1
+    }
+    e = !!e;
+    if(a = Yc(a)) {
+        if(b = a.pc(b, c, e, f)) {
+            return Zc(b)
+        }
+    }
+    return!1
+}, Zc = function(a) {
+    if(fa(a) || !a || a.removed) {
+        return!1
+    }
+    var b = a.src;
+    if(Jc(b)) {
+        return b.oh(a)
+    }
+    var c = a.type, e = a.proxy;
+    b.removeEventListener ? b.removeEventListener(c, e, a.capture) : b.detachEvent && b.detachEvent(c in Qc ? Qc[c] : Qc[c] = "on" + c, e);
+    (c = Yc(b)) ? (c.Uh(a), 0 == c.Sl() && (c.src = null, delete Pc[ja(b)])) : a.xd();
+    delete Oc[a.key];
+    return!0
+}, ad = function(a, b, c, e) {
+    var f = 1;
+    if(a = Yc(a)) {
+        if(b = a.Q[b]) {
+            for(b = La(b), a = 0;a < b.length;a++) {
+                var g = b[a];
+                g && (g.capture == c && !g.removed) && (f &= !1 !== $c(g, e))
+            }
+        }
+    }
+    return Boolean(f)
+}, $c = function(a, b) {
+    var c = a.ub, e = a.qd || a.src;
+    a.od && Zc(a);
+    return c.call(e, b)
+}, Vc = function(a, b) {
+    if(a.removed) {
+        return!0
+    }
+    if(!Fc) {
+        var c = b || ba("window.event"), e = new Hc(c, this), f = !0;
+        if(!(0 > c.keyCode || void 0 != c.returnValue)) {
+            t: {
+                var g = !1;
+                if(0 == c.keyCode) {
+                    try {
+                        c.keyCode = -1;
+                        break t
+                    }catch(h) {
+                        g = !0
+                    }
+                }
+                if(g || void 0 == c.returnValue) {
+                    c.returnValue = !0
+                }
+            }
+            c = [];
+            for(g = e.currentTarget;g;g = g.parentNode) {
+                c.push(g)
+            }
+            for(var g = a.type, l = c.length - 1;!e.vb && 0 <= l;l--) {
+                e.currentTarget = c[l], f &= ad(c[l], g, !0, e)
+            }
+            for(l = 0;!e.vb && l < c.length;l++) {
+                e.currentTarget = c[l], f &= ad(c[l], g, !1, e)
+            }
+        }
+        return f
+    }
+    return $c(a, new Hc(b, this))
+}, Yc = function(a) {
+    return a[ha] ? Pc[ja(a)] || null : null
+}, bd = "__closure_events_fn_" + (1E9 * Math.random() >>> 0), Sc = function(a) {
+    x(a, "Listener can not be null.");
+    if(ga(a)) {
+        return a
+    }
+    x(a.handleEvent, "An object listener must have handleEvent method.");
+    return a[bd] || (a[bd] = function(b) {
+        return a.handleEvent(b)
+    })
+};
+var M = function() {
+    this.Ga = new Mc(this);
+    this.sl = this
+};
+v(M, I);
+M.prototype[Ic] = !0;
+d = M.prototype;
+d.Me = null;
+d.Xh = function() {
+    return this.Me
+};
+d.Ke = function(a) {
+    this.Me = a
+};
+d.addEventListener = function(a, b, c, e) {
+    Rc(this, a, b, c, e)
+};
+d.removeEventListener = function(a, b, c, e) {
+    Xc(this, a, b, c, e)
+};
+d.dispatchEvent = function(a) {
+    this.Oh();
+    var b, c = this.Xh();
+    if(c) {
+        b = [];
+        for(var e = 1;c;c = c.Xh()) {
+            b.push(c), x(1E3 > ++e, "infinite loop")
+        }
+    }
+    c = this.sl;
+    e = a.type || a;
+    if(q(a)) {
+        a = new L(a, c)
+    }else {
+        if(a instanceof L) {
+            a.target = a.target || c
+        }else {
+            var f = a;
+            a = new L(e, c);
+            Va(a, f)
+        }
+    }
+    var f = !0, g;
+    if(b) {
+        for(var h = b.length - 1;!a.vb && 0 <= h;h--) {
+            g = a.currentTarget = b[h], f = g.Bd(e, !0, a) && f
+        }
+    }
+    a.vb || (g = a.currentTarget = c, f = g.Bd(e, !0, a) && f, a.vb || (f = g.Bd(e, !1, a) && f));
+    if(b) {
+        for(h = 0;!a.vb && h < b.length;h++) {
+            g = a.currentTarget = b[h], f = g.Bd(e, !1, a) && f
+        }
+    }
+    return f
+};
+d.b = function() {
+    M.f.b.call(this);
+    this.lk();
+    this.Me = null
+};
+d.l = function(a, b, c, e) {
+    this.Oh();
+    return this.Ga.add(a, b, !1, c, e)
+};
+d.fc = function(a, b, c, e) {
+    return this.Ga.add(a, b, !0, c, e)
+};
+d.af = function(a, b, c, e) {
+    return this.Ga.remove(a, b, c, e)
+};
+d.oh = function(a) {
+    return this.Ga.Uh(a)
+};
+d.lk = function(a) {
+    return this.Ga ? this.Ga.removeAll(a) : 0
+};
+d.Bd = function(a, b, c) {
+    a = this.Ga.Q[a];
+    if(!a) {
+        return!0
+    }
+    a = La(a);
+    for(var e = !0, f = 0;f < a.length;++f) {
+        var g = a[f];
+        if(g && !g.removed && g.capture == b) {
+            var h = g.ub, l = g.qd || g.src;
+            g.od && this.oh(g);
+            e = !1 !== h.call(l, c) && e
+        }
+    }
+    return e && !1 != c.xh
+};
+d.pc = function(a, b, c, e) {
+    return this.Ga.pc(a, b, c, e)
+};
+d.Oh = function() {
+    x(this.Ga, "Event target is not initialized. Did you call the superclass (goog.events.EventTarget) constructor?")
+};
+var cd = RegExp("^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([^/#?]*?)(?::([0-9]+))?(?=[/#?]|$))?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$"), ed = function(a) {
+    if(dd) {
+        dd = !1;
+        var b = k.location;
+        if(b) {
+            var c = b.href;
+            if(c && (c = (c = ed(c)[3] || null) && decodeURIComponent(c)) && c != b.hostname) {
+                throw dd = !0, Error();
+            }
+        }
+    }
+    return a.match(cd)
+}, dd = B, fd = function(a) {
+    var b = ed(a);
+    a = b[1];
+    var c = b[2], e = b[3], b = b[4], f = "";
+    a && (f += a + ":");
+    e && (f += "//", c && (f += c + "@"), f += e, b && (f += ":" + b));
+    return f
+};
+var gd = function(a, b) {
+    L.call(this, a);
+    this.activityId = b
+};
+v(gd, L);
+var hd = function(a, b) {
+    gd.call(this, "activity_error", a);
+    this.errorMessage = b
+};
+v(hd, gd);
+var id = function(a, b) {
+    M.call(this);
+    this.Zj = "ChromeCast";
+    this.Kg = "unknown";
+    this.n = a || ua();
+    this.cc = null;
+    this.Sa = [];
+    this.q = "new";
+    this.fd = -1;
+    this.mediaPlayerStatus = new sc(this.n, 2);
+    this.mediaPlayerStatus.timeProgress = !0;
+    u();
+    this.ak = b || "stop";
+    this.F = this.Lg()
+};
+v(id, M);
+d = id.prototype;
+d.Vf = function() {
+    return"continue" == this.ak
+};
+d.jj = function() {
+    return this.Zj
+};
+d.ve = function(a) {
+    this.cc = a;
+    return this
+};
+d.h = function() {
+    return this.n
+};
+d.Ud = function() {
+    return this.Kg
+};
+d.Td = function(a) {
+    this.Kg = a;
+    this.F = this.Lg();
+    return this
+};
+d.I = function() {
+    return this.q
+};
+d.Lg = function() {
+    var a = "cv.Activity." + this.Ud() + "." + this.h();
+    return G(a)
+};
+d.md = function(a, b) {
+    var c = p(b) ? 0 <= b.indexOf(this.q) : this.q == b;
+    c || this.F.info("Invalid state encountered in " + JSON.stringify(a) + ", was " + JSON.stringify(this.q) + "; expecting " + JSON.stringify(b));
+    return c
+};
+d.Ai = function(a) {
+    if(this.md("initialize", "new")) {
+        var b = s(function(b, e) {
+            b ? (this.q = "initialized", a(!0)) : a(!1, e)
+        }, this);
+        this.Ph(b)
+    }else {
+        a(!0)
+    }
+};
+d.Ph = function(a) {
+    a(!0)
+};
+d.start = function() {
+    this.md("start", "initialized") && (this.gf(), this.q = "playing")
+};
+d.gf = m;
+d.pause = function() {
+    this.md("pause", "playing") && (this.ff(), this.q = "paused")
+};
+d.ff = m;
+d.stop = function() {
+    this.md("stop", ["initialized", "playing", "paused"]) && (this.kc(), this.q = "stopped", this.H())
+};
+d.kc = m;
+d.zm = function() {
+    return this.fd
+};
+d.Ci = function(a) {
+    this.fd = a;
+    return this
+};
+d.Sb = function() {
+    return this.Sa
+};
+d.hj = function(a) {
+    return Ea(this.Sa, function(b) {
+        return b.h() == a
+    })
+};
+d.ue = function(a) {
+    var b = Fa(this.Sa, function(b) {
+        return b.h() == a.h()
+    });
+    0 <= b ? this.Sa[b] = a : this.Sa.push(a);
+    return this
+};
+d.fj = function(a) {
+    Ja(this.Sa, function(b) {
+        return b.h() == a
+    })
+};
+d.mb = function(a) {
+    if("update_description" == a.type) {
+        window.document.title = a.description;
+        var b = document.querySelector("link[rel=icon]");
+        b && (b.href = a.iconUrl || "")
+    }
+};
+d.Y = function(a, b) {
+    this.cc ? this.cc.Y("activity", a, b || this.Sa) : Cc(this.F, "Trying to post message without activity messenger.", a, Hb)
+};
+d.Ld = function(a, b) {
+    this.cc ? this.cc.Ld(a, b || this.Sa) : this.F.k("Trying to post message without activity messenger")
+};
+id.prototype.isLocal = function() {
+    return 0 <= this.fd || -2 == this.fd
+};
+var jd = function() {
+    this.tb = new z;
+    this.mc = new z
+};
+d = jd.prototype;
+d.la = function(a) {
+    return this.tb.get(a) || null
+};
+d.ye = function() {
+    return this.tb.bb()
+};
+d.lb = function(a) {
+    return this.mc.get(a) || []
+};
+d.xi = function(a) {
+    if(this.tb.get(a.h())) {
+        throw"Activity already exists";
+    }
+    var b = a.Sb();
+    this.tb.set(a.h(), a);
+    b.forEach(function(b) {
+        var e = this.lb(b.h());
+        0 < e.length ? e.push(a) : this.mc.set(b.h(), [a])
+    }, this)
+};
+d.Xl = function(a) {
+    if(this.tb.get(a.h())) {
+        var b = a.Sb();
+        this.tb.remove(a.h());
+        b.forEach(function(b) {
+            var e = this.lb(b.h());
+            Ja(e, function(b) {
+                return b.h() == a.h()
+            });
+            0 == e.length && this.mc.remove(b.h())
+        }, this)
+    }
+};
+d.If = function(a) {
+    (a = this.la(a)) && this.Xl(a)
+};
+d.ej = function(a, b) {
+    var c = this.lb(a);
+    this.mc.remove(a);
+    c.forEach(function(a) {
+        Ga(a.Sb(), function(a) {
+            return this.mc.pb(a.h())
+        }, this) || b && a.Vf() || this.tb.remove(a.h())
+    }, this)
+};
+var N = function(a) {
+    this.Pa = a;
+    this.A = {}
+};
+v(N, I);
+var kd = [];
+d = N.prototype;
+d.l = function(a, b, c, e, f) {
+    p(b) || (kd[0] = b, b = kd);
+    for(var g = 0;g < b.length;g++) {
+        var h = Rc(a, b[g], c || this, e || !1, f || this.Pa || this);
+        if(!h) {
+            break
+        }
+        this.A[h.key] = h
+    }
+    return this
+};
+d.fc = function(a, b, c, e, f) {
+    if(p(b)) {
+        for(var g = 0;g < b.length;g++) {
+            this.fc(a, b[g], c, e, f)
+        }
+    }else {
+        a = Wc(a, b, c || this, e, f || this.Pa || this);
+        if(!a) {
+            return this
+        }
+        this.A[a.key] = a
+    }
+    return this
+};
+d.af = function(a, b, c, e, f) {
+    if(p(b)) {
+        for(var g = 0;g < b.length;g++) {
+            this.af(a, b[g], c, e, f)
+        }
+    }else {
+        f = f || this.Pa || this, c = Sc(c || this), e = !!e, b = Jc(a) ? a.pc(b, c, e, f) : a ? (a = Yc(a)) ? a.pc(b, c, e, f) : null : null, b && (Zc(b), delete this.A[b.key])
+    }
+    return this
+};
+d.removeAll = function() {
+    Ra(this.A, Zc);
+    this.A = {}
+};
+d.b = function() {
+    N.f.b.call(this);
+    this.removeAll()
+};
+d.handleEvent = function() {
+    throw Error("EventHandler.handleEvent not implemented");
+};
+var ld = function(a) {
+    var b = new jc;
+    b.Nh(a);
+    return b
+}, md = function(a, b, c) {
+    a.Sf(b, c)
+}, nd = function(a, b, c) {
+    md(a, function(a) {
+        "success" == a.I() && b.call(this, a.Vd(), a)
+    }, c)
+}, od = function(a, b, c) {
+    md(a, function(a) {
+        "error" == a.I() && b.call(this, a.getError(), a)
+    }, c)
+}, qd = function(a, b, c) {
+    var e = new pd([a]);
+    md(a, function(a) {
+        "success" == a.I() ? (a = b.call(c, a), e.pl(a), md(a, function(a) {
+            "success" == a.I() ? e.Nh(a.Vd()) : e.yd(a.getError())
+        })) : e.yd(a.getError())
+    });
+    return e
+}, pd = function(a) {
+    jc.call(this);
+    this.Em = a
+};
+v(pd, jc);
+pd.prototype.pl = function(a) {
+    this.Em.push(a)
+};
+var rd = function(a, b) {
+    M.call(this);
+    this.Fa = a || 1;
+    this.Gb = b || k;
+    this.Se = s(this.Fl, this);
+    this.Te = u()
+};
+v(rd, M);
+d = rd.prototype;
+d.enabled = !1;
+d.t = null;
+d.uj = function() {
+    return this.Fa
+};
+d.Fl = function() {
+    if(this.enabled) {
+        var a = u() - this.Te;
+        0 < a && a < 0.8 * this.Fa ? this.t = this.Gb.setTimeout(this.Se, this.Fa - a) : (this.t && (this.Gb.clearTimeout(this.t), this.t = null), this.Ok(), this.enabled && (this.t = this.Gb.setTimeout(this.Se, this.Fa), this.Te = u()))
+    }
+};
+d.Ok = function() {
+    this.dispatchEvent("tick")
+};
+d.start = function() {
+    this.enabled = !0;
+    this.t || (this.t = this.Gb.setTimeout(this.Se, this.Fa), this.Te = u())
+};
+d.stop = function() {
+    this.enabled = !1;
+    this.t && (this.Gb.clearTimeout(this.t), this.t = null)
+};
+d.b = function() {
+    rd.f.b.call(this);
+    this.stop();
+    delete this.Gb
+};
+var sd = function(a, b, c) {
+    if(ga(a)) {
+        c && (a = s(a, c))
+    }else {
+        if(a && "function" == typeof a.handleEvent) {
+            a = s(a.handleEvent, a)
+        }else {
+            throw Error("Invalid listener argument");
+        }
+    }
+    return 2147483647 < b ? -1 : k.setTimeout(a, b || 0)
+};
+var td = function(a) {
+    M.call(this);
+    this.u = this.fe = this.ee = null;
+    this.q = a || "connecting";
+    this.fa = null;
+    this.a = G("cv.Channel")
+};
+v(td, M);
+d = td.prototype;
+d.b = function() {
+    td.f.b.call(this);
+    this.disconnect()
+};
+d.disconnect = function(a) {
+    "disconnected" != this.q ? (a ? this.a.k("Disconnect channel to " + this.u + " due to error: " + a) : this.a.info("Disconnect channel to " + this.u), this.fa && this.a.k("Channel already has error when disconnecting: " + JSON.stringify(this.fa)), this.fa = a || null, this.kb(), this.Rb("disconnected")) : a && this.a.k("Reporting error on disconnected channel: " + JSON.stringify(a))
+};
+d.K = function() {
+    return"connected" == this.q
+};
+d.I = function() {
+    return this.q
+};
+d.Rb = function(a) {
+    var b = this.q;
+    b != a && (this.q = a, this.dispatchEvent(new ud("a", b, a)), this.ee && this.ee(b, a))
+};
+d.getError = function() {
+    return"disconnected" == this.q ? this.fa : null
+};
+d.aa = function(a) {
+    this.dispatchEvent(new vd("b", a));
+    this.fe && this.fe(a)
+};
+d.Qf = function(a, b) {
+    function c() {
+        "connected" == e.I() ? a() : "disconnected" == e.I() && b("Channel failed to connect.")
+    }
+    var e = this;
+    "connecting" == this.I() ? Wc(this, "a", c) : c()
+};
+var ud = function(a, b, c) {
+    L.call(this, a);
+    this.wk = b;
+    this.Pe = c
+};
+v(ud, L);
+var vd = function(a, b) {
+    L.call(this, a);
+    this.message = b
+};
+v(vd, L);
+var wd = function(a, b, c) {
+    L.call(this, a);
+    this.message = b;
+    this.u = c || null
+};
+v(wd, L);
+var xd = function() {
+    M.call(this);
+    this.a = G("cv.ChannelService");
+    this.jb = new z;
+    this.Gc = new z;
+    this.Dc = new rd(18E5);
+    this.L = null;
+    this.Ma = new N(this)
+};
+v(xd, M);
+d = xd.prototype;
+d.Rk = function(a) {
+    this.L = a
+};
+d.ea = function() {
+    x(this.L, "Sets activityService first");
+    this.Dc.start();
+    this.Ma.l(this.Dc, "tick", this.Ck)
+};
+d.b = function() {
+    xd.f.b.call(this);
+    this.Dc.stop();
+    this.Dc.H();
+    this.Ma.H()
+};
+d.Ck = function() {
+    if(!this.jb.bf()) {
+        var a = [];
+        Qa(this.jb.Xk(), function(b) {
+            0 < this.L.lb(b).length || a.push(b)
+        }, this);
+        a.forEach(this.qg, this)
+    }
+};
+d.qg = function(a) {
+    this.a.info("Remove channel to " + a);
+    var b = this.jb.get(a);
+    b && (this.jb.remove(a), b.disconnect());
+    if(a = this.Gc.get(a)) {
+        this.a.info("existing channel removed."), a.cancel()
+    }
+};
+d.Xd = function(a) {
+    x(a.u, "New channel has no peer ID");
+    x(a.K(), "New channel is not disconnected.");
+    this.a.info("Created a channel to " + a.u);
+    a.fe = s(this.sj, this, a.u);
+    a.ee = s(this.tj, this, a.u);
+    this.jb.set(a.u, a)
+};
+d.tj = function(a, b, c) {
+    "disconnected" == c && (this.a.info("Removing a disconnected channel to " + a), (b = this.jb.get(a)) && this.qg(a), this.dispatchEvent(new wd("channel_disconnect", a)), b && b.getError() && this.dispatchEvent(new wd("channel_error", b.getError(), a)))
+};
+d.Ld = function(a, b, c) {
+    this.ti(["ramp", a], b, null, c || null)
+};
+d.Y = function(a, b, c, e) {
+    this.ti(["cv", new qc(a, b)], c, null, e || null)
+};
+d.ti = function(a, b, c, e) {
+    0 != b.length && (this.ll(a, b), b.forEach(function(b) {
+        var g = this.kl(b);
+        nd(g, function(b) {
+            b.send(a);
+            c && c()
+        }, this);
+        od(g, function(a) {
+            e ? e(String(a)) : this.dispatchEvent(new wd("channel_error", String(a), b.h()))
+        }, this)
+    }, this))
+};
+d.ll = function(a, b) {
+    if(this.a.og(Lb)) {
+        var c = "";
+        b.forEach(function(a) {
+            c += " " + a.h()
+        });
+        this.a.ie("Posting message to" + c + ": " + JSON.stringify(a))
+    }
+};
+d.kl = function(a) {
+    var b = a.h(), c = this.jb.get(b);
+    if(c) {
+        return x(c.K(), "Channel to " + c.u + " is not connected."), ld(c)
+    }
+    if((c = this.Gc.get(b)) && "pending" == c.I()) {
+        return this.a.info("Channel to " + b + " in creation..."), c
+    }
+    this.a.info("Creating channel to " + b);
+    c = this.Gi(a);
+    a = qd(c, function(a) {
+        a = a.Vd();
+        this.Xd(a);
+        return ld(a)
+    }, this);
+    this.Gc.set(b, a);
+    a.Sf(function() {
+        this.Gc.remove(b)
+    }, this);
+    return a
+};
+d.sj = function(a, b) {
+    if(b) {
+        if(this.a.ie("Received message from " + a + ": " + JSON.stringify(b)), p(b) && "ramp" == b[0] && r(b[1]) && n(b[1].cmd_id) && n(b[1].type)) {
+            this.dispatchEvent(new wd("ramp", b[1], a))
+        }else {
+            if(p(b) && "cv" == b[0] && r(b[1]) && n(b[1].type) && 0 <= pc.indexOf(b[1].type)) {
+                var c = b[1], e = this.Wj(c.type);
+                e && this.dispatchEvent(new wd(e, c.message, a))
+            }else {
+                p(b) && 2 == b.length && q(b[0]) && -1 == oc.indexOf(b[0]) && (r(b[1]) || q(b[1]) || null === b[1]) ? this.dispatchEvent(new wd("custom_message", b, a)) : rc(b) || Cc(this.a, "Unrecognized channel message", b, Hb)
+            }
+        }
+    }
+};
+d.Wj = function(a) {
+    switch(a) {
+        case "launch_service":
+            return"launch_service";
+        case "activity_service":
+            return"activity_service";
+        case "activity":
+            return"activity";
+        default:
+            return null
+    }
+};
+var yd = function(a, b) {
+    M.call(this);
+    this.a = G("cv.ActivityService");
+    this.Na = a;
+    this.N = b;
+    this.Ma = new N(this)
+};
+v(yd, M);
+var zd = function(a, b) {
+    L.call(this, a);
+    this.activityId = b
+};
+v(zd, L);
+d = yd.prototype;
+d.ea = function() {
+    this.Ma.l(this.Na, "activity", this.Fk);
+    this.Ma.l(this.Na, "activity_service", this.Gk);
+    this.Ma.l(this.Na, "channel_disconnect", this.Ek);
+    this.Ma.l(this.Na, "custom_message", this.th)
+};
+d.th = m;
+d.b = function() {
+    yd.f.b.call(this);
+    this.Ma.H()
+};
+d.la = function(a) {
+    return this.N.la(a)
+};
+d.ye = function() {
+    return this.N.ye()
+};
+d.lb = function(a) {
+    return this.N.lb(a)
+};
+d.Fk = function(a) {
+    x("activity" == a.type, "Got event type " + a.type + "; expect activity");
+    var b = a.message, c = this.N.la(b.activityId);
+    c ? c.mb(b) : Cc(this.a, "Received a remote message for unknown activity: " + b.activityId, a)
+};
+d.Gk = function(a) {
+    x("activity_service" == a.type, "Got event type " + a.type + "; expect activity_service");
+    a = a.message;
+    "remove_activity" == a.type ? this.hg(a.activityId) : Cc(this.a, "Received unknown activity service message.", a)
+};
+d.hg = function(a) {
+    this.N.la(a) ? (this.a.info("Peer informs activity removal: " + a), this.ke(a), this.N.la(a).stop(), this.N.If(a), this.dispatchEvent(new zd("remove_activity", a))) : this.a.info("Activity does not exist: " + a)
+};
+d.Ek = function(a) {
+    x("channel_disconnect" == a.type);
+    a = a.message;
+    this.a.info("Handle peer " + a + " disconnection.");
+    this.Fg(a)
+};
+d.Fg = m;
+d.ke = m;
+d.zi = function(a) {
+    this.a.info("Inform peer to remove activity " + a.h() + " " + a.jj() + " " + a.Ud());
+    this.Na.Y("activity_service", new zd("remove_activity", a.h()), a.Sb())
+};
+var Ad = function(a, b, c) {
+    this.$b = a;
+    this.Fa = b;
+    this.Pa = c;
+    this.Oe = s(this.xl, this)
+};
+v(Ad, I);
+d = Ad.prototype;
+d.vd = !1;
+d.cf = 0;
+d.t = null;
+d.Jh = function() {
+    this.t || this.cf ? this.vd = !0 : this.oc()
+};
+d.stop = function() {
+    this.t && (k.clearTimeout(this.t), this.t = null, this.vd = !1)
+};
+d.pause = function() {
+    this.cf++
+};
+d.b = function() {
+    Ad.f.b.call(this);
+    this.stop()
+};
+d.xl = function() {
+    this.t = null;
+    this.vd && !this.cf && (this.vd = !1, this.oc())
+};
+d.oc = function() {
+    this.t = sd(this.Oe, this.Fa);
+    this.$b.call(this.Pa)
+};
+var O = function(a, b, c) {
+    gd.call(this, a, b);
+    this.state = c || null
+};
+v(O, gd);
+var Bd = function(a, b, c, e) {
+    id.call(this, c, e);
+    this.Td(a);
+    this.j = b;
+    this.nk = new Ad(function() {
+        this.Y(new O("timeupdate", this.n, this.j))
+    }, 1E3, this)
+};
+v(Bd, id);
+var Cd = function() {
+    this.mediaUrl = "";
+    this.currentTime = null;
+    this.duration = 0;
+    this.paused = !0;
+    this.muted = !1;
+    this.volume = 1
+}, Dd = {sm:"pause", tm:"play", $m:"stop", um:"timeupdate", rm:"durationchange", Zm:"seeked", Wm:"mute", vm:"volumechange"};
+d = Bd.prototype;
+d.nd = function() {
+    return this.j
+};
+d.gf = function() {
+    this.play()
+};
+d.ff = function() {
+    this.j.paused = !0;
+    this.Y(new O("pause", this.n))
+};
+d.kc = function() {
+    this.pause()
+};
+d.play = function() {
+    this.j.paused = !1;
+    this.Y(new O("play", this.n))
+};
+d.Jk = function(a) {
+    this.j.currentTime != a && (this.j.currentTime = a, this.nk.Jh())
+};
+d.sh = function(a) {
+    this.j.duration != a && (this.j.duration = a, this.Y(new O("durationchange", this.n, this.j)))
+};
+d.Ik = function(a) {
+    this.j.muted != a && (this.j.muted = a, this.Y(new O("mute", this.n, this.j)))
+};
+d.Lk = function(a) {
+    this.j.volume != a && (this.j.volume = a, this.Y(new O("volumechange", this.n, this.j)))
+};
+d.mb = function(a) {
+    Bd.f.mb.call(this, a);
+    a.state && (this.j = a.state);
+    this.dispatchEvent(a)
+};
+var Ed = function(a, b) {
+    xd.call(this);
+    this.a = G("cv.receiver.ChannelService");
+    a && (a.Yb = s(this.Xd, this));
+    b && (b.Yb = s(this.Xd, this))
+};
+v(Ed, xd);
+Ed.prototype.Gi = function() {
+    var a = new jc;
+    a.yd("Receiver does not initialize channel creation");
+    return a
+};
+var Fd = function(a, b, c) {
+    N.call(this, this);
+    this.a = G("cv.PcStatsCollector");
+    this.wj = a;
+    this.Cj = b;
+    this.xj = c;
+    this.Uc = new rd(2E3);
+    this.qe = [];
+    this.Xc = 0;
+    this.l(this.Uc, "tick", this.Ej)
+};
+v(Fd, N);
+d = Fd.prototype;
+d.start = function() {
+    this.Uc.start()
+};
+d.stop = function() {
+    this.Uc.stop()
+};
+d.b = function() {
+    this.Uc.H()
+};
+d.Qa = function() {
+    0 != this.Xc && (this.Cj(this.qe), this.Xc = 0, this.qe = [])
+};
+d.Ll = function(a) {
+    if(!a || !a.names) {
+        return{}
+    }
+    var b = {};
+    b.timestamp = a.timestamp;
+    a.names().forEach(function(c) {
+        b[c] = a.stat(c)
+    });
+    return b
+};
+d.mm = function(a) {
+    var b = [];
+    a.result().forEach(function(a) {
+        b.push(this.Ll(a.local))
+    }, this);
+    this.qe.push(b);
+    this.Xc++;
+    10 == this.Xc && this.Qa()
+};
+d.Ej = function() {
+    var a = this.wj();
+    if(a && n(a.getStats)) {
+        if(this.xj) {
+            if(!a.getLocalStreams() || 0 == a.getLocalStreams().length) {
+                return
+            }
+        }else {
+            if(n(a.getRemoteStreams)) {
+                if(!a.getRemoteStreams() || 0 == a.getRemoteStreams().length) {
+                    return
+                }
+            }else {
+                if(!a.remoteStreams || 0 == a.remoteStreams.length) {
+                    return
+                }
+            }
+        }
+        a.getStats(s(this.mm, this))
+    }
+};
+var Gd = function(a) {
+    this.mf = a || 100;
+    this.Ha = []
+};
+d = Gd.prototype;
+d.Lb = 0;
+d.add = function(a) {
+    var b = this.Ha[this.Lb];
+    this.Ha[this.Lb] = a;
+    this.Lb = (this.Lb + 1) % this.mf;
+    return b
+};
+d.get = function(a) {
+    a = this.gi(a);
+    return this.Ha[a]
+};
+d.set = function(a, b) {
+    a = this.gi(a);
+    this.Ha[a] = b
+};
+d.bb = function() {
+    return this.Ha.length
+};
+d.bf = function() {
+    return 0 == this.Ha.length
+};
+d.clear = function() {
+    this.Lb = this.Ha.length = 0
+};
+d.P = function() {
+    return this.cm(this.bb())
+};
+d.cm = function(a) {
+    var b = this.bb(), c = [];
+    for(a = this.bb() - a;a < b;a++) {
+        c[a] = this.get(a)
+    }
+    return c
+};
+d.ua = function() {
+    for(var a = [], b = this.bb(), c = 0;c < b;c++) {
+        a[c] = c
+    }
+    return a
+};
+d.pb = function(a) {
+    return a < this.bb()
+};
+d.gi = function(a) {
+    if(a >= this.Ha.length) {
+        throw Error("Out of bounds exception");
+    }
+    return this.Ha.length < this.mf ? a : (this.Lb + Number(a)) % this.mf
+};
+var Hd = function() {
+    this.a = G("cv.PcStatsStore");
+    this.Ae = new Gd(900);
+    this.ze = new Gd(900);
+    this.cd = null
+};
+ca(Hd);
+Hd.prototype.Vk = function(a) {
+    a.forEach(function(a) {
+        this.Ae.add(a)
+    }, this);
+    this.cd && this.cd()
+};
+Hd.prototype.Mi = function(a) {
+    a.forEach(function(a) {
+        this.ze.add(a)
+    }, this);
+    this.cd && this.cd()
+};
+Hd.prototype.reset = function() {
+    this.Ae.clear();
+    this.ze.clear()
+};
+var Id = function(a, b) {
+    this.senderStats = a;
+    this.receiverStats = b
+};
+Hd.prototype.getStats = function() {
+    return new Id(this.Ae.P(), this.ze.P())
+};
+var Jd = ["VP8", "CAST1"];
+var Kd = function(a) {
+    this.X = a
+};
+d = Kd.prototype;
+d.sk = function() {
+    return this.X
+};
+d.gh = function(a) {
+    this.X = this.X.replace(/(m=audio.*\r\n)/g, "$1b=AS:" + a + "\r\n")
+};
+d.ok = function() {
+    this.X = this.X.replace(/a=group:BUNDLE\saudio\svideo.*\r\n/, "")
+};
+d.fh = function(a, b, c) {
+    for(var e = this.X, f = e.replace(/[\s\S]*m=audio\s\d+\sRTP\/SAVPF((\s\d+)+)[\s\S]*/, "$1").replace(/(^\s+)|(\s+$)/g, "").split(" "), g = [], h = 0, l = f.length;h < l;++h) {
+        -1 != e.search(RegExp("a=rtpmap:" + f[h] + "\\s+opus", "i")) ? g.push(f[h]) : e = e.replace(RegExp("a=rtpmap:" + f[h] + ".*\\r\\n"), "")
+    }
+    e = e.replace(/(m=audio\s\d+\sRTP\/SAVPF\s).*/, "$1" + g.join(" "));
+    g.length && (a && (e = e.replace(RegExp("(a=fmtp:" + g[0] + ".*)\\r\\n", "i"), "$1; " + (c ? "sprop-stereo" : "stereo") + "=1\r\n")), b && (e = e.replace(RegExp("(a=fmtp:" + g[0] + ".*)\\r\\n", "i"), "$1\r\na=rtcp-fb:" + g[0] + " nack\r\n")));
+    this.X = e
+};
+d.qk = function() {
+    var a = this.X;
+    Jd.forEach(function(b) {
+        var c = a, e = Ld(c, b);
+        if(e) {
+            b = "a=rtcp-fb:" + e + " ccm fir";
+            var f = "a=rtcp-fb:" + e + " nack", g = "a=rtcp-fb:" + e + " goog-remb", e = RegExp("(a=rtpmap:" + e + ".*)\\r\\n", "i");
+            -1 == c.search(b) && (c = c.replace(e, "$1\r\n" + b + "\r\n"));
+            -1 == c.search(f) && (c = c.replace(e, "$1\r\n" + f + "\r\n"));
+            -1 == c.search(g) && (c = c.replace(e, "$1\r\n" + g + "\r\n"))
+        }
+        a = c
+    });
+    this.X = a
+};
+d.pk = function() {
+    for(var a = this.X, b = Md(a), c = [], e = 0, f = b.length;e < f;++e) {
+        var g = !1;
+        Jd.forEach(function(f) {
+            -1 != a.search(RegExp("a=rtpmap:" + b[e] + "\\s+" + f, "i")) && (c.push(b[e]), g = !0)
+        });
+        g || (a = a.replace(RegExp("a=rtpmap:" + b[e] + ".*\\r\\n"), ""))
+    }
+    this.X = a = a.replace(/(m=video\s\d+\sRTP\/SAVPF\s).*/, "$1" + c.join(" "))
+};
+d.hh = function(a, b, c, e) {
+    var f = this.X, g;
+    Jd.forEach(function(e) {
+        e = Ld(f, e);
+        g || (g = e);
+        var l = f;
+        e && (l = l.replace(RegExp("(a=rtpmap:" + e + ".*)\\r\\n", "i"), "$1\r\na=fmtp:" + e + " x-google-min-bitrate=" + a + "; x-google-max-bitrate=" + b + "; x-google-max-quantization=" + c + "\r\n"));
+        f = l
+    });
+    e && g && (f = f.replace(RegExp("(a=rtpmap:" + g + ".*)\\r\\n", "i"), "$1\r\na=x-google-buffer-latency:" + e + "\r\n"));
+    this.X = f
+};
+var Md = function(a) {
+    return a.replace(/[\s\S]*m=video\s\d+\sRTP\/SAVPF((\s\d+)+)[\s\S]*/, "$1").replace(/(^\s+)|(\s+$)/g, "").split(" ")
+}, Ld = function(a, b) {
+    for(var c = Md(a), e = 0, f = c.length;e < f;++e) {
+        if(-1 != a.search(RegExp("a=rtpmap:" + c[e] + "\\s+" + b, "i"))) {
+            return c[e]
+        }
+    }
+    return""
+};
+var Nd = {mandatory:{OfferToReceiveAudio:!0, OfferToReceiveVideo:!0}}, Od = {mandatory:{IceRestart:!0, OfferToReceiveAudio:!0, OfferToReceiveVideo:!0}}, Pd = function(a, b, c) {
+    M.call(this);
+    x(n(webkitRTCPeerConnection), "webkitRTCPeerConnection is not available.  Do you need to set flags?");
+    this.a = G("cv.PeerConnection");
+    this.xa = a;
+    this.bg = b;
+    this.Zf = Nd;
+    this.G = c || new hc;
+    this.Z = this.mj();
+    this.Hi = !1;
+    this.gb = null;
+    this.nj()
+};
+v(Pd, M);
+d = Pd.prototype;
+d.nj = function() {
+    var a = s(function(a) {
+        this.xa ? Hd.Pc().Vk(a) : this.bg(JSON.stringify({type:"stats", stats:a}))
+    }, this);
+    this.gb = new Fd(s(function() {
+        return this.Z
+    }, this), a, this.xa)
+};
+d.nb = !1;
+d.ib = m;
+d.ij = m;
+d.Rl = function(a) {
+    this.ib = a
+};
+d.$k = function() {
+    return this.nb
+};
+d.Mj = function() {
+    return{iceServers:[{url:"stun:stun.l.google.com:19302"}]}
+};
+d.mj = function() {
+    var a = this.Mj(), b = new webkitRTCPeerConnection(a);
+    b.onicecandidate = s(this.Nj, this);
+    b.Jm = s(this.Oj, this);
+    b.Im = s(this.Pj, this);
+    b.onopen = s(this.Qj, this);
+    b.onaddstream = s(this.Rj, this);
+    b.onremovestream = s(this.Sj, this);
+    this.a.info("Created webkitRTCPeerConnnection with config: " + JSON.stringify(a));
+    return b
+};
+d.start = function(a) {
+    this.nb || (this.nb = !0, this.xa && this.Dl(), a && this.gb && this.gb.start())
+};
+d.stop = function() {
+    this.nb = !1;
+    this.Z.close();
+    this.gb && this.gb.stop()
+};
+d.b = function() {
+    this.stop();
+    this.Z = null;
+    this.gb && this.gb.H();
+    Pd.f.b.call(this)
+};
+d.Dl = function() {
+    x(this.xa, "Must be initiator to create an offer!");
+    this.a.info("Sending offer to peer.");
+    this.Z.createOffer(s(this.me, this), this.ib, this.Zf)
+};
+d.Ni = function() {
+    this.Z.createAnswer(s(this.me, this), this.ib, this.Zf)
+};
+d.me = function(a) {
+    var b = new Kd(a.sdp);
+    this.xa ? (b.ok(), "off" != this.G.bufferedMode && b.pk(), this.G.useOpus && b.fh(!0, this.G.enableAudioNack, !0)) : (this.G.useOpus && (this.G.audioBitrate && b.gh(this.G.audioBitrate), b.fh(!0, this.G.enableAudioNack, !1)), "off" != this.G.bufferedMode ? b.hh(this.G.minVideoBitrate, this.G.maxVideoBitrate, this.G.videoQuality, this.G.rk()) : b.hh(this.G.minVideoBitrate, this.G.maxVideoBitrate, this.G.videoQuality), b.qk());
+    a.sdp = b.sk();
+    this.Z.setLocalDescription(a, m, this.ib);
+    this.ag(a)
+};
+d.ag = function(a) {
+    a = JSON.stringify(a);
+    this.a.info("===>: " + a);
+    this.bg(a)
+};
+d.zk = function(a) {
+    var b = JSON.parse(a);
+    "stats" != b.type && this.a.g("<===: " + a);
+    if("offer" === b.type) {
+        x(!this.xa, "Must not be initiator to answer an offer!"), this.nb || this.start(), this.Z.setRemoteDescription(new RTCSessionDescription(b), m, this.ib), this.Ni()
+    }else {
+        if("answer" === b.type && this.nb) {
+            x(this.xa, "Must be initiator to receive an answer!"), this.Z.setRemoteDescription(new RTCSessionDescription(b), m, this.ib)
+        }else {
+            if("candidate" === b.type && this.nb) {
+                a = new RTCIceCandidate({sdpMLineIndex:b.label, sdpMid:b.id, candidate:b.candidate});
+                try {
+                    this.Oi(a, this.xa) && (this.a.info("Adding candidate " + JSON.stringify(a)), this.Z.addIceCandidate(a))
+                }catch(c) {
+                    this.a.wb("Error calling addIceCandidate; messages out of order?", c)
+                }
+            }else {
+                "stats" === b.type && Hd.Pc().Mi(b.stats)
+            }
+        }
+    }
+};
+d.Oi = function(a, b) {
+    if(b) {
+        if(this.G.enableAudioTcp && -1 != a.sdpMid.indexOf("audio") && -1 != a.candidate.indexOf("udp") || this.G.enableVideoTcp && -1 != a.sdpMid.indexOf("video") && -1 != a.candidate.indexOf("udp")) {
+            return!1
+        }
+    }else {
+        if(this.G.enableAudioTcp && -1 != a.sdpMid.indexOf("audio") && -1 != a.candidate.indexOf("tcp") && -1 != a.candidate.indexOf("0 typ host") || this.G.enableVideoTcp && -1 != a.sdpMid.indexOf("video") && -1 != a.candidate.indexOf("tcp") && -1 != a.candidate.indexOf("0 typ host")) {
+            return!1
+        }
+    }
+    return!0
+};
+d.Nj = function(a) {
+    a.candidate ? this.ag({type:"candidate", label:a.candidate.sdpMLineIndex, id:a.candidate.sdpMid, candidate:a.candidate.candidate}) : this.a.info("End of candidates.")
+};
+d.Oj = function() {
+    if(this.Z) {
+        var a = this.Z.iceConnectionState;
+        this.a.info("New ICE connection state: " + a + ".");
+        this.xa && "disconnected" == a && (this.a.k("Ice connection state is bad."), this.Hi ? (this.a.info("Restarting ICE."), this.Z.createOffer(s(this.me, this), this.ib, Od)) : this.ij())
+    }
+};
+d.Pj = function(a) {
+    this.a.info("Session connecting.");
+    this.dispatchEvent(a)
+};
+d.Qj = function(a) {
+    this.a.info("Session opened.");
+    this.dispatchEvent(a)
+};
+d.Rj = function(a) {
+    this.a.info("Stream added.");
+    this.dispatchEvent(a)
+};
+d.Sj = function(a) {
+    this.a.info("Stream removed.");
+    this.dispatchEvent(a)
+};
+var Qd = function(a, b, c) {
+    id.call(this, c);
+    this.Td("mirror_tab");
+    this.Ml = b;
+    this.zoomFactor = 1;
+    this.ra = new Pd(a, s(this.Nl, this), this.Ml);
+    this.mediaPlayerStatus.hasPause = !1
+};
+v(Qd, id);
+Qd.prototype.al = function() {
+    return 0 <= this.zm()
+};
+Qd.prototype.stream = null;
+Qd.prototype.url = null;
+var Rd = function(a, b, c, e) {
+    gd.call(this, a, b);
+    this.zoomFactor = c;
+    this.Cd = e
+};
+v(Rd, gd);
+var Sd = function(a, b) {
+    gd.call(this, "webrtc", b);
+    this.message = a
+};
+v(Sd, gd);
+d = Qd.prototype;
+d.pg = function() {
+    return this.url
+};
+d.Ph = function(a) {
+    this.ra.Rl(s(this.Ql, this));
+    a(!0)
+};
+d.ff = function() {
+    this.F.info("Pausing tab mirroring...");
+    this.lc("pause")
+};
+d.kc = function() {
+    this.F.info("Stopping tab mirroring...");
+    this.ra && (this.ra.stop(), this.ra = null)
+};
+d.lc = function(a, b) {
+    this.dispatchEvent(this.Bm(a, b))
+};
+d.Bm = function(a, b) {
+    return new Rd(a, this.n, this.zoomFactor, b)
+};
+d.Nl = function(a) {
+    this.Y(new Sd(a, this.n))
+};
+d.Ql = function(a) {
+    this.F.k("PeerConnection error: " + a);
+    this.dispatchEvent(new hd(this.n, a));
+    this.stop()
+};
+d.mb = function(a) {
+    Qd.f.mb.call(this, a);
+    "webrtc" == a.type && this.ra && this.ra.zk(a.message)
+};
+var Td = function(a) {
+    this.n = a || ua()
+};
+Td.prototype.h = function() {
+    return this.n
+};
+var Ud = function(a, b) {
+    Qd.call(this, !1, a, b);
+    this.eh = 1;
+    this.uk = this.dh = !1;
+    this.ud = null;
+    this.zh = 0
+};
+v(Ud, Qd);
+d = Ud.prototype;
+d.gf = function() {
+    this.ra.$k() ? this.F.info("Tab mirroring already started.") : (this.F.info("Starting tab mirroring..."), this.ra.addEventListener("addstream", s(this.bl, this)), this.ra.addEventListener("removestream", s(this.cl, this)), this.ra.start(this.al()))
+};
+d.bl = function(a) {
+    x("addstream" == a.type);
+    this.F.info("Remote stream added.");
+    ++this.zh;
+    this.url = window.webkitURL.createObjectURL(a.stream);
+    this.lc("start");
+    this.ud || (this.ud = u())
+};
+d.cl = function(a) {
+    x("removestream" == a.type);
+    this.F.info("Remote stream removed.");
+    0 == --this.zh && (this.url = null, this.lc("stop"), this.stop())
+};
+d.kc = function() {
+    Ud.f.kc.call(this);
+    this.lc("stop")
+};
+d.mb = function(a) {
+    Ud.f.mb.call(this, a);
+    "zoom" == a.type && this.dispatchEvent(a)
+};
+d.Gf = function(a, b) {
+    var c = {};
+    n(b) && (this.dh = b, c.muted = b);
+    n(a) && (this.eh = a, c.volume = a);
+    this.lc("volume", c)
+};
+d.Bk = function() {
+    return this.ud ? (u() - this.ud) / 1E3 : 0
+};
+d.Pd = function() {
+    var a = 2;
+    if("paused" == this.I() || "stopped" == this.I()) {
+        a = 1
+    }
+    a = new sc(this.h(), a);
+    a.contentId = this.url;
+    a.position = this.Bk();
+    a.duration = null;
+    a.volume = this.eh;
+    a.muted = this.dh;
+    a.timeProgress = !this.uk;
+    a.hasPause = !1;
+    return a
+};
+d.Ef = m;
+d.Ff = function() {
+};
+d.Hf = function() {
+};
+var Vd, Wd = !A || A && 9 <= tb, Xd = !gb && !A || A && A && 9 <= tb || gb && C("1.9.1");
+A && C("9");
+var Yd = function(a, b) {
+    var c;
+    c = a.className;
+    c = q(c) && c.match(/\S+/g) || [];
+    for(var e = Ma(arguments, 1), f = c.length + e.length, g = c, h = 0;h < e.length;h++) {
+        0 <= Ba(g, e[h]) || g.push(e[h])
+    }
+    a.className = c.join(" ");
+    return c.length == f
+};
+var P = function(a) {
+    return a ? new Zd(9 == a.nodeType ? a : a.ownerDocument || a.document) : Vd || (Vd = new Zd)
+}, ae = function(a, b) {
+    Ra(b, function(b, e) {
+        "style" == e ? a.style.cssText = b : "class" == e ? a.className = b : "for" == e ? a.htmlFor = b : e in $d ? a.setAttribute($d[e], b) : 0 == e.lastIndexOf("aria-", 0) || 0 == e.lastIndexOf("data-", 0) ? a.setAttribute(e, b) : a[e] = b
+    })
+}, $d = {cellpadding:"cellPadding", cellspacing:"cellSpacing", colspan:"colSpan", frameborder:"frameBorder", height:"height", maxlength:"maxLength", role:"role", rowspan:"rowSpan", type:"type", usemap:"useMap", valign:"vAlign", width:"width"}, ce = function(a, b, c, e) {
+    function f(c) {
+        c && b.appendChild(q(c) ? a.createTextNode(c) : c)
+    }
+    for(;e < c.length;e++) {
+        var g = c[e];
+        !ea(g) || r(g) && 0 < g.nodeType ? f(g) : Ca(be(g) ? La(g) : g, f)
+    }
+}, de = function(a) {
+    return a && a.parentNode ? a.parentNode.removeChild(a) : null
+}, be = function(a) {
+    if(a && "number" == typeof a.length) {
+        if(r(a)) {
+            return"function" == typeof a.item || "string" == typeof a.item
+        }
+        if(ga(a)) {
+            return"function" == typeof a.item
+        }
+    }
+    return!1
+}, Zd = function(a) {
+    this.cb = a || k.document || document
+};
+d = Zd.prototype;
+d.ug = function() {
+    return this.cb
+};
+d.$c = function(a) {
+    return q(a) ? this.cb.getElementById(a) : a
+};
+d.kh = function(a, b, c) {
+    c = c || this.cb;
+    a = a && "*" != a ? a.toUpperCase() : "";
+    if(c.querySelectorAll && c.querySelector && (a || b)) {
+        b = c.querySelectorAll(a + (b ? "." + b : ""))
+    }else {
+        if(b && c.getElementsByClassName) {
+            if(c = c.getElementsByClassName(b), a) {
+                for(var e = {}, f = 0, g = 0, h;h = c[g];g++) {
+                    a == h.nodeName && (e[f++] = h)
+                }
+                e.length = f;
+                b = e
+            }else {
+                b = c
+            }
+        }else {
+            if(c = c.getElementsByTagName(a || "*"), b) {
+                e = {};
+                for(g = f = 0;h = c[g];g++) {
+                    a = h.className, "function" == typeof a.split && 0 <= Ba(a.split(/\s+/), b) && (e[f++] = h)
+                }
+                e.length = f;
+                b = e
+            }else {
+                b = c
+            }
+        }
+    }
+    return b
+};
+d.ia = function(a, b, c) {
+    var e = this.cb, f = arguments, g = f[0], h = f[1];
+    if(!Wd && h && (h.name || h.type)) {
+        g = ["<", g];
+        h.name && g.push(' name="', ta(h.name), '"');
+        if(h.type) {
+            g.push(' type="', ta(h.type), '"');
+            var l = {};
+            Va(l, h);
+            delete l.type;
+            h = l
+        }
+        g.push(">");
+        g = g.join("")
+    }
+    g = e.createElement(g);
+    h && (q(h) ? g.className = h : p(h) ? Yd.apply(null, [g].concat(h)) : ae(g, h));
+    2 < f.length && ce(e, g, f, 2);
+    return g
+};
+d.createElement = function(a) {
+    return this.cb.createElement(a)
+};
+d.createTextNode = function(a) {
+    return this.cb.createTextNode(String(a))
+};
+d.p = function() {
+    return this.cb.parentWindow || this.cb.defaultView
+};
+d.appendChild = function(a, b) {
+    a.appendChild(b)
+};
+d.removeNode = de;
+d.getChildren = function(a) {
+    return Xd && void 0 != a.children ? a.children : Da(a.childNodes, function(a) {
+        return 1 == a.nodeType
+    })
+};
+var ee = function() {
+};
+ca(ee);
+ee.prototype.Cm = 0;
+ee.prototype.tl = function() {
+    return":" + (this.Cm++).toString(36)
+};
+ee.Pc();
+var Q = function(a) {
+    M.call(this);
+    this.Ua = a || P();
+    this.dm = fe
+};
+v(Q, M);
+Q.prototype.ul = ee.Pc();
+var fe = null;
+d = Q.prototype;
+d.n = null;
+d.Tb = !1;
+d.T = null;
+d.dm = null;
+d.Xi = null;
+d.v = null;
+d.Oa = null;
+d.Wb = null;
+d.Yi = !1;
+d.h = function() {
+    return this.n || (this.n = this.ul.tl())
+};
+d.$c = function() {
+    return this.T
+};
+d.Gd = function(a) {
+    this.T = a
+};
+d.Qb = function() {
+    return this.Cb || (this.Cb = new N(this))
+};
+d.tk = function(a) {
+    if(this == a) {
+        throw Error("Unable to set parent component");
+    }
+    if(a && this.v && this.n && this.v.fg(this.n) && this.v != a) {
+        throw Error("Unable to set parent component");
+    }
+    this.v = a;
+    Q.f.Ke.call(this, a)
+};
+d.getParent = function() {
+    return this.v
+};
+d.Ke = function(a) {
+    if(this.v && this.v != a) {
+        throw Error("Method not supported");
+    }
+    Q.f.Ke.call(this, a)
+};
+d.He = function() {
+    return this.Tb
+};
+d.ia = function() {
+    this.T = this.Ua.createElement("div")
+};
+d.Bi = function(a) {
+    this.Fm(a)
+};
+d.Fm = function(a, b) {
+    if(this.Tb) {
+        throw Error("Component already rendered");
+    }
+    this.T || this.ia();
+    a ? a.insertBefore(this.T, b || null) : this.Ua.ug().body.appendChild(this.T);
+    this.v && !this.v.He() || this.pa()
+};
+d.Ya = function(a) {
+    this.T = a
+};
+d.pa = function() {
+    this.Tb = !0;
+    this.be(function(a) {
+        !a.He() && a.$c() && a.pa()
+    })
+};
+d.Aa = function() {
+    this.be(function(a) {
+        a.He() && a.Aa()
+    });
+    this.Cb && this.Cb.removeAll();
+    this.Tb = !1
+};
+d.b = function() {
+    this.Tb && this.Aa();
+    this.Cb && (this.Cb.H(), delete this.Cb);
+    this.be(function(a) {
+        a.H()
+    });
+    !this.Yi && this.T && de(this.T);
+    this.v = this.Xi = this.T = this.Wb = this.Oa = null;
+    Q.f.b.call(this)
+};
+d.fg = function(a) {
+    return this.Wb && a ? (a in this.Wb ? this.Wb[a] : void 0) || null : null
+};
+d.be = function(a, b) {
+    this.Oa && Ca(this.Oa, a, b)
+};
+d.removeChild = function(a, b) {
+    if(a) {
+        var c = q(a) ? a : a.h();
+        a = this.fg(c);
+        if(c && a) {
+            var e = this.Wb;
+            c in e && delete e[c];
+            Ia(this.Oa, a);
+            b && (a.Aa(), a.T && de(a.T));
+            a.tk(null)
+        }
+    }
+    if(!a) {
+        throw Error("Child is not in parent component");
+    }
+    return a
+};
+var ge = function(a) {
+    Q.call(this);
+    this.B = a;
+    this.a = G("cv.receiver.MirrorTabControl");
+    this.r = new N(this);
+    this.r.l(this.B, "start", this.Ri);
+    this.r.l(this.B, "stop", this.Si);
+    this.r.l(this.B, "pause", this.Pi);
+    this.r.l(this.B, "play", this.Qi);
+    this.r.l(this.B, "volume", this.Ui);
+    this.r.l(this.B, "zoom", this.Ti)
+};
+v(ge, Q);
+d = ge.prototype;
+d.ia = function() {
+    this.Ya(this.Ua.createElement("video"))
+};
+d.Ya = function(a) {
+    this.Gd(a);
+    a.setAttribute("class", "activity");
+    a.setAttribute("id", "cv_mirroring");
+    a.setAttribute("src", "");
+    a.setAttribute("allowFullScreen", "");
+    a.setAttribute("autoplay", "");
+    a.volume = 1
+};
+d.na = function() {
+    return this.T
+};
+d.Ri = function() {
+    this.B.pg() ? (this.na().setAttribute("src", this.B.pg()), this.na().play()) : this.a.wb("Got START event but no URL was set!")
+};
+d.Pi = function() {
+    this.a.info("Pause video");
+    this.na().pause()
+};
+d.Qi = function() {
+    this.a.info("Resume video");
+    this.na().play()
+};
+d.Si = function() {
+    this.na().pause();
+    this.na().setAttribute("src", "")
+};
+d.Ti = function(a) {
+    this.a.info("New zoom factor: " + a.zoomFactor);
+    var b = a.zoomFactor;
+    a = this.na();
+    var c = 50 * (1 - b) + "%", b = 100 * b + "%";
+    a.style.top = c;
+    a.style.left = c;
+    a.style.width = b;
+    a.style.height = b
+};
+d.pa = function() {
+    ge.f.pa.call(this);
+    var a = q("active_activity") ? document.getElementById("active_activity") : "active_activity";
+    a.te ? a.te() : a.webkitRequestFullScreen && a.webkitRequestFullScreen();
+    this.Qb().l(this.na(), "canplay", function() {
+        this.B.Y({type:"performance", activityId:this.B.h(), message:"video canplay"})
+    })
+};
+d.Aa = function() {
+    ge.f.Aa.call(this);
+    this.r.removeAll()
+};
+d.b = function() {
+    this.r.H();
+    ge.f.b.call(this)
+};
+d.Ui = function(a) {
+    n(a.Cd.volume) && (this.na().volume = a.Cd.volume);
+    n(a.Cd.muted) && (this.na().muted = a.Cd.muted)
+};
+var he = function(a, b, c, e) {
+    Bd.call(this, a, b, c, e)
+};
+v(he, Bd);
+d = he.prototype;
+d.Gf = function(a, b) {
+    this.j.muted = n(b) ? b : this.j.muted;
+    this.j.volume = n(a) ? a : this.j.volume;
+    this.dispatchEvent(new O("volumechange", this.n, this.j))
+};
+d.Ef = m;
+d.Ff = function(a) {
+    a && (this.j.currentTime = a, this.dispatchEvent(new O("timeupdate", this.n, this.j)));
+    this.j.paused = !1;
+    this.dispatchEvent(new O("play", this.n))
+};
+d.Hf = function() {
+    this.j.paused = !0;
+    this.dispatchEvent(new O("pause", this.n))
+};
+d.Pd = function() {
+    var a = 2;
+    if("paused" == this.I() || "stopped" == this.I()) {
+        a = 1
+    }
+    a = new sc(this.h(), a);
+    a.contentId = this.j.mediaUrl;
+    a.title = this.j.mediaUrl;
+    a.volume = this.j.volume;
+    a.muted = this.j.muted;
+    a.position = this.j.currentTime;
+    a.duration = this.j.duration;
+    a.timeProgress = !this.j.paused;
+    a.hasPause = !0;
+    return a
+};
+var R = function(a, b) {
+    Q.call(this);
+    this.model = a;
+    this.F = b
+};
+v(R, Q);
+R.prototype.ab = null;
+R.prototype.Zc = function() {
+    return this.T
+};
+R.prototype.Je = function() {
+    var a = this.Zc(), b = this.model.nd();
+    a.volume = b.volume;
+    a.currentTime = b.currentTime;
+    this.model.sh(a.duration);
+    b.paused || a.play()
+};
+var ie = {Mm:"canplay", tm:"play", sm:"pause", rm:"durationchange", um:"timeupdate", vm:"volumechange"};
+d = R.prototype;
+d.ek = function(a) {
+    if(this.ab && this.ab == a.type) {
+        this.F.info("Suppressed receiver event : " + a.type), this.ab = null
+    }else {
+        switch(this.F.ie("Get event : " + a.type), a.type) {
+            case "canplay":
+                this.Je();
+                break;
+            case "play":
+                this.model.play();
+                break;
+            case "pause":
+                this.model.pause();
+                break;
+            case "durationchange":
+                this.model.sh(a.target.duration);
+                break;
+            case "timeupdate":
+                this.model.Jk(a.target.currentTime);
+                break;
+            case "volumechange":
+                this.model.nd().volume == a.target.volume ? this.model.Ik(a.target.muted) : this.model.Lk(a.target.volume)
+        }
+    }
+};
+d.pa = function() {
+    R.f.pa.call(this);
+    for(var a in Dd) {
+        this.Qb().l(this.model, Dd[a], this.fk)
+    }
+    for(a in ie) {
+        this.Qb().l(this.Zc(), ie[a], this.ek)
+    }
+};
+d.Aa = function() {
+    R.f.Aa.call(this);
+    this.Qb().removeAll()
+};
+d.b = function() {
+    this.Qb().H();
+    R.f.b.call(this)
+};
+d.fk = function(a) {
+    var b = this.Zc();
+    switch(a.type) {
+        case "play":
+            this.ab = "play";
+            b.play();
+            break;
+        case "pause":
+            this.ab = "pause";
+            b.pause();
+            break;
+        case "timeupdate":
+            1 < Math.abs(b.currentTime - a.state.currentTime) && (b.currentTime = a.state.currentTime, this.ab = "timeupdate");
+            break;
+        case "mute":
+            ;
+        case "volumechange":
+            this.ab = "volumechange";
+            b.volume = a.state.volume;
+            b.muted = a.state.muted;
+            break;
+        case "stop":
+            this.ab = "pause";
+            b.pause();
+            break;
+        default:
+            this.F.info("Ignore sender event : " + JSON.stringify(a))
+    }
+};
+var je = function(a) {
+    R.call(this, a, G("cv.receiver.AudioControl"))
+};
+v(je, R);
+je.prototype.ia = function() {
+    this.Ya(this.Ua.createElement("audio"))
+};
+je.prototype.Ya = function(a) {
+    this.Gd(a);
+    a.setAttribute("class", "activity");
+    a.setAttribute("id", "cv_audiocontrol");
+    a.setAttribute("src", this.model.nd().mediaUrl);
+    a.setAttribute("controls", "controls");
+    a.volume = 1
+};
+var ke = function(a) {
+    R.call(this, a, G("cv.receiver.VideoControl"))
+};
+v(ke, R);
+ke.prototype.ia = function() {
+    this.Ya(this.Ua.createElement("video"))
+};
+ke.prototype.Ya = function(a) {
+    this.Gd(a);
+    a.setAttribute("class", "activity");
+    a.setAttribute("id", "cv_videocontrol");
+    a.setAttribute("src", this.model.nd().mediaUrl);
+    a.setAttribute("allowFullScreen", "");
+    a.volume = 1
+};
+ke.prototype.Je = function() {
+    var a = this.Zc(), b = document.body.clientWidth, c = document.body.clientHeight, e = a.getBoundingClientRect(), f = "100%", g = "auto";
+    e.width / e.height < b / c && (g = "100%", f = "auto");
+    a.style.setProperty("width", f);
+    a.style.setProperty("height", g);
+    ke.f.Je.call(this)
+};
+ke.prototype.pa = function() {
+    ke.f.pa.call(this);
+    var a = q("active_activity") ? document.getElementById("active_activity") : "active_activity";
+    a.te ? a.te() : a.webkitRequestFullScreen && a.webkitRequestFullScreen()
+};
+var le = function(a, b, c) {
+    id.call(this, a, c);
+    this.Td("slideshow");
+    this.oa = (new uc).update(b);
+    this.a = G("cv.receiver.Slideshow");
+    this.a.g("Made a slideshow with slides " + JSON.stringify(this.oa))
+};
+v(le, id);
+le.prototype.gj = function(a) {
+    switch(a.type) {
+        case "nextslide":
+            this.oa.next() && this.dispatchEvent("changeslide");
+            break;
+        case "previousslide":
+            this.oa.Aj() && this.dispatchEvent("changeslide");
+            break;
+        case "jumptoslide":
+            null != a.param.slideNum ? this.oa.oe(a.param.slideNum) && this.dispatchEvent("changeslide") : this.a.info("Jump to slide action with no slideNum parameter");
+            break;
+        case "addslide":
+            null != a.param.slideUrl ? this.oa.yj(a.param.slideUrl) && this.dispatchEvent("changeslide") : this.a.info("Add slide action with no slideUrl parameter");
+            break;
+        case "removeslide":
+            null != a.param.slideNum ? this.oa.Bj(a.param.slideNum) && this.dispatchEvent("changeslide") : this.a.info("Remove slide action with no slideNum parameter");
+            break;
+        case "setcomments":
+            null != a.param.slideInfo ? (null != a.param.slideNum ? this.oa.Mc(a.param.slideNum) : this.oa.Mc()).comments = a.param.slideInfo : this.a.info("Set comments action with no slideInfo parameter");
+            break;
+        default:
+            this.a.k("Custom action type " + a.type + " not recognized.")
+    }
+};
+var me = function(a) {
+    Q.call(this);
+    this.B = a;
+    this.a = G("cv.receiver.SlideshowControl");
+    this.Nf = "activity slide slideForeground";
+    this.Mf = "activity slide slideBackground";
+    this.r = new N(this);
+    this.r.l(this.B, "changeslide", this.Wi)
+};
+v(me, Q);
+d = me.prototype;
+d.ia = function() {
+    this.hd = this.Ua.ia("img", {"class":this.Nf, src:this.B.oa.Mc().url});
+    this.background = this.Ua.ia("img", {"class":this.Mf});
+    this.Ya(this.Ua.ia("div", null, this.hd, this.background))
+};
+d.Ya = function(a) {
+    this.Gd(a);
+    a.setAttribute("id", "cv_slideshow")
+};
+d.pa = function() {
+    me.f.pa.call(this)
+};
+d.Aa = function() {
+    me.f.Aa.call(this);
+    this.r.removeAll()
+};
+d.b = function() {
+    this.r.H();
+    me.f.b.call(this)
+};
+d.Wi = function() {
+    this.background.setAttribute("src", this.B.oa.Mc().url);
+    this.hd.setAttribute("class", this.Mf);
+    this.background.setAttribute("class", this.Nf);
+    var a = this.hd;
+    this.hd = this.background;
+    this.background = a
+};
+var ne = function(a, b) {
+    yd.call(this, a, new jd);
+    this.ae = b;
+    this.a = G("cv.receiver.ActivityService");
+    this.zb = this.hb = this.ba = null
+};
+v(ne, yd);
+d = ne.prototype;
+d.th = function(a) {
+    x("custom_message" == a.type);
+    var b = za(a.message[0]);
+    a.u && "cv.Slideshow" == b && (this.a.g("Handling custom message " + JSON.stringify(a.message) + " from receiver " + a.u), (b = this.Df()) && ("slideshow" == b.Ud() && b.hj(a.u)) && b.gj(a.message[1]))
+};
+d.Fg = function(a) {
+    this.N.lb(a).forEach(function(b) {
+        b.Vf() || 1 != b.Sb().length || (this.a.info("Stopping activity: " + b.h()), this.ke(b.h()), b.stop(), this.dispatchEvent(new zd("remove_activity", b.h())));
+        b.fj(a)
+    }, this);
+    this.N.ej(a, !0)
+};
+d.ke = function(a) {
+    this.Lh();
+    a == this.ba && this.Kf()
+};
+d.startActivity = function(a, b, c, e, f) {
+    this.zb && (k.clearTimeout(this.zb), this.zb = null);
+    this.ba && (this.zi(this.N.la(this.ba)), this.dispatchEvent(new zd("remove_activity", this.ba)));
+    var g = this.ba;
+    this.Kf();
+    g && this.N.If(g);
+    var h = null, g = null;
+    switch(a) {
+        case "video_playback":
+            g = "video_playback";
+        case "audio_playback":
+            a = c || new Cd;
+            a.mediaUrl = a.mediaUrl || c.videoUrl;
+            h = this.Di(b, a, e, f, g || "audio_playback");
+            break;
+        case "mirror_tab":
+            f = new hc;
+            f.update(c.settings);
+            h = this.Fi(b, e, f);
+            h.Ci(c.tab_id);
+            break;
+        case "slideshow":
+            h = this.Ei(b, e, c, f);
+            break;
+        default:
+            this.a.k("Do not know how to start activity: " + a)
+    }
+    h && (this.a.info("Ready to start activity: " + h.h()), h.Ai(m), this.ba = h.h(), this.hb.Bi(q("active_activity") ? document.getElementById("active_activity") : "active_activity"), h.start(), this.N.xi(h))
+};
+d.Kf = function() {
+    this.ba && (this.a.info("Stopping active activity: " + this.ba), this.N.la(this.ba).stop(), this.hb.H(), this.hb = this.ba = null, window.document.title = "CV Receiver (Idle)", document.querySelector("link[rel=icon]").href = "")
+};
+d.Lh = function(a) {
+    k.clearTimeout(this.zb);
+    this.zb = sd(this.im, a || 3E3, this)
+};
+d.im = function() {
+    this.zb = null;
+    0 < this.N.ye() || (this.a.info("No activity; show idle page now"), "windowclose" == this.ae && (window.open("", "_self", ""), window.close()))
+};
+d.Di = function(a, b, c, e, f) {
+    a = new he(f, b, a, e);
+    a.ue(new Td(c));
+    a.ve(this.Na);
+    switch(f) {
+        case "video_playback":
+            this.hb = new ke(a);
+            break;
+        case "audio_playback":
+            this.hb = new je(a);
+            break;
+        default:
+            return this.a.k("Do not know how to create control with media type: " + f), null
+    }
+    return a
+};
+d.Fi = function(a, b, c) {
+    a = new Ud(c, a);
+    a.ue(new Td(b));
+    a.ve(this.Na);
+    this.hb = new ge(a);
+    return a
+};
+d.Ei = function(a, b, c, e) {
+    a = new le(a, c, e);
+    a.ue(new Td(b));
+    a.ve(this.Na);
+    this.hb = new me(a);
+    return a
+};
+d.Df = function() {
+    return this.ba ? this.N.la(this.ba) : null
+};
+var oe = null, pe = null, qe = null;
+var re = function() {
+};
+var se = function(a, b, c) {
+    this.W = a;
+    this.zd = c || 16;
+    this.Eh = Array(this.zd);
+    this.df = Array(this.zd);
+    this.Bl(b)
+};
+v(se, re);
+d = se.prototype;
+d.Bl = function(a) {
+    a.length > this.zd && (this.W.update(a), a = this.W.sc());
+    for(var b, c = 0;c < this.zd;c++) {
+        b = c < a.length ? a[c] : 0, this.Eh[c] = b ^ 92, this.df[c] = b ^ 54
+    }
+    this.W.update(this.df)
+};
+d.reset = function() {
+    this.W.reset();
+    this.W.update(this.df)
+};
+d.update = function(a, b) {
+    this.W.update(a, b)
+};
+d.sc = function() {
+    var a = this.W.sc();
+    this.W.reset();
+    this.W.update(this.Eh);
+    this.W.update(a);
+    return this.W.sc()
+};
+d.hm = function(a) {
+    this.reset();
+    this.update(a);
+    return this.sc()
+};
+var te = function() {
+    this.D = [];
+    this.Xe = [];
+    this.ol = [];
+    this.sd = [];
+    this.sd[0] = 128;
+    for(var a = 1;64 > a;++a) {
+        this.sd[a] = 0
+    }
+    this.reset()
+};
+v(te, re);
+te.prototype.reset = function() {
+    this.D[0] = 1732584193;
+    this.D[1] = 4023233417;
+    this.D[2] = 2562383102;
+    this.D[3] = 271733878;
+    this.D[4] = 3285377520;
+    this.Ze = this.qc = 0
+};
+te.prototype.td = function(a, b) {
+    b || (b = 0);
+    var c = this.ol;
+    if(q(a)) {
+        for(var e = 0;16 > e;e++) {
+            c[e] = a.charCodeAt(b) << 24 | a.charCodeAt(b + 1) << 16 | a.charCodeAt(b + 2) << 8 | a.charCodeAt(b + 3), b += 4
+        }
+    }else {
+        for(e = 0;16 > e;e++) {
+            c[e] = a[b] << 24 | a[b + 1] << 16 | a[b + 2] << 8 | a[b + 3], b += 4
+        }
+    }
+    for(e = 16;80 > e;e++) {
+        var f = c[e - 3] ^ c[e - 8] ^ c[e - 14] ^ c[e - 16];
+        c[e] = (f << 1 | f >>> 31) & 4294967295
+    }
+    for(var g = this.D[0], h = this.D[1], l = this.D[2], t = this.D[3], D = this.D[4], E, e = 0;80 > e;e++) {
+        40 > e ? 20 > e ? (f = t ^ h & (l ^ t), E = 1518500249) : (f = h ^ l ^ t, E = 1859775393) : 60 > e ? (f = h & l | t & (h | l), E = 2400959708) : (f = h ^ l ^ t, E = 3395469782), f = (g << 5 | g >>> 27) + f + D + E + c[e] & 4294967295, D = t, t = l, l = (h << 30 | h >>> 2) & 4294967295, h = g, g = f
+    }
+    this.D[0] = this.D[0] + g & 4294967295;
+    this.D[1] = this.D[1] + h & 4294967295;
+    this.D[2] = this.D[2] + l & 4294967295;
+    this.D[3] = this.D[3] + t & 4294967295;
+    this.D[4] = this.D[4] + D & 4294967295
+};
+te.prototype.update = function(a, b) {
+    n(b) || (b = a.length);
+    for(var c = b - 64, e = 0, f = this.Xe, g = this.qc;e < b;) {
+        if(0 == g) {
+            for(;e <= c;) {
+                this.td(a, e), e += 64
+            }
+        }
+        if(q(a)) {
+            for(;e < b;) {
+                if(f[g] = a.charCodeAt(e), ++g, ++e, 64 == g) {
+                    this.td(f);
+                    g = 0;
+                    break
+                }
+            }
+        }else {
+            for(;e < b;) {
+                if(f[g] = a[e], ++g, ++e, 64 == g) {
+                    this.td(f);
+                    g = 0;
+                    break
+                }
+            }
+        }
+    }
+    this.qc = g;
+    this.Ze += b
+};
+te.prototype.sc = function() {
+    var a = [], b = 8 * this.Ze;
+    56 > this.qc ? this.update(this.sd, 56 - this.qc) : this.update(this.sd, 64 - (this.qc - 56));
+    for(var c = 63;56 <= c;c--) {
+        this.Xe[c] = b & 255, b /= 256
+    }
+    this.td(this.Xe);
+    for(c = b = 0;5 > c;c++) {
+        for(var e = 24;0 <= e;e -= 8) {
+            a[b] = this.D[c] >> e & 255, ++b
+        }
+    }
+    return a
+};
+var ue = function(a, b, c) {
+    this.$b = a;
+    this.Fa = b || 0;
+    this.Pa = c;
+    this.Oe = s(this.oc, this)
+};
+v(ue, I);
+d = ue.prototype;
+d.n = 0;
+d.b = function() {
+    ue.f.b.call(this);
+    this.stop();
+    delete this.$b;
+    delete this.Pa
+};
+d.start = function(a) {
+    this.stop();
+    this.n = sd(this.Oe, n(a) ? a : this.Fa)
+};
+d.stop = function() {
+    this.Re() && k.clearTimeout(this.n);
+    this.n = 0
+};
+d.Jh = function() {
+    this.stop();
+    this.oc()
+};
+d.Re = function() {
+    return 0 != this.n
+};
+d.oc = function() {
+    this.n = 0;
+    this.$b && this.$b.call(this.Pa)
+};
+var ve = function(a) {
+    a = String(a);
+    if(/^\s*$/.test(a) ? 0 : /^[\],:{}\s\u2028\u2029]*$/.test(a.replace(/\\["\\\/bfnrtu]/g, "@").replace(/"[^"\\\n\r\u2028\u2029\x00-\x08\x0a-\x1f]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:[\s\u2028\u2029]*\[)+/g, ""))) {
+        try {
+            return eval("(" + a + ")")
+        }catch(b) {
+        }
+    }
+    throw Error("Invalid JSON string: " + a);
+}, we = function(a) {
+    this.Ed = a
+};
+we.prototype.Fe = function(a) {
+    var b = [];
+    this.qf(a, b);
+    return b.join("")
+};
+we.prototype.qf = function(a, b) {
+    switch(typeof a) {
+        case "string":
+            this.Yh(a, b);
+            break;
+        case "number":
+            this.fm(a, b);
+            break;
+        case "boolean":
+            b.push(a);
+            break;
+        case "undefined":
+            b.push("null");
+            break;
+        case "object":
+            if(null == a) {
+                b.push("null");
+                break
+            }
+            if(p(a)) {
+                this.em(a, b);
+                break
+            }
+            this.gm(a, b);
+            break;
+        case "function":
+            break;
+        default:
+            throw Error("Unknown type: " + typeof a);
+    }
+};
+var xe = {'"':'\\"', "\\":"\\\\", "/":"\\/", "\b":"\\b", "\f":"\\f", "\n":"\\n", "\r":"\\r", "\t":"\\t", "\x0B":"\\u000b"}, ye = /\uffff/.test("\uffff") ? /[\\\"\x00-\x1f\x7f-\uffff]/g : /[\\\"\x00-\x1f\x7f-\xff]/g;
+we.prototype.Yh = function(a, b) {
+    b.push('"', a.replace(ye, function(a) {
+        if(a in xe) {
+            return xe[a]
+        }
+        var b = a.charCodeAt(0), f = "\\u";
+        16 > b ? f += "000" : 256 > b ? f += "00" : 4096 > b && (f += "0");
+        return xe[a] = f + b.toString(16)
+    }), '"')
+};
+we.prototype.fm = function(a, b) {
+    b.push(isFinite(a) && !isNaN(a) ? a : "null")
+};
+we.prototype.em = function(a, b) {
+    var c = a.length;
+    b.push("[");
+    for(var e = "", f = 0;f < c;f++) {
+        b.push(e), e = a[f], this.qf(this.Ed ? this.Ed.call(a, String(f), e) : e, b), e = ","
+    }
+    b.push("]")
+};
+we.prototype.gm = function(a, b) {
+    b.push("{");
+    var c = "", e;
+    for(e in a) {
+        if(Object.prototype.hasOwnProperty.call(a, e)) {
+            var f = a[e];
+            "function" != typeof f && (b.push(c), this.Yh(e, b), b.push(":"), this.qf(this.Ed ? this.Ed.call(a, e, f) : f, b), c = ",")
+        }
+    }
+    b.push("}")
+};
+var S = {Xa:!0};
+S.Vm = Eb;
+S.J = F;
+S.Um = Ab;
+S.Id = function(a, b) {
+    if(S.Xa) {
+        var c = G(a);
+        b && c && c.Vc(b);
+        return c
+    }
+    return null
+};
+S.kf = function(a, b) {
+    S.Xa && a && a.kf(b)
+};
+S.lf = function(a, b) {
+    return S.Xa && a ? a.lf(b) : !1
+};
+S.log = function(a, b, c, e) {
+    S.Xa && a && a.log(b, c, e)
+};
+S.error = function(a, b, c) {
+    S.Xa && a && a.wb(b, c)
+};
+S.k = function(a, b, c) {
+    S.Xa && a && a.k(b, c)
+};
+S.info = function(a, b, c) {
+    S.Xa && a && a.info(b, c)
+};
+S.g = function(a, b, c) {
+    S.Xa && a && a.g(b, c)
+};
+var ze = function() {
+    this.Kc = {}
+};
+v(ze, I);
+d = ze.prototype;
+d.F = S.Id("goog.messaging.AbstractChannel");
+d.connect = function(a) {
+    a && a()
+};
+d.K = function() {
+    return!0
+};
+d.$e = function(a, b, c) {
+    this.Kc[a] = {$:b, bh:!!c}
+};
+d.$j = function(a, b) {
+    var c = this.Kl(a, b);
+    if(c) {
+        var e = this.Jl(a, b, c.bh);
+        null != e && c.$(e)
+    }
+};
+d.Kl = function(a, b) {
+    var c = this.Kc[a];
+    if(c) {
+        return c
+    }
+    if(this.kg) {
+        return{$:ma(this.kg, a), bh:r(b)}
+    }
+    S.k(this.F, 'Unknown service name "' + a + '"');
+    return null
+};
+d.Jl = function(a, b, c) {
+    if(c && q(b)) {
+        try {
+            return ve(b)
+        }catch(e) {
+            return S.k(this.F, "Expected JSON payload for " + a + ', was "' + b + '"'), null
+        }
+    }else {
+        if(!c && !q(b)) {
+            return(new we(void 0)).Fe(b)
+        }
+    }
+    return b
+};
+d.b = function() {
+    ze.f.b.call(this);
+    delete this.F;
+    delete this.Kc;
+    delete this.kg
+};
+var J = function(a, b) {
+    var c;
+    a instanceof J ? (this.da = n(b) ? b : a.mk(), this.rb(a.qb()), this.Zg(a.Og()), this.hc(a.Ce()), this.jc(a.bd()), this.ic(a.Ng()), this.Yg(a.Wg().clone()), this.Xg(a.Mg())) : a && (c = ed(String(a))) ? (this.da = !!b, this.rb(c[1] || "", !0), this.Zg(c[2] || "", !0), this.hc(c[3] || "", !0), this.jc(c[4]), this.ic(c[5] || "", !0), this.Yg(c[6] || "", !0), this.Xg(c[7] || "", !0)) : (this.da = !!b, this.Va = new Ae(null, null, this.da))
+};
+d = J.prototype;
+d.tc = "";
+d.mi = "";
+d.rf = "";
+d.sf = null;
+d.li = "";
+d.ji = "";
+d.Am = !1;
+d.da = !1;
+d.toString = function() {
+    var a = [], b = this.qb();
+    b && a.push(Be(b, Ce), ":");
+    if(b = this.Ce()) {
+        a.push("//");
+        var c = this.Og();
+        c && a.push(Be(c, Ce), "@");
+        a.push(encodeURIComponent(String(b)));
+        b = this.bd();
+        null != b && a.push(":", String(b))
+    }
+    if(b = this.Ng()) {
+        this.rl() && "/" != b.charAt(0) && a.push("/"), a.push(Be(b, "/" == b.charAt(0) ? De : Ee))
+    }
+    (b = this.ql()) && a.push("?", b);
+    (b = this.Mg()) && a.push("#", Be(b, Fe));
+    return a.join("")
+};
+d.clone = function() {
+    return new J(this)
+};
+d.qb = function() {
+    return this.tc
+};
+d.rb = function(a, b) {
+    this.$a();
+    if(this.tc = b ? a ? decodeURIComponent(a) : "" : a) {
+        this.tc = this.tc.replace(/:$/, "")
+    }
+    return this
+};
+d.Og = function() {
+    return this.mi
+};
+d.Zg = function(a, b) {
+    this.$a();
+    this.mi = b ? a ? decodeURIComponent(a) : "" : a;
+    return this
+};
+d.Ce = function() {
+    return this.rf
+};
+d.hc = function(a, b) {
+    this.$a();
+    this.rf = b ? a ? decodeURIComponent(a) : "" : a;
+    return this
+};
+d.rl = function() {
+    return!!this.rf
+};
+d.bd = function() {
+    return this.sf
+};
+d.jc = function(a) {
+    this.$a();
+    if(a) {
+        a = Number(a);
+        if(isNaN(a) || 0 > a) {
+            throw Error("Bad port number " + a);
+        }
+        this.sf = a
+    }else {
+        this.sf = null
+    }
+    return this
+};
+d.Ng = function() {
+    return this.li
+};
+d.ic = function(a, b) {
+    this.$a();
+    this.li = b ? a ? decodeURIComponent(a) : "" : a;
+    return this
+};
+d.Yg = function(a, b) {
+    this.$a();
+    a instanceof Ae ? (this.Va = a, this.Va.ef(this.da)) : (b || (a = Be(a, Ge)), this.Va = new Ae(a, null, this.da));
+    return this
+};
+d.ql = function() {
+    return this.Va.toString()
+};
+d.Wg = function() {
+    return this.Va
+};
+d.dc = function(a, b) {
+    this.$a();
+    this.Va.set(a, b);
+    return this
+};
+d.Mg = function() {
+    return this.ji
+};
+d.Xg = function(a, b) {
+    this.$a();
+    this.ji = b ? a ? decodeURIComponent(a) : "" : a;
+    return this
+};
+d.$a = function() {
+    if(this.Am) {
+        throw Error("Tried to modify a read-only Uri");
+    }
+};
+d.ef = function(a) {
+    this.da = a;
+    this.Va && this.Va.ef(a);
+    return this
+};
+d.mk = function() {
+    return this.da
+};
+var Be = function(a, b) {
+    return q(a) ? encodeURI(a).replace(b, He) : null
+}, He = function(a) {
+    a = a.charCodeAt(0);
+    return"%" + (a >> 4 & 15).toString(16) + (a & 15).toString(16)
+}, Ce = /[#\/\?@]/g, Ee = /[\#\?:]/g, De = /[\#\?]/g, Ge = /[\#\?@]/g, Fe = /#/g, Ae = function(a, b, c) {
+    this.Wa = a || null;
+    this.da = !!c
+};
+d = Ae.prototype;
+d.Ea = function() {
+    if(!this.C && (this.C = new z, this.w = 0, this.Wa)) {
+        for(var a = this.Wa.split("&"), b = 0;b < a.length;b++) {
+            var c = a[b].indexOf("="), e = null, f = null;
+            0 <= c ? (e = a[b].substring(0, c), f = a[b].substring(c + 1)) : e = a[b];
+            e = decodeURIComponent(e.replace(/\+/g, " "));
+            e = this.sb(e);
+            this.add(e, f ? decodeURIComponent(f.replace(/\+/g, " ")) : "")
+        }
+    }
+};
+d.C = null;
+d.w = null;
+d.bb = function() {
+    this.Ea();
+    return this.w
+};
+d.add = function(a, b) {
+    this.Ea();
+    this.Jb();
+    a = this.sb(a);
+    var c = this.C.get(a);
+    c || this.C.set(a, c = []);
+    c.push(b);
+    this.w++;
+    return this
+};
+d.remove = function(a) {
+    this.Ea();
+    a = this.sb(a);
+    return this.C.pb(a) ? (this.Jb(), this.w -= this.C.get(a).length, this.C.remove(a)) : !1
+};
+d.clear = function() {
+    this.Jb();
+    this.C = null;
+    this.w = 0
+};
+d.bf = function() {
+    this.Ea();
+    return 0 == this.w
+};
+d.pb = function(a) {
+    this.Ea();
+    a = this.sb(a);
+    return this.C.pb(a)
+};
+d.ua = function() {
+    this.Ea();
+    for(var a = this.C.P(), b = this.C.ua(), c = [], e = 0;e < b.length;e++) {
+        for(var f = a[e], g = 0;g < f.length;g++) {
+            c.push(b[e])
+        }
+    }
+    return c
+};
+d.P = function(a) {
+    this.Ea();
+    var b = [];
+    if(q(a)) {
+        this.pb(a) && (b = Ka(b, this.C.get(this.sb(a))))
+    }else {
+        a = this.C.P();
+        for(var c = 0;c < a.length;c++) {
+            b = Ka(b, a[c])
+        }
+    }
+    return b
+};
+d.set = function(a, b) {
+    this.Ea();
+    this.Jb();
+    a = this.sb(a);
+    this.pb(a) && (this.w -= this.C.get(a).length);
+    this.C.set(a, [b]);
+    this.w++;
+    return this
+};
+d.get = function(a, b) {
+    var c = a ? this.P(a) : [];
+    return 0 < c.length ? String(c[0]) : b
+};
+d.Kk = function(a, b) {
+    this.remove(a);
+    0 < b.length && (this.Jb(), this.C.set(this.sb(a), La(b)), this.w += b.length)
+};
+d.toString = function() {
+    if(this.Wa) {
+        return this.Wa
+    }
+    if(!this.C) {
+        return""
+    }
+    for(var a = [], b = this.C.ua(), c = 0;c < b.length;c++) {
+        for(var e = b[c], f = encodeURIComponent(String(e)), e = this.P(e), g = 0;g < e.length;g++) {
+            var h = f;
+            "" !== e[g] && (h += "=" + encodeURIComponent(String(e[g])));
+            a.push(h)
+        }
+    }
+    return this.Wa = a.join("&")
+};
+d.Jb = function() {
+    this.Wa = null
+};
+d.clone = function() {
+    var a = new Ae;
+    a.Wa = this.Wa;
+    this.C && (a.C = this.C.clone(), a.w = this.w);
+    return a
+};
+d.sb = function(a) {
+    a = String(a);
+    this.da && (a = a.toLowerCase());
+    return a
+};
+d.ef = function(a) {
+    a && !this.da && (this.Ea(), this.Jb(), Ya(this.C, function(a, c) {
+        var e = c.toLowerCase();
+        c != e && (this.remove(c), this.Kk(e, a))
+    }, this));
+    this.da = a
+};
+var T = {constant:function(a) {
+    return function() {
+        return a
+    }
+}};
+T.Sm = T.constant(!1);
+T.an = T.constant(!0);
+T.Xm = T.constant(null);
+T.identity = function(a) {
+    return a
+};
+T.error = function(a) {
+    return function() {
+        throw Error(a);
+    }
+};
+T.hk = function(a) {
+    return function() {
+        throw a;
+    }
+};
+T.fn = function(a, b) {
+    b = b || 0;
+    return function() {
+        return a.apply(this, Array.prototype.slice.call(arguments, 0, b))
+    }
+};
+T.jn = function(a, b) {
+    return T.Gm(a, T.constant(b))
+};
+T.en = function(a, b) {
+    var c = arguments, e = c.length;
+    return function() {
+        var a;
+        e && (a = c[e - 1].apply(this, arguments));
+        for(var b = e - 2;0 <= b;b--) {
+            a = c[b].call(this, a)
+        }
+        return a
+    }
+};
+T.Gm = function(a) {
+    var b = arguments, c = b.length;
+    return function() {
+        for(var a, f = 0;f < c;f++) {
+            a = b[f].apply(this, arguments)
+        }
+        return a
+    }
+};
+T.bn = function(a) {
+    var b = arguments, c = b.length;
+    return function() {
+        for(var a = 0;a < c;a++) {
+            if(!b[a].apply(this, arguments)) {
+                return!1
+            }
+        }
+        return!0
+    }
+};
+T.hn = function(a) {
+    var b = arguments, c = b.length;
+    return function() {
+        for(var a = 0;a < c;a++) {
+            if(b[a].apply(this, arguments)) {
+                return!0
+            }
+        }
+        return!1
+    }
+};
+T.gn = function(a) {
+    return function() {
+        return!a.apply(this, arguments)
+    }
+};
+T.create = function(a, b) {
+    var c = function() {
+    };
+    c.prototype = a.prototype;
+    c = new c;
+    a.apply(c, Array.prototype.slice.call(arguments, 1));
+    return c
+};
+T.dn = function(a) {
+    var b = !1, c;
+    return function() {
+        b || (c = a(), b = !0);
+        return c
+    }
+};
+/*
+ Portions of this code are from MochiKit, received by
+ The Closure Authors under the MIT license. All other code is Copyright
+ 2005-2009 The Closure Authors. All Rights Reserved.
+ */
+var U = function(a, b) {
+    this.za = [];
+    this.Pg = a;
+    this.vg = b || null;
+    this.gc = this.ah = !1;
+    this.Hb = void 0;
+    this.Ie = this.yg = this.De = !1;
+    this.ed = 0;
+    this.v = null;
+    this.dd = 0;
+    this.Qe = null;
+    if(Error.captureStackTrace) {
+        var c = {stack:""};
+        Error.captureStackTrace(c, U);
+        "string" == typeof c.stack && (this.Qe = c.stack.replace(/^[^\n]*\n/, ""))
+    }
+};
+d = U.prototype;
+d.cancel = function(a) {
+    if(this.Ca()) {
+        this.Hb instanceof U && this.Hb.cancel()
+    }else {
+        if(this.v) {
+            var b = this.v;
+            delete this.v;
+            a ? b.cancel(a) : b.Hk()
+        }
+        this.Pg ? this.Pg.call(this.vg, this) : this.Ie = !0;
+        this.Ca() || this.ih(new Ie(this))
+    }
+};
+d.Hk = function() {
+    this.dd--;
+    0 >= this.dd && this.cancel()
+};
+d.Tg = function(a, b) {
+    this.De = !1;
+    this.nf(a, b)
+};
+d.nf = function(a, b) {
+    this.ah = !0;
+    this.Hb = b;
+    this.gc = !a;
+    this.Bh()
+};
+d.ei = function() {
+    if(this.Ca()) {
+        if(!this.Ie) {
+            throw new Je(this);
+        }
+        this.Ie = !1
+    }
+};
+d.$ = function(a) {
+    this.ei();
+    this.di(a);
+    this.nf(!0, a)
+};
+d.ih = function(a) {
+    this.ei();
+    this.di(a);
+    this.Hg(a);
+    this.nf(!1, a)
+};
+d.Hg = function(a) {
+    this.Qe && (r(a) && a.stack && /^[^\n]+(\n   [^\n]+)+/.test(a.stack)) && (a.stack = a.stack + "\nDEFERRED OPERATION:\n" + this.Qe)
+};
+d.di = function(a) {
+    x(!(a instanceof U), "An execution sequence may not be initiated with a blocking Deferred.")
+};
+d.Qd = function(a, b) {
+    return this.Ge(a, null, b)
+};
+d.Ge = function(a, b, c) {
+    x(!this.yg, "Blocking Deferreds can not be re-used");
+    this.za.push([a, b, c]);
+    this.Ca() && this.Bh();
+    return this
+};
+d.zl = function(a) {
+    this.Ge(a.$, a.ih, a);
+    return this
+};
+d.Lc = function(a) {
+    return this.Qd(s(a.nm, a))
+};
+d.nm = function(a) {
+    var b = new U;
+    this.zl(b);
+    a && (b.v = this, this.dd++);
+    return b
+};
+d.Ca = function() {
+    return this.ah
+};
+d.ik = function(a) {
+    return a instanceof Error
+};
+d.Ug = function() {
+    return Ea(this.za, function(a) {
+        return ga(a[1])
+    })
+};
+d.Bh = function() {
+    this.ed && (this.Ca() && this.Ug()) && (k.clearTimeout(this.ed), delete this.ed);
+    this.v && (this.v.dd--, delete this.v);
+    for(var a = this.Hb, b = !1, c = !1;this.za.length && !this.De;) {
+        var e = this.za.shift(), f = e[0], g = e[1], e = e[2];
+        if(f = this.gc ? g : f) {
+            try {
+                var h = f.call(e || this.vg, a);
+                n(h) && (this.gc = this.gc && (h == a || this.ik(h)), this.Hb = a = h);
+                a instanceof U && (this.De = c = !0)
+            }catch(l) {
+                a = l, this.gc = !0, this.Hg(a), this.Ug() || (b = !0)
+            }
+        }
+    }
+    this.Hb = a;
+    c && (a.Ge(s(this.Tg, this, !0), s(this.Tg, this, !1)), a.yg = !0);
+    b && (this.ed = k.setTimeout(T.hk(a), 0))
+};
+var Je = function() {
+    w.call(this)
+};
+v(Je, w);
+Je.prototype.message = "Deferred has already fired";
+Je.prototype.name = "AlreadyCalledError";
+var Ie = function() {
+    w.call(this)
+};
+v(Ie, w);
+Ie.prototype.message = "Deferred was canceled";
+Ie.prototype.name = "CanceledError";
+var Ke = {1:"NativeMessagingTransport", 2:"FrameElementMethodTransport", 3:"IframeRelayTransport", 4:"IframePollingTransport", 5:"FlashTransport", 6:"NixTransport"}, Le = ["pu", "lru", "pru", "lpu", "ppu"], V = {}, Ne = function(a, b) {
+    for(var c = b || Me, e = c.length, f = "";0 < a--;) {
+        f += c.charAt(Math.floor(Math.random() * e))
+    }
+    return f
+}, Me = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", Y = S.Id("goog.net.xpc");
+var Oe = function(a) {
+    this.R = a || P()
+};
+v(Oe, I);
+Oe.prototype.Mb = 0;
+Oe.prototype.p = function() {
+    return this.R.p()
+};
+Oe.prototype.getName = function() {
+    return Ke[this.Mb] || ""
+};
+var Pe = function(a, b) {
+    this.R = b || P();
+    this.e = a;
+    this.ec = [];
+    this.Lj = s(this.vk, this)
+};
+v(Pe, Oe);
+d = Pe.prototype;
+d.Mb = 2;
+d.Ee = !1;
+d.t = 0;
+d.connect = function() {
+    0 == this.e.ta() ? (this.Ba = this.e.Eg(), this.Ba.XPC_toOuter = s(this.Cg, this)) : this.Bg()
+};
+d.Bg = function() {
+    var a = !0;
+    try {
+        this.Ba || (this.Ba = this.p().frameElement), this.Ba && this.Ba.XPC_toOuter && (this.Zd = this.Ba.XPC_toOuter, this.Ba.XPC_toOuter.XPC_toInner = s(this.Cg, this), a = !1, this.send("tp", "SETUP_ACK"), this.e.ya())
+    }catch(b) {
+        S.error(Y, "exception caught while attempting setup: " + b)
+    }
+    a && (this.Jg || (this.Jg = s(this.Bg, this)), this.p().setTimeout(this.Jg, 100))
+};
+d.Le = function(a) {
+    if(0 != this.e.ta() || this.e.K() || "SETUP_ACK" != a) {
+        throw Error("Got unexpected transport message.");
+    }
+    this.Zd = this.Ba.XPC_toOuter.XPC_toInner;
+    this.e.ya()
+};
+d.Cg = function(a, b) {
+    this.Ee || 0 != this.ec.length ? (this.ec.push({Vj:a, payload:b}), 1 == this.ec.length && (this.t = this.p().setTimeout(this.Lj, 1))) : this.e.wa(a, b)
+};
+d.vk = function() {
+    for(;this.ec.length;) {
+        var a = this.ec.shift();
+        this.e.wa(a.Vj, a.payload)
+    }
+};
+d.send = function(a, b) {
+    this.Ee = !0;
+    this.Zd(a, b);
+    this.Ee = !1
+};
+d.b = function() {
+    Pe.f.b.call(this);
+    this.Ba = this.Zd = null
+};
+var Qe = function(a, b) {
+    this.R = b || P();
+    this.e = a;
+    this.Xb = this.e.gd().ppu;
+    this.Xj = this.e.gd().lpu;
+    this.ad = []
+}, Re, Se;
+v(Qe, Oe);
+d = Qe.prototype;
+d.dk = 5;
+d.Mb = 4;
+d.za = 0;
+d.Ab = !1;
+d.ka = !1;
+d.Sg = null;
+d.Ic = function() {
+    return"googlexpc_" + this.e.name + "_msg"
+};
+d.Hc = function() {
+    return"googlexpc_" + this.e.name + "_ack"
+};
+d.Rg = function() {
+    return!this.Tc() && this.e.$g()
+};
+d.je = function() {
+    try {
+        if(this.Rg()) {
+            return this.e.zg().frames || {}
+        }
+    }catch(a) {
+        S.g(Y, "error retrieving peer frames")
+    }
+    return{}
+};
+d.le = function(a) {
+    return this.je()[a]
+};
+d.connect = function() {
+    this.Rg() && (S.g(Y, "transport connect called"), this.ka || (S.g(Y, "initializing..."), this.Nk(), this.ka = !0), this.Mk())
+};
+d.Nk = function() {
+    var a = this.Ic();
+    this.Eb = this.xe(a);
+    this.Od = this.p().frames[a];
+    a = this.Hc();
+    this.Db = this.xe(a);
+    this.Nd = this.p().frames[a]
+};
+d.xe = function(a) {
+    S.log(Y, S.J.M, "constructing sender frame: " + a);
+    var b = document.createElement("iframe"), c = b.style;
+    c.position = "absolute";
+    c.top = "-10px";
+    c.left = "10px";
+    c.width = "1px";
+    c.height = "1px";
+    b.id = b.name = a;
+    b.src = this.Xb + "#INITIAL";
+    this.p().document.body.appendChild(b);
+    return b
+};
+d.aj = function() {
+    this.Sg || 0 < this.dk-- || (S.log(Y, S.J.M, "Inner peer reconnect triggered."), this.e.name = Ne(10), S.log(Y, S.J.M, "switching channels: " + this.e.name), this.Ig(), this.ka = !1, this.Sg = this.xe("googlexpc_reconnect_" + this.e.name))
+};
+d.bj = function() {
+    S.log(Y, S.J.M, "outerPeerReconnect called");
+    for(var a = this.je(), b = a.length, c = 0;c < b;c++) {
+        var e;
+        try {
+            a[c] && a[c].name && (e = a[c].name)
+        }catch(f) {
+        }
+        if(e) {
+            var g = e.split("_");
+            if(3 == g.length && "googlexpc" == g[0] && "reconnect" == g[1]) {
+                this.e.name = g[2];
+                this.Ig();
+                this.ka = !1;
+                break
+            }
+        }
+    }
+};
+d.Ig = function() {
+    S.log(Y, S.J.M, "deconstructSenderFrames called");
+    this.Eb && (this.Eb.parentNode.removeChild(this.Eb), this.Od = this.Eb = null);
+    this.Db && (this.Db.parentNode.removeChild(this.Db), this.Nd = this.Db = null)
+};
+d.Mk = function() {
+    this.cg(this.Ic()) && this.cg(this.Hc()) ? (S.g(Y, "foreign frames present"), this.Af = new Te(this, this.le(this.Ic()), s(this.dj, this)), this.yf = new Te(this, this.le(this.Hc()), s(this.cj, this)), this.Rf()) : (S.log(Y, S.J.M, "foreign frames not (yet) present"), 1 == this.e.ta() ? this.aj() : 0 == this.e.ta() && this.bj(), this.p().setTimeout(s(this.connect, this), 100))
+};
+d.cg = function(a) {
+    S.log(Y, S.J.M, "checking for receive frame: " + a);
+    try {
+        var b = this.le(a);
+        if(!b || 0 != b.location.href.indexOf(this.Xj)) {
+            return!1
+        }
+    }catch(c) {
+        return!1
+    }
+    return!0
+};
+d.Rf = function() {
+    var a = this.je();
+    a[this.Hc()] && a[this.Ic()] ? (this.lg = new Ue(this.Xb, this.Od), this.Jc = new Ue(this.Xb, this.Nd), S.g(Y, "local frames ready"), this.p().setTimeout(s(function() {
+        this.lg.send("SETUP");
+        this.Ab = !0;
+        S.g(Y, "SETUP sent")
+    }, this), 100)) : (this.Gg || (this.Gg = s(this.Rf, this)), this.p().setTimeout(this.Gg, 100), S.g(Y, "local frames not (yet) present"))
+};
+d.ig = function() {
+    if(this.he && this.Tf) {
+        if(this.e.ya(), this.Fb) {
+            S.g(Y, "delivering queued messages (" + this.Fb.length + ")");
+            for(var a = 0, b;a < this.Fb.length;a++) {
+                b = this.Fb[a], this.e.wa(b.service, b.payload)
+            }
+            delete this.Fb
+        }
+    }else {
+        S.log(Y, S.J.M, "checking if connected: ack sent:" + this.he + ", ack rcvd: " + this.Tf)
+    }
+};
+d.dj = function(a) {
+    S.log(Y, S.J.M, "msg received: " + a);
+    if("SETUP" == a) {
+        this.Jc && (this.Jc.send("SETUP_ACK"), S.log(Y, S.J.M, "SETUP_ACK sent"), this.he = !0, this.ig())
+    }else {
+        if(this.e.K() || this.he) {
+            var b = a.indexOf("|"), c = a.substring(0, b);
+            a = a.substring(b + 1);
+            b = c.indexOf(",");
+            if(-1 == b) {
+                var e;
+                this.Jc.send("ACK:" + c);
+                this.sg(a)
+            }else {
+                e = c.substring(0, b), this.Jc.send("ACK:" + e), c = c.substring(b + 1).split("/"), b = parseInt(c[0], 10), c = parseInt(c[1], 10), 1 == b && (this.Be = []), this.Be.push(a), b == c && (this.sg(this.Be.join("")), delete this.Be)
+            }
+        }else {
+            S.k(Y, "received msg, but channel is not connected")
+        }
+    }
+};
+d.cj = function(a) {
+    S.log(Y, S.J.M, "ack received: " + a);
+    "SETUP_ACK" == a ? (this.Ab = !1, this.Tf = !0, this.ig()) : this.e.K() ? this.Ab ? parseInt(a.split(":")[1], 10) == this.za ? (this.Ab = !1, this.mg()) : S.k(Y, "got ack with wrong sequence") : S.k(Y, "got unexpected ack") : S.k(Y, "received ack, but channel not connected")
+};
+d.mg = function() {
+    if(!this.Ab && this.ad.length) {
+        var a = this.ad.shift();
+        ++this.za;
+        this.lg.send(this.za + a);
+        S.log(Y, S.J.M, "msg sent: " + this.za + a);
+        this.Ab = !0
+    }
+};
+d.sg = function(a) {
+    var b = a.indexOf(":"), c = a.substr(0, b);
+    a = a.substring(b + 1);
+    this.e.K() ? this.e.wa(c, a) : ((this.Fb || (this.Fb = [])).push({service:c, payload:a}), S.log(Y, S.J.M, "queued delivery"))
+};
+d.Dd = 3800;
+d.send = function(a, b) {
+    var c = a + ":" + b;
+    if(!A || b.length <= this.Dd) {
+        this.ad.push("|" + c)
+    }else {
+        for(var e = b.length, f = Math.ceil(e / this.Dd), g = 0, h = 1;g < e;) {
+            this.ad.push("," + h + "/" + f + "|" + c.substr(g, this.Dd)), h++, g += this.Dd
+        }
+    }
+    this.mg()
+};
+d.b = function() {
+    Qe.f.b.call(this);
+    var a = Ve;
+    Ia(a, this.Af);
+    Ia(a, this.yf);
+    this.Af = this.yf = null;
+    de(this.Eb);
+    de(this.Db);
+    this.Od = this.Nd = this.Eb = this.Db = null
+};
+var Ve = [], We = s(function() {
+    var a = Ve, b, c = !1;
+    try {
+        for(var e = 0;b = a[e];e++) {
+            c = c || b.Ak()
+        }
+    }catch(f) {
+        if(S.info(Y, "receive_() failed: " + f), b.O.e.yk(), !a.length) {
+            return
+        }
+    }
+    a = u();
+    c && (Re = a);
+    Se = window.setTimeout(We, 1E3 > a - Re ? 10 : 100)
+}, Qe), Xe = function() {
+    S.g(Y, "starting receive-timer");
+    Re = u();
+    Se && window.clearTimeout(Se);
+    Se = window.setTimeout(We, 10)
+}, Ue = function(a, b) {
+    this.Xb = a;
+    this.fi = b;
+    this.pf = 0
+};
+Ue.prototype.send = function(a) {
+    this.pf = ++this.pf % 2;
+    a = this.Xb + "#" + this.pf + encodeURIComponent(a);
+    try {
+        B ? this.fi.location.href = a : this.fi.location.replace(a)
+    }catch(b) {
+        S.error(Y, "sending failed", b)
+    }
+    Xe()
+};
+var Te = function(a, b, c) {
+    this.O = a;
+    this.Th = b;
+    this.Gl = c;
+    this.Sh = this.Th.location.href.split("#")[0] + "#INITIAL";
+    Ve.push(this);
+    Xe()
+};
+Te.prototype.Ak = function() {
+    var a = this.Th.location.href;
+    if(a != this.Sh) {
+        this.Sh = a;
+        if(a = a.split("#")[1]) {
+            a = a.substr(1), this.Gl(decodeURIComponent(a))
+        }
+        return!0
+    }
+    return!1
+};
+var Ze = function(a, b) {
+    this.R = b || P();
+    this.e = a;
+    this.Tj = this.e.gd().pru;
+    this.wg = this.e.gd().ifrid;
+    B && Ye()
+};
+v(Ze, Oe);
+if(B) {
+    var $e = [], af = 0, Ye = function() {
+        af || (af = window.setTimeout(function() {
+            bf()
+        }, 1E3))
+    }, bf = function(a) {
+        var b = u();
+        for(a = a || 3E3;$e.length && b - $e[0].timestamp >= a;) {
+            var c = $e.shift().Yj;
+            de(c);
+            S.log(Y, S.J.M, "iframe removed")
+        }
+        af = window.setTimeout(cf, 1E3)
+    }, cf = function() {
+        bf()
+    }
+}
+var df = {};
+Ze.prototype.Mb = 3;
+Ze.prototype.connect = function() {
+    this.p().xpcRelay || (this.p().xpcRelay = ef);
+    this.send("tp", "SETUP")
+};
+var ef = function(a, b) {
+    var c = b.indexOf(":"), e = b.substr(0, c), f = b.substr(c + 1);
+    if(A && -1 != (c = e.indexOf("|"))) {
+        var g = e.substr(0, c), e = e.substr(c + 1), c = e.indexOf("+"), h = e.substr(0, c), c = parseInt(e.substr(c + 1), 10), l = df[h];
+        l || (l = df[h] = {$h:[], ai:0, Zh:0});
+        -1 != e.indexOf("++") && (l.Zh = c + 1);
+        l.$h[c] = f;
+        l.ai++;
+        if(l.ai != l.Zh) {
+            return
+        }
+        f = l.$h.join("");
+        delete df[h]
+    }else {
+        var g = e
+    }
+    V[a].wa(g, decodeURIComponent(f))
+};
+Ze.prototype.Le = function(a) {
+    "SETUP" == a ? (this.send("tp", "SETUP_ACK"), this.e.ya()) : "SETUP_ACK" == a && this.e.ya()
+};
+Ze.prototype.send = function(a, b) {
+    var c = encodeURIComponent(b), e = c.length;
+    if(A && 1800 < e) {
+        for(var f = ua(), g = 0, h = 0;g < e;h++) {
+            var l = c.substr(g, 1800), g = g + 1800;
+            this.Qa(a, l, f + (g >= e ? "++" : "+") + h)
+        }
+    }else {
+        this.Qa(a, c)
+    }
+};
+Ze.prototype.Qa = function(a, b, c) {
+    if(A) {
+        var e = this.p().document.createElement("div");
+        e.innerHTML = '<iframe onload="this.xpcOnload()"></iframe>';
+        e = e.childNodes[0];
+        e.xpcOnload = ff
+    }else {
+        e = this.p().document.createElement("iframe"), B ? $e.push({timestamp:u(), Yj:e}) : Rc(e, "load", ff)
+    }
+    var f = e.style;
+    f.visibility = "hidden";
+    f.width = e.style.height = "0px";
+    f.position = "absolute";
+    f = this.Tj;
+    f += "#" + this.e.name;
+    this.wg && (f += "," + this.wg);
+    f += "|" + a;
+    c && (f += "|" + c);
+    f += ":" + b;
+    e.src = f;
+    this.p().document.body.appendChild(e);
+    S.log(Y, S.J.M, "msg sent: " + f)
+};
+var ff = function() {
+    S.log(Y, S.J.M, "iframe-load");
+    de(this)
+};
+Ze.prototype.b = function() {
+    Ze.f.b.call(this);
+    B && bf(0)
+};
+var Z = function(a, b, c, e, f) {
+    this.R = c || P();
+    this.e = a;
+    this.ga = f || 2;
+    x(1 <= this.ga);
+    x(2 >= this.ga);
+    this.xf = b || "*";
+    this.r = new N(this);
+    this.Nb = new rd(100, this.p());
+    this.Ec = !!e;
+    this.Ja = new U;
+    this.Ka = new U;
+    this.La = new U;
+    this.yi = Ne(10);
+    this.Fc = null;
+    this.Ec ? 1 == this.e.ta() ? this.La.Lc(this.Ja) : this.La.Lc(this.Ka) : (this.La.Lc(this.Ja), 2 == this.ga && this.La.Lc(this.Ka));
+    this.La.Qd(this.Pf, this);
+    this.La.$(!0);
+    this.r.l(this.Nb, "tick", this.Of);
+    S.info(Y, "NativeMessagingTransport created.  protocolVersion=" + this.ga + ", oneSidedHandshake=" + this.Ec + ", role=" + this.e.ta())
+};
+v(Z, Oe);
+Z.prototype.Ta = null;
+Z.prototype.ka = !1;
+Z.prototype.Mb = 1;
+var gf = {};
+Z.prototype.pd = function(a) {
+    return null == this.Ta || this.Ta == a
+};
+var jf = function(a) {
+    var b = a.jh().data;
+    if(!q(b)) {
+        return!1
+    }
+    var c = b.indexOf("|"), e = b.indexOf(":");
+    if(-1 == c || -1 == e) {
+        return!1
+    }
+    var f = b.substring(0, c), c = b.substring(c + 1, e), b = b.substring(e + 1);
+    S.g(Y, "messageReceived: channel=" + f + ", service=" + c + ", payload=" + b);
+    if(e = V[f]) {
+        return e.wa(c, b, a.jh().origin), !0
+    }
+    a = hf(b)[0];
+    for(var g in V) {
+        if(e = V[g], 1 == e.ta() && !e.K() && "tp" == c && ("SETUP" == a || "SETUP_NTPV2" == a)) {
+            return S.g(Y, "changing channel name to " + f), e.name = f, delete V[g], V[f] = e, e.wa(c, b), !0
+        }
+    }
+    S.info(Y, 'channel name mismatch; message ignored"');
+    return!1
+};
+d = Z.prototype;
+d.Le = function(a) {
+    var b = hf(a);
+    a = b[1];
+    switch(b[0]) {
+        case "SETUP_ACK":
+            this.ld(1);
+            this.Ja.Ca() || this.Ja.$(!0);
+            break;
+        case "SETUP_ACK_NTPV2":
+            2 == this.ga && (this.ld(2), this.Ja.Ca() || this.Ja.$(!0));
+            break;
+        case "SETUP":
+            this.ld(1);
+            this.lh(1);
+            break;
+        case "SETUP_NTPV2":
+            2 == this.ga && (b = this.Ta, this.ld(2), this.lh(2), 1 != b && null == this.Fc || this.Fc == a || (S.info(Y, "Sending SETUP and changing peer ID to: " + a), this.ng()), this.Fc = a)
+    }
+};
+d.ng = function() {
+    x(!(1 == this.ga && 2 == this.Ta));
+    if(2 == this.ga && this.pd(2)) {
+        var a;
+        a = "SETUP_NTPV2," + this.yi;
+        this.send("tp", a)
+    }
+    this.pd(1) && this.send("tp", "SETUP")
+};
+d.lh = function(a) {
+    x(1 != this.ga || 2 != a, "Shouldn't try to send a v2 setup ack in v1 mode.");
+    if(2 == this.ga && this.pd(2) && 2 == a) {
+        this.send("tp", "SETUP_ACK_NTPV2")
+    }else {
+        if(this.pd(1) && 1 == a) {
+            this.send("tp", "SETUP_ACK")
+        }else {
+            return
+        }
+    }
+    this.Ka.Ca() || this.Ka.$(!0)
+};
+d.ld = function(a) {
+    a > this.Ta && (this.Ta = a);
+    1 == this.Ta && (this.Ka.Ca() || this.Ec || this.Ka.$(!0), this.Fc = null)
+};
+d.connect = function() {
+    var a = this.p(), b = ja(a), c = gf[b];
+    fa(c) || (c = 0);
+    0 == c && Rc(a.postMessage ? a : a.document, "message", jf, !1, Z);
+    gf[b] = c + 1;
+    this.ka = !0;
+    this.Of()
+};
+d.Of = function() {
+    var a = 0 == this.e.ta();
+    this.Ec && a || this.e.K() || this.Tc() ? this.Nb.stop() : (this.Nb.start(), this.ng())
+};
+d.send = function(a, b) {
+    var c = this.e.zg();
+    c ? (this.send = function(a, b) {
+        var g = this, h = this.e.name;
+        this.Cc = sd(function() {
+            g.Cc = 0;
+            try {
+                var l = c.postMessage ? c : c.document;
+                l.postMessage ? (l.postMessage(h + "|" + a + ":" + b, g.xf), S.g(Y, "send(): service=" + a + " payload=" + b + " to hostname=" + g.xf)) : S.k(Y, "Peer window had no postMessage function.")
+            }catch(t) {
+                S.k(Y, "Error performing postMessage, ignoring.", t)
+            }
+        }, 0)
+    }, this.send(a, b)) : S.g(Y, "send(): window not ready")
+};
+d.Pf = function() {
+    this.e.ya(1 == this.ga || 1 == this.Ta ? 200 : void 0)
+};
+d.b = function() {
+    if(this.ka) {
+        var a = this.p(), b = ja(a), c = gf[b];
+        gf[b] = c - 1;
+        1 == c && Xc(a.postMessage ? a : a.document, "message", jf, !1, Z)
+    }
+    this.Cc && (k.clearTimeout(this.Cc), this.Cc = 0);
+    lc(this.r);
+    delete this.r;
+    lc(this.Nb);
+    delete this.Nb;
+    this.Ja.cancel();
+    delete this.Ja;
+    this.Ka.cancel();
+    delete this.Ka;
+    this.La.cancel();
+    delete this.La;
+    delete this.send;
+    Z.f.b.call(this)
+};
+var hf = function(a) {
+    a = a.split(",");
+    a[1] = a[1] || null;
+    return a
+};
+var kf = function(a, b) {
+    this.R = b || P();
+    this.e = a;
+    this.tg = a.at || "";
+    this.xg = a.rat || "";
+    var c = this.p();
+    if(!c.nix_setup_complete) {
+        try {
+            c.execScript("Class GCXPC____NIXVBS_wrapper\n Private m_Transport\nPrivate m_Auth\nPublic Sub SetTransport(transport)\nIf isEmpty(m_Transport) Then\nSet m_Transport = transport\nEnd If\nEnd Sub\nPublic Sub SetAuth(auth)\nIf isEmpty(m_Auth) Then\nm_Auth = auth\nEnd If\nEnd Sub\nPublic Function GetAuthToken()\n GetAuthToken = m_Auth\nEnd Function\nPublic Sub SendMessage(service, payload)\n Call m_Transport.GCXPC____NIXJS_handle_message(service, payload)\nEnd Sub\nPublic Sub CreateChannel(channel)\n Call m_Transport.GCXPC____NIXJS_create_channel(channel)\nEnd Sub\nPublic Sub GCXPC____NIXVBS_container()\n End Sub\nEnd Class\n Function GCXPC____NIXVBS_get_wrapper(transport, auth)\nDim wrap\nSet wrap = New GCXPC____NIXVBS_wrapper\nwrap.SetTransport transport\nwrap.SetAuth auth\nSet GCXPC____NIXVBS_get_wrapper = wrap\nEnd Function",
+                    "vbscript"), c.nix_setup_complete = !0
+        }catch(e) {
+            S.error(Y, "exception caught while attempting global setup: " + e)
+        }
+    }
+    this.GCXPC____NIXJS_handle_message = this.kk;
+    this.GCXPC____NIXJS_create_channel = this.jk
+};
+v(kf, Oe);
+d = kf.prototype;
+d.Mb = 6;
+d.Ib = !1;
+d.Ra = null;
+d.connect = function() {
+    0 == this.e.ta() ? this.Qg() : this.Ag()
+};
+d.Qg = function() {
+    if(!this.Ib) {
+        var a = this.e.Eg();
+        try {
+            a.contentWindow.opener = (0,this.p().GCXPC____NIXVBS_get_wrapper)(this, this.tg), this.Ib = !0
+        }catch(b) {
+            S.error(Y, "exception caught while attempting setup: " + b)
+        }
+        this.Ib || this.p().setTimeout(s(this.Qg, this), 100)
+    }
+};
+d.Ag = function() {
+    if(!this.Ib) {
+        try {
+            var a = this.p().opener;
+            if(a && "GCXPC____NIXVBS_container" in a) {
+                this.Ra = a;
+                if(this.Ra.GetAuthToken() != this.xg) {
+                    S.error(Y, "Invalid auth token from other party");
+                    return
+                }
+                this.Ra.CreateChannel((0,this.p().GCXPC____NIXVBS_get_wrapper)(this, this.tg));
+                this.Ib = !0;
+                this.e.ya()
+            }
+        }catch(b) {
+            S.error(Y, "exception caught while attempting setup: " + b);
+            return
+        }
+        this.Ib || this.p().setTimeout(s(this.Ag, this), 100)
+    }
+};
+d.jk = function(a) {
+    "unknown" == typeof a && "GCXPC____NIXVBS_container" in a || S.error(Y, "Invalid NIX channel given to createChannel_");
+    this.Ra = a;
+    this.Ra.GetAuthToken() != this.xg ? S.error(Y, "Invalid auth token from other party") : this.e.ya()
+};
+d.kk = function(a, b) {
+    this.p().setTimeout(s(function() {
+        this.e.wa(a, b)
+    }, this), 1)
+};
+d.send = function(a, b) {
+    "unknown" !== typeof this.Ra && S.error(Y, "NIX channel not connected");
+    this.Ra.SendMessage(a, b)
+};
+d.b = function() {
+    kf.f.b.call(this);
+    this.Ra = null
+};
+var mf = function(a, b) {
+    this.Kc = {};
+    for(var c = 0, e;e = Le[c];c++) {
+        if(e in a && !/^https?:\/\//.test(a[e])) {
+            throw Error("URI " + a[e] + " is invalid for field " + e);
+        }
+    }
+    this.o = a;
+    this.name = this.o.cn || Ne(10);
+    this.R = b || P();
+    this.Sc = [];
+    this.Nc = new N(this);
+    a.lpu = a.lpu || fd(this.R.p().location.href) + "/robots.txt";
+    a.ppu = a.ppu || fd(a.pu || "") + "/robots.txt";
+    V[this.name] = this;
+    Rc(window, "unload", lf);
+    S.info(Y, "CrossPageChannel created: " + this.name)
+};
+v(mf, ze);
+var nf = /^%*tp$/, of = /^%+tp$/;
+d = mf.prototype;
+d.Za = null;
+d.qa = null;
+d.O = null;
+d.q = 1;
+d.K = function() {
+    return 2 == this.q
+};
+d.ob = null;
+d.Zb = null;
+d.gd = function() {
+    return this.o
+};
+d.Eg = function() {
+    return this.Zb
+};
+d.Vg = function(a) {
+    this.ob = a
+};
+d.zg = function() {
+    return this.ob
+};
+d.$g = function() {
+    try {
+        return!!this.ob && !Boolean(this.ob.closed)
+    }catch(a) {
+        return!1
+    }
+};
+d.Dk = function() {
+    var a;
+    if(ga(document.postMessage) || ga(window.postMessage) || A && window.postMessage) {
+        a = 1
+    }else {
+        if(gb) {
+            a = 2
+        }else {
+            if(A && this.o.pru) {
+                a = 3
+            }else {
+                var b;
+                if(b = A) {
+                    b = !1;
+                    try {
+                        a = window.opener, window.opener = {}, b = Ec(window, "opener"), window.opener = a
+                    }catch(c) {
+                    }
+                }
+                a = b ? 6 : 4
+            }
+        }
+    }
+    return a
+};
+d.gk = function() {
+    if(!this.O) {
+        this.o.tp || (this.o.tp = this.Dk());
+        switch(this.o.tp) {
+            case 1:
+                this.O = new Z(this, this.o.ph, this.R, !!this.o.osh, this.o.nativeProtocolVersion || 2);
+                break;
+            case 6:
+                this.O = new kf(this, this.R);
+                break;
+            case 2:
+                this.O = new Pe(this, this.R);
+                break;
+            case 3:
+                this.O = new Ze(this, this.R);
+                break;
+            case 4:
+                this.O = new Qe(this, this.R)
+        }
+        if(this.O) {
+            S.info(Y, "Transport created: " + this.O.getName())
+        }else {
+            throw Error("CrossPageChannel: No suitable transport found!");
+        }
+    }
+};
+d.Zk = function() {
+    var a = {};
+    a.cn = this.name;
+    a.tp = this.o.tp;
+    a.osh = this.o.osh;
+    this.o.lru && (a.pru = this.o.lru);
+    this.o.lpu && (a.ppu = this.o.lpu);
+    this.o.ppu && (a.lpu = this.o.ppu);
+    var b = this.o.role;
+    b && (a.role = 1 == b ? 0 : 1);
+    return a
+};
+d.Pk = function(a, b, c) {
+    S.info(Y, "createPeerIframe()");
+    var e = this.o.ifrid;
+    e || (e = this.o.ifrid = "xpcpeer" + Ne(4));
+    var f = P(a).createElement("IFRAME");
+    f.id = f.name = e;
+    b ? b(f) : f.style.width = f.style.height = "100%";
+    this.Dg();
+    this.qa = new U(void 0, this);
+    var g = this.xk(c);
+    this.Nc.fc(f, "load", this.qa.$, !1, this.qa);
+    gb || B ? window.setTimeout(s(function() {
+        a.appendChild(f);
+        f.src = g.toString();
+        S.info(Y, "peer iframe created (" + e + ")")
+    }, this), 1) : (f.src = g.toString(), a.appendChild(f), S.info(Y, "peer iframe created (" + e + ")"));
+    return f
+};
+d.Dg = function() {
+    this.qa && (this.qa.cancel(), this.qa = null);
+    this.Sc.length = 0;
+    this.Nc.removeAll()
+};
+d.xk = function(a) {
+    var b = this.o.pu;
+    q(b) && (b = this.o.pu = new J(b));
+    !1 !== a && b.dc("xpc", (new we(void 0)).Fe(this.Zk()));
+    return b
+};
+d.connect = function(a) {
+    this.Ne = a || m;
+    this.qa ? this.qa.Qd(this.Wh) : this.Wh()
+};
+d.Wh = function() {
+    S.info(Y, "continueConnection_()");
+    this.qa = null;
+    this.o.ifrid && (this.Zb = this.R.$c(this.o.ifrid));
+    if(this.Zb) {
+        var a = this.Zb.contentWindow;
+        a || (a = window.frames[this.o.ifrid]);
+        this.Vg(a)
+    }
+    if(!this.ob) {
+        if(window == window.top) {
+            throw Error("CrossPageChannel: Can't connect, peer window-object not set.");
+        }
+        this.Vg(window.parent)
+    }
+    this.gk();
+    for(this.O.connect();0 < this.Sc.length;) {
+        this.Sc.shift()()
+    }
+};
+d.close = function() {
+    this.Dg();
+    this.q = 3;
+    lc(this.O);
+    this.Ne = this.O = null;
+    lc(this.Za);
+    this.Za = null;
+    S.info(Y, 'Channel "' + this.name + '" closed')
+};
+d.ya = function(a) {
+    this.K() || this.Za && this.Za.Re() || (this.q = 2, S.info(Y, 'Channel "' + this.name + '" connected'), lc(this.Za), a ? (this.Za = new ue(this.Ne, a), this.Za.start()) : (this.Za = null, this.Ne()))
+};
+d.Pf = mf.prototype.ya;
+d.yk = function() {
+    S.info(Y, "Transport Error");
+    this.close()
+};
+d.send = function(a, b) {
+    this.K() ? this.$g() ? (r(b) && (b = (new we(void 0)).Fe(b)), this.O.send(this.Yk(a), b)) : (S.error(Y, "Peer has disappeared."), this.close()) : S.error(Y, "Can't send. Channel not connected.")
+};
+d.wa = function(a, b, c) {
+    this.qa ? this.Sc.push(s(this.wa, this, a, b, c)) : this.bk(c) ? this.Tc() ? S.k(Y, "CrossPageChannel::xpcDeliver(): Disposed.") : a && "tp" != a ? this.K() ? this.$j(this.ck(a), b) : S.info(Y, "CrossPageChannel::xpcDeliver(): Not connected.") : this.O.Le(b) : S.k(Y, 'Message received from unapproved origin "' + c + '" - rejected.')
+};
+d.Yk = function(a) {
+    nf.test(a) && (a = "%" + a);
+    return a.replace(/[%:|]/g, encodeURIComponent)
+};
+d.ck = function(a) {
+    a = a.replace(/%[0-9a-f]{2}/gi, decodeURIComponent);
+    return of.test(a) ? a.substring(1) : a
+};
+d.ta = function() {
+    var a = this.o.role;
+    return a ? a : window.parent == this.ob ? 1 : 0
+};
+d.bk = function(a) {
+    var b = this.o.ph;
+    return/^[\s\xa0]*$/.test(null == a ? "" : String(a)) || /^[\s\xa0]*$/.test(null == b ? "" : String(b)) || a == this.o.ph
+};
+d.b = function() {
+    this.close();
+    this.Zb = this.ob = null;
+    delete V[this.name];
+    lc(this.Nc);
+    delete this.Nc;
+    mf.f.b.call(this)
+};
+var lf = function() {
+    for(var a in V) {
+        lc(V[a])
+    }
+};
+var pf = function(a, b, c, e, f, g) {
+    e = new J(e || window.location.href);
+    var h = new J;
+    f = f ? f : Math.floor(1E3 * Math.random()) + ".talkgadget.google.com";
+    h.hc(f);
+    h.ic("/talkgadget/d");
+    h.dc("token", a);
+    g && h.jc(g);
+    a = c || "wcs-iframe";
+    c = "#" + a + " { display: none; }";
+    var l = P(void 0), t = null;
+    if(A) {
+        l = t = l.ug().createStyleSheet(), A ? l.cssText = c : l.innerHTML = c
+    }else {
+        var D = l.kh("head")[0];
+        D || (t = l.kh("body")[0], D = l.ia("head"), t.parentNode.insertBefore(D, t));
+        var E = t = l.ia("style");
+        A ? E.cssText = c : E.innerHTML = c;
+        l.appendChild(D, t)
+    }
+    c = {};
+    l = new J;
+    l.hc(f);
+    g && l.jc(g);
+    l.ic("/talkgadget/xpc_blank");
+    "http" == e.qb() || "https" == e.qb() ? (h.rb(e.qb()), l.rb(e.qb()), g = new J, g.rb(e.qb()), g.hc(e.Ce()), 80 != e.bd() && g.jc(e.bd()), g.ic(b)) : (h.rb("http"), l.rb("http"), g = new J("http://www.google.com/xpc_blank"));
+    c.lpu = g.toString();
+    c.ppu = l.toString();
+    c.ifrid = a;
+    c.pu = h.toString();
+    mf.call(this, c)
+};
+v(pf, mf);
+var rf = function(a, b, c, e, f) {
+    this.readyState = 0;
+    this.Ve = [];
+    this.onopen = b.onopen;
+    this.onmessage = b.onmessage;
+    this.onerror = b.onerror;
+    this.onclose = b.onclose;
+    this.Kb = c || new pf(a, "/_ah/channel/xpc_blank");
+    this.rh = c ? e : "wcs-iframe";
+    this.mh = f || new qf(a);
+    if(!document.body) {
+        throw"document.body is not defined -- do not create socket from script in <head>.";
+    }
+    this.Kb.Pk(document.body, void 0, !0);
+    this.Kb.$e("onMessage", s(this.aa, this));
+    this.Kb.$e("onError", s(this.ge, this));
+    this.Kb.$e("onClosed", s(this.yh, this));
+    this.Kb.connect(s(this.Qk, this))
+};
+d = rf.prototype;
+d.send = function() {
+    return!1
+};
+d.close = function() {
+    this.yh()
+};
+d.$l = function() {
+    for(var a = 0, b;b = this.Ve[a];a++) {
+        switch(b.type) {
+            case 0:
+                this.onopen(b.Fd);
+                break;
+            case 1:
+                this.onmessage(b.Fd);
+                break;
+            case 2:
+                this.onerror(b.Fd);
+                break;
+            case 3:
+                this.onclose(b.Fd)
+        }
+    }
+    this.Ve = []
+};
+d.Ad = function(a, b) {
+    this.Ve.push({type:a, Fd:b});
+    window.setTimeout(s(this.$l, this), 1)
+};
+d.ci = function(a) {
+    return"string" == typeof a ? window.JSON && window.JSON.parse ? window.JSON.parse(a) : ve(a) : a
+};
+d.aa = function(a) {
+    if(a = this.ci(a)) {
+        var b = a.m;
+        this.mh.Pl(b, a.s) && (this.Ad(1, {data:b}), this.mh.Ol())
+    }
+};
+d.ge = function(a) {
+    (a = this.ci(a)) && this.Ad(2, {description:a.d, code:a.c})
+};
+d.Qk = function() {
+    this.Dm()
+};
+d.Dm = function() {
+    this.readyState = 1;
+    this.Ad(0, {})
+};
+d.yh = function() {
+    lc(this.Kb);
+    this.readyState = 3;
+    this.Ad(3, {});
+    if(this.rh) {
+        var a = new Zd, b = a.$c(this.rh);
+        b && a.removeNode(b)
+    }
+};
+var qf = function(a, b, c) {
+    for(;0 != a.length % 4;) {
+        a += "."
+    }
+    this.rd = 0;
+    try {
+        if(!oe) {
+            oe = {};
+            pe = {};
+            qe = {};
+            for(var e = 0;65 > e;e++) {
+                oe[e] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(e), pe[e] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.".charAt(e), qe[pe[e]] = e
+            }
+        }
+        for(var e = qe, f = [], g = 0;g < a.length;) {
+            var h = e[a.charAt(g++)], l = g < a.length ? e[a.charAt(g)] : 0;
+            ++g;
+            var t = g < a.length ? e[a.charAt(g)] : 0;
+            ++g;
+            var D = g < a.length ? e[a.charAt(g)] : 0;
+            ++g;
+            if(null == h || null == l || null == t || null == D) {
+                throw Error();
+            }
+            f.push(h << 2 | l >> 4);
+            64 != t && (f.push(l << 4 & 240 | t >> 2), 64 != D && f.push(t << 6 & 192 | D))
+        }
+        this.Vh = f
+    }catch(E) {
+        if(E.message) {
+            throw Error("The provided token is invalid (" + E.name + ": " + E.message + ")");
+        }
+        throw Error("The provided token is invalid.");
+    }
+    this.W = b || new te;
+    this.El = c || new se(this.W, this.Vh, this.Vh.length)
+};
+qf.prototype.ym = function(a) {
+    for(var b = [], c = 0, e = 0;e < a.length;e++) {
+        for(var f = a.charCodeAt(e);255 < f;) {
+            b[c++] = f & 255, f >>= 8
+        }
+        b[c++] = f
+    }
+    b.push(this.rd);
+    return this.El.hm(b)
+};
+qf.prototype.Pl = function(a, b) {
+    var c;
+    t: {
+        if(c = this.ym(a), ea(c) && ea(b) && c.length == b.length) {
+            for(var e = c.length, f = 0;f < e;f++) {
+                if(c[f] !== b[f]) {
+                    c = !1;
+                    break t
+                }
+            }
+            c = !0
+        }else {
+            c = !1
+        }
+    }
+    return c
+};
+qf.prototype.Ol = function() {
+    this.rd++
+};
+var sf = function(a) {
+    this.Hm = a
+}, tf = {onopen:function() {
+}, onclose:function() {
+}, onerror:function() {
+}, onmessage:function() {
+}};
+sf.prototype.open = function(a) {
+    a = a || tf;
+    return new rf(this.Hm, a)
+};
+var uf = function() {
+};
+uf.prototype.qi = null;
+uf.prototype.Bf = function() {
+    return this.qi || (this.qi = this.om())
+};
+var vf, wf = function() {
+};
+v(wf, uf);
+wf.prototype.oi = function() {
+    var a = this.ri();
+    return a ? new ActiveXObject(a) : new XMLHttpRequest
+};
+wf.prototype.om = function() {
+    var a = {};
+    this.ri() && (a[0] = !0, a[1] = !0);
+    return a
+};
+wf.prototype.ri = function() {
+    if(!this.si && "undefined" == typeof XMLHttpRequest && "undefined" != typeof ActiveXObject) {
+        for(var a = ["MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP"], b = 0;b < a.length;b++) {
+            var c = a[b];
+            try {
+                return new ActiveXObject(c), this.si = c
+            }catch(e) {
+            }
+        }
+        throw Error("Could not create ActiveXObject. ActiveX might be disabled, or MSXML might not be installed");
+    }
+    return this.si
+};
+vf = new wf;
+var xf = function(a) {
+    M.call(this);
+    this.headers = new z;
+    this.zc = a || null;
+    this.Ia = !1;
+    this.wc = this.i = null;
+    this.Ob = this.uf = this.yc = "";
+    this.eb = this.Jd = this.vc = this.Kd = !1;
+    this.xb = 0;
+    this.Ac = null;
+    this.vf = "";
+    this.Bc = this.wf = !1
+};
+v(xf, M);
+xf.prototype.a = S.Id("goog.net.XhrIo");
+var yf = /^https?$/i, zf = ["POST", "PUT"], Af = [], Bf = function(a, b, c, e, f, g, h) {
+    var l = new xf;
+    Af.push(l);
+    b && l.l("complete", b);
+    l.fc("ready", l.Sk);
+    g && l.Tk(g);
+    h && l.Uk(h);
+    l.send(a, c, e, f)
+};
+xf.prototype.Sk = function() {
+    this.H();
+    Ia(Af, this)
+};
+xf.prototype.Tk = function(a) {
+    this.xb = Math.max(0, a)
+};
+xf.prototype.Uk = function(a) {
+    this.wf = a
+};
+xf.prototype.send = function(a, b, c, e) {
+    if(this.i) {
+        throw Error("[goog.net.XhrIo] Object is active with another request=" + this.yc + "; newUri=" + a);
+    }
+    b = b ? b.toUpperCase() : "GET";
+    this.yc = a;
+    this.Ob = "";
+    this.uf = b;
+    this.Kd = !1;
+    this.Ia = !0;
+    this.i = this.vi();
+    this.wc = this.zc ? this.zc.Bf() : vf.Bf();
+    this.i.onreadystatechange = s(this.tf, this);
+    try {
+        S.g(this.a, this.va("Opening Xhr")), this.Jd = !0, this.i.open(b, a, !0), this.Jd = !1
+    }catch(f) {
+        S.g(this.a, this.va("Error opening Xhr: " + f.message));
+        this.fa(5, f);
+        return
+    }
+    a = c || "";
+    var g = this.headers.clone();
+    e && Ya(e, function(a, b) {
+        g.set(b, a)
+    });
+    e = Ga(g.ua(), Cf);
+    c = k.FormData && a instanceof k.FormData;
+    !(0 <= Ba(zf, b)) || (e || c) || g.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+    Ya(g, function(a, b) {
+        this.i.setRequestHeader(b, a)
+    }, this);
+    this.vf && (this.i.responseType = this.vf);
+    "withCredentials" in this.i && (this.i.withCredentials = this.wf);
+    try {
+        this.zf(), 0 < this.xb && (this.Bc = A && C(9) && fa(this.i.timeout) && n(this.i.ontimeout), S.g(this.a, this.va("Will abort after " + this.xb + "ms if incomplete, xhr2 " + this.Bc)), this.Bc ? (this.i.timeout = this.xb, this.i.ontimeout = s(this.Cf, this)) : this.Ac = sd(this.Cf, this.xb, this)), S.g(this.a, this.va("Sending request")), this.vc = !0, this.i.send(a), this.vc = !1
+    }catch(h) {
+        S.g(this.a, this.va("Send error: " + h.message)), this.fa(5, h)
+    }
+};
+var Cf = function(a) {
+    return"content-type" == a.toLowerCase()
+};
+d = xf.prototype;
+d.vi = function() {
+    return this.zc ? this.zc.oi() : vf.oi()
+};
+d.Cf = function() {
+    "undefined" != typeof aa && this.i && (this.Ob = "Timed out after " + this.xb + "ms, aborting", S.g(this.a, this.va(this.Ob)), this.dispatchEvent("timeout"), this.abort(8))
+};
+d.fa = function(a, b) {
+    this.Ia = !1;
+    this.i && (this.eb = !0, this.i.abort(), this.eb = !1);
+    this.Ob = b;
+    this.Jf();
+    this.xc()
+};
+d.Jf = function() {
+    this.Kd || (this.Kd = !0, this.dispatchEvent("complete"), this.dispatchEvent("error"))
+};
+d.abort = function() {
+    this.i && this.Ia && (S.g(this.a, this.va("Aborting")), this.Ia = !1, this.eb = !0, this.i.abort(), this.eb = !1, this.dispatchEvent("complete"), this.dispatchEvent("abort"), this.xc())
+};
+d.b = function() {
+    this.i && (this.Ia && (this.Ia = !1, this.eb = !0, this.i.abort(), this.eb = !1), this.xc(!0));
+    xf.f.b.call(this)
+};
+d.tf = function() {
+    this.Tc() || (this.Jd || this.vc || this.eb ? this.Qh() : this.Cl())
+};
+d.Cl = function() {
+    this.Qh()
+};
+d.Qh = function() {
+    if(this.Ia && "undefined" != typeof aa) {
+        if(this.wc[1] && 4 == this.Pb() && 2 == this.Ub()) {
+            S.g(this.a, this.va("Local request error detected and ignored"))
+        }else {
+            if(this.vc && 4 == this.Pb()) {
+                sd(this.tf, 0, this)
+            }else {
+                if(this.dispatchEvent("readystatechange"), this.Ii()) {
+                    S.g(this.a, this.va("Request complete"));
+                    this.Ia = !1;
+                    try {
+                        this.Sd() ? (this.dispatchEvent("complete"), this.dispatchEvent("success")) : (this.Ob = this.Rd() + " [" + this.Ub() + "]", this.Jf())
+                    }finally {
+                        this.xc()
+                    }
+                }
+            }
+        }
+    }
+};
+d.xc = function(a) {
+    if(this.i) {
+        this.zf();
+        var b = this.i, c = this.wc[0] ? m : null;
+        this.wc = this.i = null;
+        a || this.dispatchEvent("ready");
+        try {
+            b.onreadystatechange = c
+        }catch(e) {
+            S.error(this.a, "Problem encountered resetting onreadystatechange: " + e.message)
+        }
+    }
+};
+d.zf = function() {
+    this.i && this.Bc && (this.i.ontimeout = null);
+    fa(this.Ac) && (k.clearTimeout(this.Ac), this.Ac = null)
+};
+d.Re = function() {
+    return!!this.i
+};
+d.Ii = function() {
+    return 4 == this.Pb()
+};
+d.Sd = function() {
+    var a = this.Ub(), b;
+    t: {
+        switch(a) {
+            case 200:
+                ;
+            case 201:
+                ;
+            case 202:
+                ;
+            case 204:
+                ;
+            case 206:
+                ;
+            case 304:
+                ;
+            case 1223:
+                b = !0;
+                break t;
+            default:
+                b = !1
+        }
+    }
+    return b || 0 === a && !this.lm()
+};
+d.lm = function() {
+    var a = ed(String(this.yc))[1] || null;
+    !a && self.location && (a = self.location.protocol, a = a.substr(0, a.length - 1));
+    return yf.test(a ? a.toLowerCase() : "")
+};
+d.Pb = function() {
+    return this.i ? this.i.readyState : 0
+};
+d.Ub = function() {
+    try {
+        return 2 < this.Pb() ? this.i.status : -1
+    }catch(a) {
+        return S.k(this.a, "Can not get status: " + a.message), -1
+    }
+};
+d.Rd = function() {
+    try {
+        return 2 < this.Pb() ? this.i.statusText : ""
+    }catch(a) {
+        return S.g(this.a, "Can not get status: " + a.message), ""
+    }
+};
+d.Hl = function() {
+    try {
+        return this.i ? this.i.responseText : ""
+    }catch(a) {
+        return S.g(this.a, "Can not get responseText: " + a.message), ""
+    }
+};
+d.va = function(a) {
+    return a + " [" + this.uf + " " + this.yc + " " + this.Ub() + "]"
+};
+var $ = function(a) {
+    td.call(this, a.I());
+    this.fb = a;
+    this.u = a.u;
+    var b = new N(this);
+    b.l(a, "b", this.yb);
+    b.l(a, "a", this.bc);
+    this.Yd(b)
+};
+v($, td);
+$.prototype.kb = function() {
+    this.fb.disconnect()
+};
+$.prototype.send = function(a) {
+    this.fb.send(a)
+};
+$.prototype.yb = function(a) {
+    this.aa(a.message)
+};
+$.prototype.bc = function(a) {
+    this.Rb(a.Pe)
+};
+var Df = function(a, b, c, e) {
+    $.call(this, a);
+    this.Yc = b;
+    this.a = c || G("cv.LoggingChannel");
+    this.Da = e || Lb;
+    this.ha("Created with state = " + this.I())
+};
+v(Df, $);
+d = Df.prototype;
+d.send = function(a) {
+    this.ha("Sending: " + JSON.stringify(a));
+    Df.f.send.call(this, a)
+};
+d.kb = function() {
+    this.ha("Disconnecting");
+    Df.f.kb.call(this)
+};
+d.bc = function(a) {
+    this.ha("State changing: " + a.wk + " => " + a.Pe);
+    Df.f.bc.call(this, a)
+};
+d.yb = function(a) {
+    this.ha("Received: " + JSON.stringify(a.message));
+    Df.f.yb.call(this, a)
+};
+d.ha = function(a) {
+    this.a.log(this.Da, this.Yc + ": " + a)
+};
+var Kf = function(a) {
+    td.call(this);
+    this.u = a;
+    x(Ef);
+    this.a = Ff;
+    Gf.set(a, this);
+    Hf && this.rg();
+    If || Jf(!0, null)
+}, Ef, If, Lf;
+v(Kf, td);
+var Ff = G("cv.AppEngineChannel");
+Kf.prototype.wrap = function() {
+    var a;
+    a = new Df(this, "cv.AppEngineChannel", Ff);
+    a = new Mf(a);
+    return a = new Nf(a, 100, 1E3)
+};
+var Gf = new z, Of = null, Hf = !1, Pf = null, Qf = function(a, b) {
+    Ef = a;
+    Jf(!1, b)
+}, Jf = function(a, b) {
+    if(If) {
+        throw Error("Already initialized AppEngineChannel");
+    }
+    If = !0;
+    Pf = b;
+    var c = new J("https://lwbtripzcpzmxmaksmgyzuqkvkvlx.appspot.com/v1" + (a ? "/auth/open" : "/open"));
+    c.dc("id", Ef);
+    Bf(c.toString(), function(a) {
+        a = a.target;
+        a.Sd() ? (a = a.Hl(), Lf = new sf(a), Of = a = Lf.open(), a.onopen = Rf, a.onmessage = Sf, a.onerror = Tf, a.onclose = Uf) : (If = !1, 401 == a.Ub() ? (window.open("https://lwbtripzcpzmxmaksmgyzuqkvkvlx.appspot.com/v1/auth/login"), Tf("Must be logged in to create AppEngineChannel.")) : Tf("HTTP error opening AppEngineChannel: " + a.Rd()))
+    }, "POST", "")
+}, Rf = function() {
+    Ff.info("channel open");
+    Hf = !0;
+    for(var a = Gf.P(), b = 0;b < a.length;b++) {
+        a[b].rg()
+    }
+};
+Kf.prototype.rg = function() {
+    Pf || this.Rh({from:Ef});
+    this.Rb("connected")
+};
+var Sf = function(a) {
+    a = JSON.parse(a.data);
+    var b = a.from, c = Gf.get(b);
+    !c && Pf && (c = new Kf(b), Pf(c));
+    "body" in a && c.aa(a.body)
+}, Tf = function(a) {
+    q(a) || (a = "error " + a.code + ": " + a.description);
+    Ff.k(a);
+    for(var b = Gf.P(), c = 0;c < b.length;c++) {
+        b[c].disconnect(a)
+    }
+    Of && Of.close()
+}, Uf = function() {
+    Ff.info("channel closed");
+    for(var a = Gf.P(), b = 0;b < a.length;b++) {
+        a[b].Rb("disconnected")
+    }
+    Of = null;
+    Hf = !1
+};
+Kf.prototype.Rh = function(a) {
+    x(Hf);
+    var b = new J("https://lwbtripzcpzmxmaksmgyzuqkvkvlx.appspot.com/v1/send");
+    b.dc("from", Ef);
+    b.dc("to", this.u);
+    Bf(b.toString(), s(function(a) {
+        a = a.target;
+        if(!a.Sd()) {
+            throw Of && Of.close(), Error("XHR error: " + a.Rd());
+        }
+    }, this), "POST", JSON.stringify(a), {"Content-Type":"text/plain"})
+};
+Kf.prototype.kb = function() {
+    Gf.remove(this.u)
+};
+Kf.prototype.send = function(a) {
+    x("connected" == this.I());
+    this.Rh({from:Ef, body:a})
+};
+var Nf = function(a, b, c) {
+    x(0 <= b);
+    x(b <= c);
+    $.call(this, a);
+    this.nl = b;
+    this.ml = c;
+    this.ca = [];
+    this.Ah = -c;
+    this.Ih = -c
+};
+v(Nf, $);
+d = Nf.prototype;
+d.send = function(a) {
+    var b = u();
+    this.ca.length || (this.Ih = b);
+    this.ca.push(a);
+    this.Mh()
+};
+d.yb = function(a) {
+    a.message.parts.forEach(s(this.aa, this))
+};
+d.Mh = function() {
+    if(this.ca.length) {
+        var a = u(), a = Math.max(this.ml - (a - this.Ah), this.nl - (a - this.Ih));
+        0 >= a ? this.Dh() : sd(this.Mh, a, this)
+    }
+};
+d.Dh = function() {
+    var a = {parts:this.ca};
+    this.ca = [];
+    this.Ah = u();
+    this.fb.send(a)
+};
+d.kb = function() {
+    0 < this.ca.length && this.Dh();
+    this.fb.disconnect()
+};
+var Mf = function(a) {
+    $.call(this, a);
+    this.a = G("cv.OrderedChannel");
+    this.ca = new z;
+    this.Vb = [];
+    this.Wd = this.Uf = 0;
+    this.t = new rd(400);
+    Rc(this.t, "tick", s(this.Fj, this))
+};
+v(Mf, $);
+var Vf = function(a) {
+    this.timestamp = u();
+    this.message = a;
+    this.vj = 0
+}, Wf = function(a, b) {
+    this.seqNum = a;
+    this.body = b
+};
+d = Mf.prototype;
+d.send = function(a) {
+    a = new Wf(this.Uf++, a);
+    Mf.f.send.call(this, a);
+    this.ca.set(a.seqNum, new Vf(a));
+    this.t.start()
+};
+d.yb = function(a) {
+    a = a.message;
+    var b = a.seqNum;
+    if(-1 == b) {
+        this.ca.remove(a.body)
+    }else {
+        if(-2 == b) {
+            this.Xf()
+        }else {
+            this.fb.send(this.Vi(b));
+            var c = b - this.Wd;
+            if(0 > c || void 0 !== this.Vb[c]) {
+                this.a.info("Duplicate message received with seq num: " + b)
+            }else {
+                for(this.Vb[c] = a.body;void 0 !== this.Vb[0];) {
+                    a = this.Vb.shift(), this.Wd++, Mf.f.yb.call(this, new vd("b", a))
+                }
+            }
+        }
+    }
+};
+d.kb = function() {
+    this.fb.send(this.Vl());
+    this.Xf()
+};
+d.Xf = function() {
+    this.Uf = 0;
+    this.ca.clear();
+    this.Wd = 0;
+    this.Vb = []
+};
+d.Fj = function() {
+    var a = this.ca.ua();
+    if(0 == a.length) {
+        this.t.stop()
+    }else {
+        if(100 < a.length) {
+            this.disconnect("Too many messages queued up in reliable channel.")
+        }else {
+            this.a.info("Retransmitting up to " + a.length + " messages.");
+            var b = u(), c;
+            for(c in a) {
+                var e = this.ca.get(a[c]);
+                if(25 <= e.vj++) {
+                    this.disconnect("Exhausted maximum retries for message.");
+                    break
+                }
+                b - e.timestamp >= this.t.uj() && this.fb.send(e.message)
+            }
+        }
+    }
+};
+d.Vi = function(a) {
+    return new Wf(-1, a)
+};
+d.Vl = function() {
+    return new Wf(-2, {})
+};
+var Xf = function(a) {
+    this.a = G("cv.receiver.AppEngineChannelFactory");
+    this.ne = a
+};
+Xf.prototype.Yb = m;
+Xf.prototype.ea = function() {
+    Qf(this.ne, s(function(a) {
+        this.Yb(a.wrap())
+    }, this))
+};
+var Yf = function(a, b, c) {
+    $.call(this, a);
+    x(!c || 0 < c);
+    this.de = b || "ping";
+    this.jg = c || 5E3;
+    this.we = 2E4;
+    this.a = G("cv.TimeoutChannel");
+    this.Oc = this.Qc = this.Md = null;
+    this.Gj = setTimeout(s(this.Hj, this), 6E3);
+    this.a.info("Creating...");
+    this.Qf(s(this.Ij, this), m)
+};
+v(Yf, $);
+d = Yf.prototype;
+d.send = function(a) {
+    Yf.f.send.call(this, a);
+    u()
+};
+d.aa = function(a) {
+    Yf.f.aa.call(this, a);
+    this.Md = u();
+    rc(a) && ("ping" == a[1].type ? (this.a.g("Got ping from " + this.u), this.Lf()) : "pong" == a[1].type && this.a.g("Got pong from " + this.u))
+};
+d.bc = function(a) {
+    Yf.f.bc.call(this, a);
+    "connected" != a.Pe && (clearTimeout(this.Oc), this.Oc = null, clearTimeout(this.Qc), this.Qc = null)
+};
+d.Hj = function() {
+    "connecting" == this.I() && (this.a.k("failed to connect in 6 seconds"), this.disconnect("failed to connect in 6 seconds"))
+};
+d.bm = function() {
+    var a = s(function() {
+        this.K() && (this.Md ? u() > this.Md + this.we ? this.disconnect("liveness timeout") : this.Qc = setTimeout(a, this.we) : this.disconnect("liveness timeout - heartbeat never received"))
+    }, this);
+    this.Qc = setTimeout(a, this.we)
+};
+d.am = function() {
+    var a = s(function() {
+        this.K() && (this.Lf(), this.Oc = setTimeout(a, this.jg))
+    }, this);
+    this.Oc = setTimeout(a, this.jg)
+};
+d.Lf = function() {
+    var a = {type:this.de};
+    this.a.g("Sending " + this.de + " to " + this.u);
+    this.send(["cm", a])
+};
+d.Ij = function() {
+    clearTimeout(this.Gj);
+    "ping" == this.de && this.am();
+    this.bm()
+};
+var $f = function(a, b) {
+    M.call(this);
+    this.kj = n(a) ? a : !0;
+    this.pe = b || Zf;
+    this.Wc = this.pe(this.ac)
+};
+v($f, M);
+d = $f.prototype;
+d.V = null;
+d.S = null;
+d.Bb = void 0;
+d.re = !1;
+d.ac = 0;
+d.a = S.Id("goog.net.WebSocket");
+var Zf = function(a) {
+    return Math.min(1E3 * Math.pow(2, a), 6E4)
+};
+d = $f.prototype;
+d.open = function(a, b) {
+    x(k.WebSocket, "This browser does not support WebSocket");
+    x(!this.eg(), "The WebSocket is already open");
+    this.dg();
+    this.S = a;
+    (this.Bb = b) ? (S.info(this.a, "Opening the WebSocket on " + this.S + " with protocol " + this.Bb), this.V = new WebSocket(this.S, this.Bb)) : (S.info(this.a, "Opening the WebSocket on " + this.S), this.V = new WebSocket(this.S));
+    this.V.onopen = s(this.pj, this);
+    this.V.onclose = s(this.oj, this);
+    this.V.onmessage = s(this.aa, this);
+    this.V.onerror = s(this.ge, this)
+};
+d.close = function() {
+    this.dg();
+    this.V && (S.info(this.a, "Closing the WebSocket."), this.re = !0, this.V.close(), this.V = null)
+};
+d.send = function(a) {
+    x(this.eg(), "Cannot send without an open socket");
+    this.V.send(a)
+};
+d.eg = function() {
+    return!!this.V && 1 == this.V.readyState
+};
+d.pj = function() {
+    S.info(this.a, "WebSocket opened on " + this.S);
+    this.dispatchEvent("f");
+    this.ac = 0;
+    this.Wc = this.pe(this.ac)
+};
+d.oj = function(a) {
+    S.info(this.a, "The WebSocket on " + this.S + " closed.");
+    this.dispatchEvent("c");
+    this.V = null;
+    this.re ? (S.info(this.a, "The WebSocket closed normally."), this.S = null, this.Bb = void 0) : (S.error(this.a, "The WebSocket disconnected unexpectedly: " + a.data), this.kj && (S.info(this.a, "Seconds until next reconnect attempt: " + Math.floor(this.Wc / 1E3)), this.se = sd(s(this.open, this, this.S, this.Bb), this.Wc, this), this.ac++, this.Wc = this.pe(this.ac)));
+    this.re = !1
+};
+d.aa = function(a) {
+    this.dispatchEvent(new ag(a.data))
+};
+d.ge = function(a) {
+    a = a.data;
+    S.error(this.a, "An error occurred: " + a);
+    this.dispatchEvent(new bg(a))
+};
+d.dg = function() {
+    null != this.se && k.clearTimeout(this.se);
+    this.se = null
+};
+d.b = function() {
+    $f.f.b.call(this);
+    this.close()
+};
+var ag = function(a) {
+    L.call(this, "e");
+    this.message = a
+};
+v(ag, L);
+var bg = function(a) {
+    L.call(this, "d");
+    this.data = a
+};
+v(bg, L);
+var cg = function(a) {
+    td.call(this);
+    this.a = G("cv.WebSocketChannel");
+    this.r = new N(this);
+    this.U = new $f(!1);
+    this.S = a;
+    this.r.l(this.U, "f", this.Li);
+    this.r.l(this.U, "e", this.ce);
+    this.r.l(this.U, "d", this.Ki);
+    this.r.l(this.U, "c", this.Ji);
+    this.U.open(this.S)
+};
+v(cg, td);
+d = cg.prototype;
+d.b = function() {
+    this.r.H();
+    cg.f.b.call(this)
+};
+d.Li = function() {
+    this.a.info("On WebSocket open: " + this.S);
+    this.Rb("connected")
+};
+d.ce = function(a) {
+    this.aa(Aa(JSON.parse(a.message)))
+};
+d.Ji = function() {
+    this.a.info("On WebSocket close: " + this.S);
+    this.disconnect()
+};
+d.Ki = function(a) {
+    this.a.k("On WebSocket error: " + this.S + ", " + a.data);
+    this.disconnect(a.data)
+};
+d.kb = function() {
+    this.a.info("Closing WebSocket channel");
+    this.U.close()
+};
+d.send = function(a) {
+    this.U.send(JSON.stringify(a))
+};
+var dg = function(a) {
+    console.log("dg(a): "+ a);
+    console.log(a.senderId);
+    console.log(a.appName);
+    return r(a) && "ChromeCast" == a.appName && n(a.senderId)
+};
+var eg = function(a) {
+    this.a = G("cv.receiver.WebSocketChannelFactory");
+    this.lj = a;
+    this.Rc = this.U = null
+};
+v(eg, I);
+d = eg.prototype;
+d.ea = function() {
+    this.a.info("Initializing WebSocketChannelFactory...");
+    this.U = new $f(!0);
+    this.Yd(this.U);
+    var a = new N(this);
+    this.Yd(a);
+    a.l(this.U, "f", this.zj);
+    a.l(this.U, "e", this.ce);
+    this.U.open(this.lj)
+};
+d.zj = function() {
+    var a = {type:"REGISTER", version:2, name:"ChromeCast", pingInterval:3, protocols:["ramp"]};
+    this.a.info("Registering with connection service with " + JSON.stringify(a));
+    this.Rc = new z;
+    this.Qa(a)
+};
+d.ce = function(a) {
+    var b = Aa(JSON.parse(a.message));
+    if("CHANNELREQUEST" == b.type) {
+        var c = b.requestId;
+        a = b.senderId;
+        this.a.info("Incoming channel request " + c + " from " + a);
+        dg(a) || (this.a.k("Missing or invalid sender Id: " + a), a = "NoSenderId-" + ua());
+        this.Rc.set(c, a);
+        this.Qa({type:"CHANNELRESPONSE", requestId:c, action:0})
+    }else {
+        "NEWCHANNEL" == b.type ? (c = b.requestId, (a = this.Rc.get(c)) ? (this.a.info("Creating new channel to " + JSON.stringify(a) + " on request " + c), this.Rc.remove(c), b = new cg(b.URL), b = new Yf(b, "ping", 3E3), b.u = dg(a) ? za(a.senderId) : za(a), b.Qf(s(this.Yb, this, b), s(function(a) {
+            this.a.wb("Error opening channel: " + a)
+        }, this))) : (this.a.wb("Missing senderId in NEWCHANNEL message."), this.Yf(2, b))) : (this.a.k("Unknown message type: " + b.type), this.Yf(1, b))
+    }
+};
+d.Qa = function(a) {
+    this.U.send(JSON.stringify(a))
+};
+d.Yf = function(a, b) {
+    this.Qa({type:"ERROR", code:a, message:b})
+};
+d.Yb = m;
+var fg = function(a, b) {
+    this.a = G("cv.receiver.LaunchService");
+    this.L = b;
+    this.ma = a;
+    this.r = new N(this);
+    this.r.l(this.ma, "launch_service", this.$i, !1, this)
+};
+fg.prototype.$i = function(a) {
+    x("launch_service" == a.type);
+    a = a.message;
+    switch(a.action) {
+        case "launch":
+            this.Kj(a);
+            break;
+        case "join":
+            break;
+        case "cancel":
+            this.Jj(a);
+            break;
+        default:
+            this.a.k("Launch service did not recognize action " + a.action)
+    }
+};
+fg.prototype.Kj = function(a) {
+    this.a.g("Got launch request: " + JSON.stringify(a));
+    this.L.startActivity(a.activityType, a.activityId, a.initParams, a.senderId, a.disconnectPolicy);
+    a.action = "launch_succeeded";
+    this.ma.Y("launch_service", a, [new Td(a.senderId)])
+};
+fg.prototype.Jj = function(a) {
+    this.a.g("Got cancel_launch request: " + JSON.stringify(a));
+    this.L.la(a.activityId) && this.L.hg(a.activityId)
+};
+var gg = function(a, b) {
+    N.call(this, this);
+    this.a = G("cv.receiver.RampService");
+    this.L = b;
+    this.ma = a;
+    this.Dj = 0;
+    this.B = null
+};
+v(gg, N);
+gg.prototype.ea = function() {
+    this.l(this.ma, "ramp", this.aa)
+};
+gg.prototype.aa = function(a) {
+    x("ramp" == a.type);
+    var b = a.message;
+    if(n(b.cmd_id) && n(b.type)) {
+        this.a.g("Get a RAMP request: " + JSON.stringify(a.message) + " from " + a.u);
+        var c = this.L.Df();
+        if(c && n(c.Pd)) {
+            this.B = c;
+            a = new Td(a.u);
+            switch(b.type) {
+                case "LOAD":
+                    this.B.Ef(b);
+                    break;
+                case "INFO":
+                    break;
+                case "PLAY":
+                    this.B.Ff(b.position);
+                    break;
+                case "STOP":
+                    this.B.Hf();
+                    break;
+                case "VOLUME":
+                    if(!n(b.volume) && !n(b.muted)) {
+                        return
+                    }
+                    this.B.Gf(b.volume, b.muted);
+                    break;
+                default:
+                    this.a.k("Invalid message type: " + b.type);
+                    return
+            }
+            b = new vc(b.cmd_id, "RESPONSE");
+            b.status = this.wi();
+            this.B.Ld(b, [a])
+        }
+    }
+};
+gg.prototype.wi = function() {
+    var a = this.B.Pd();
+    a.eventSequenceId = ++this.Dj;
+    var b = {};
+    K(a.eventSequenceId, b, "event_sequence");
+    K(a.state, b, "state");
+    K(a.contentId, b, "content_id");
+    K(a.title, b, "title");
+    K(a.timeProgress, b, "time_progress");
+    K(a.position, b, "current_time");
+    K(a.duration, b, "duration");
+    K(a.volume, b, "volume");
+    K(a.muted, b, "muted");
+    K(a.hasPause, b, "has_pause");
+    return b
+};
+var hg = function() {
+    this.Hh = s(this.Al, this);
+    this.wd = new Bc;
+    this.wd.qh = !1;
+    this.Gh = this.wd.$d = !1;
+    this.Ch = "";
+    this.Wk = {}
+};
+hg.prototype.gg = function() {
+    return this.wd
+};
+hg.prototype.rj = function(a) {
+    if(a != this.Gh) {
+        var b = Pb();
+        a ? b.kf(this.Hh) : b.lf(this.Hh);
+        this.Gh = a
+    }
+};
+hg.prototype.Al = function(a) {
+    if(!this.Wk[a.vh()]) {
+        var b = this.wd.Il(a), c = ig;
+        if(c) {
+            switch(a.We()) {
+                case Fb:
+                    jg(c, "info", b);
+                    break;
+                case Gb:
+                    jg(c, "error", b);
+                    break;
+                case Hb:
+                    jg(c, "warn", b);
+                    break;
+                default:
+                    jg(c, "debug", b)
+            }
+        }else {
+            window.opera ? window.opera.postError(b) : this.Ch += b
+        }
+    }
+};
+var ig = window.console, jg = function(a, b, c) {
+    if(a[b]) {
+        a[b](c)
+    }else {
+        a.log(c)
+    }
+};
+var kg = {}, lg = ["webapp"], mg = k;
+lg[0] in mg || !mg.execScript || mg.execScript("var " + lg[0]);
+for(var ng;lg.length && (ng = lg.shift());) {
+    lg.length || void 0 === kg ? mg = mg[ng] ? mg[ng] : mg[ng] = {} : mg[ng] = kg
+}
+kg.onPause = function() {
+    window.close()
+};
+kg.onResume = m;
+var og = function() {
+    mc.call(this);
+    var a = new hg;
+    Pb().Vc(Kb);
+    a.gg().Wf = !0;
+    a.gg().$d = !0;
+    ub(Qb(G("browser")));
+    a.rj(!0);
+    this.a = G("cv.ReceiverSetup");
+    this.ne = nc("id") || ua();
+    nc("name");
+    this.ae = nc("idle");
+    this.$f = new eg("ws://localhost:8008/connection");
+    this.qj = new Xf(this.ne);
+    this.ma = new Ed(this.$f, this.qj);
+    this.L = new ne(this.ma, this.ae);
+    new fg(this.ma, this.L);
+    this.Zi = new gg(this.ma, this.L)
+};
+v(og, mc);
+og.prototype.Uj = function() {
+    this.$f.ea();
+    this.ma.Rk(this.L);
+    this.ma.ea();
+    this.L.ea();
+    this.Zi.ea()
+};
+og.prototype.Tl = function() {
+    this.L.Lh(15E3)
+};
+var pg = new og;
+window.onload = function(a) {
+    return function() {
+        a.ea();
+        a.Tl()
+    }
+}(pg);
+window.addEventListener("beforeunload", function() {
+    pg.H()
+}, !1);
+
+</script>
+</head>
+<body>
+<div id="active_activity" class="activityWrapper"></div>
+<div id="lcsclient" style="display:none"></div>
+</body>
+</html>

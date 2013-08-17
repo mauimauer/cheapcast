@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.maui.cheapcast"
-    android:versionCode="1"
-    android:versionName="1.0-SNAPSHOT" >
-
+    android:versionCode="11"
+    android:versionName="0.3.6-BETA" >
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+    <supports-screens android:xlargeScreens="true" android:normalScreens="true" android:largeScreens="true" android:resizeable="true" android:smallScreens="true" android:anyDensity="true"/>
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="16" />
@@ -12,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -21,13 +23,27 @@
         <activity android:name=".activity.PreferenceActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CastActivity" android:screenOrientation="sensorLandscape" android:hardwareAccelerated="true" android:launchMode="singleTask">
+        <activity android:name=".activity.CastActivity" android:screenOrientation="sensorLandscape" android:hardwareAccelerated="true">
         </activity>
-        <service android:name=".service.CheapCastService" android:process=":server"/>
+        <activity android:name=".activity.AboutActivity"></activity>
+        <activity android:name=".activity.DonateActivity"></activity>
+        <receiver android:name=".receiver.OnBootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.ServiceControlReceiver">
+            <intent-filter>
+                <action android:name="at.maui.cheapcast.STOP_SERVICE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="at.maui.cheapcast.RESTART_SERVICE" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.CheapCastService" android:process=":server" android:exported="true"/>
     </application>
 
 </manifest>

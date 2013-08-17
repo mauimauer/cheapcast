@@ -4,12 +4,17 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import at.maui.cheapcast.Const;
 import at.maui.cheapcast.Installation;
@@ -18,7 +23,13 @@ import at.maui.cheapcast.Utils;
 import at.maui.cheapcast.activity.CastActivity;
 import at.maui.cheapcast.activity.PreferenceActivity;
 import at.maui.cheapcast.chromecast.*;
+import at.maui.cheapcast.chromecast.model.AppRegistration;
 import at.maui.cheapcast.ssdp.SSDP;
+import com.google.analytics.tracking.android.ExceptionReporter;
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+import com.google.gson.Gson;
 import org.eclipse.jetty.server.AbstractHttpConnection;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
@@ -29,7 +40,6 @@ import org.eclipse.jetty.websocket.WebSocketHandler;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.NetworkInterface;
 import java.util.HashMap;
@@ -54,8 +64,13 @@ public class CheapCastService extends Service {
     private SSDP mSsdp;
     private Server mServer;
 
+    private Gson mGson;
+    private SharedPreferences mPreferences;
+    private Tracker mGaTracker;
+    private GoogleAnalytics mGoogleAnalytics;
     private boolean mRunning = false;
     private ICheapCastCallback mCallback;
+    private App mLastApp;
 
     private final ICheapCastService.Stub mBinder = new ICheapCastService.Stub() {
         @Override
@@ -82,12 +97,31 @@ public class CheapCastService extends Service {
         mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
         mNetIf = Utils.getWifiNetworkInterface(mWifiManager);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            mPreferences = getSharedPreferences("cheapcast", MODE_PRIVATE | MODE_MULTI_PROCESS);
+        } else {
+            mPreferences = getSharedPreferences("cheapcast", MODE_PRIVATE);
+        }
+        Log.d(LOG_TAG, String.format("Starting up: friendlyName: %s", mPreferences.getString("friendly_name","CheapCasto")));
+        mGson = new Gson();
+
+        mGoogleAnalytics = GoogleAnalytics.getInstance(this);
+        mGaTracker = mGoogleAnalytics.getTracker(getString(R.string.ga_trackingId));
+        mGoogleAnalytics.setAppOptOut(mPreferences.getBoolean("analytics", false));
+
+        Thread.UncaughtExceptionHandler myHandler = new ExceptionReporter(
+                mGaTracker,                                        // Currently used Tracker.
+                GAServiceManager.getInstance(),                   // GAServiceManager singleton.
+                Thread.getDefaultUncaughtExceptionHandler(), this);     // Current default uncaught exception handler.
+
+
+        mGaTracker.sendEvent("CheapCastService","ServiceStart", null,null);
+
         mRegisteredApps = new HashMap<String, App>();
         registerApp(new App("ChromeCast", "https://www.gstatic.com/cv/receiver.html?$query"));
         registerApp(new App("YouTube", "https://www.youtube.com/tv?$query"));
         registerApp(new App("PlayMovies", "https://play.google.com/video/avi/eureka?$query", new String[]{"play-movies", "ramp"}));
-        registerApp(new App("GoogleMusic", "https://jmt17.google.com/sjdev/cast/player"));
-        //registerApp(new App("GoogleMusic", "https://play.google.com/music/cast/player"));
+        registerApp(new App("GoogleMusic", "https://play.google.com/music/cast/player"));
 
         registerApp(new App("GoogleCastSampleApp", "http://anzymrcvr.appspot.com/receiver/anzymrcvr.html"));
         registerApp(new App("GoogleCastPlayer", "https://www.gstatic.com/eureka/html/gcp.html"));
@@ -125,19 +159,38 @@ public class CheapCastService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(LOG_TAG, "onStartCommand()");
 
-        Notification.Builder mBuilder = new Notification.Builder(this)
+        Notification n = null;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            Notification.Builder mBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_service)
                 .setContentTitle("CheapCast")
-                .setContentText("Service enabled.");
+                .setContentText("Service enabled.")
+                .setOngoing(true)
+                .addAction(R.drawable.ic_reload, getString(R.string.restart_service), PendingIntent.getBroadcast(this, 1, new Intent(Const.ACTION_RESTART), PendingIntent.FLAG_ONE_SHOT))
+                .addAction(R.drawable.ic_stop, getString(R.string.stop_service), PendingIntent.getBroadcast(this, 2, new Intent(Const.ACTION_STOP), PendingIntent.FLAG_ONE_SHOT));
 
-        Intent i = new Intent(this, PreferenceActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent i = new Intent(this, PreferenceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
-        mBuilder.setContentIntent(pi);
+            PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
+            mBuilder.setContentIntent(pi);
+            n = mBuilder.build();
+        } else {
+            Intent i = new Intent(this, PreferenceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+            PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
 
-        startForeground(1337, mBuilder.build());
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_service)
+                .setContentTitle("CheapCast")
+                .setContentText("Service enabled.")
+                .setOngoing(true)
+                .setContentIntent(pi);
+            n = mBuilder.getNotification();
+        }
+
+        startForeground(1337, n);
 
         if(!mRunning)
             initService();
@@ -182,6 +235,8 @@ public class CheapCastService extends Service {
     public void onDestroy() {
         Log.d(LOG_TAG, "onDestroy()");
 
+        mGaTracker.sendEvent("CheapCastService","ServiceStop", null,null);
+
         mSsdp.shutdown();
 
         try {
@@ -199,7 +254,7 @@ public class CheapCastService extends Service {
             Log.d(LOG_TAG,"WS Requested "+ httpServletRequest.getPathInfo());
 
             if(httpServletRequest.getPathInfo().equals("/system/control")) {
-                return new SystemControlSocket();
+                return new SystemControlSocket(CheapCastService.this);
             } else if(httpServletRequest.getPathInfo().equals("/connection")) {
                 return new ConnectionSocket(CheapCastService.this);
             } else if(httpServletRequest.getPathInfo().startsWith("/session/")) {
@@ -227,7 +282,7 @@ public class CheapCastService extends Service {
 
                 String deviceDesc = Const.DEVICE_DESC;
                 deviceDesc = deviceDesc.replaceAll("#uuid#", Installation.id(CheapCastService.this));
-                deviceDesc = deviceDesc.replaceAll("#friendlyname#", "cheapcast");
+                deviceDesc = deviceDesc.replaceAll("#friendlyname#", mPreferences.getString("friendly_name", getString(R.string.cheapcast)+"_"+Build.MODEL));
                 deviceDesc = deviceDesc.replaceAll("#base#", "http://"+server+":8008");
 
                 httpServletResponse.setHeader("Access-Control-Allow-Method", "GET, POST, DELETE, OPTIONS");
@@ -267,63 +322,112 @@ public class CheapCastService extends Service {
             } else if(httpServletRequest.getPathInfo().startsWith("/apps/") && httpServletRequest.getMethod().equals("DELETE")) {
                 String appName = httpServletRequest.getPathInfo().replace("/apps/","").replace("/web-1","");
                 App app = mRegisteredApps.get(appName);
-                app.stop();
 
-                if(mCallback != null)
-                    try {
-                        mCallback.onAppStopped(appName);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                if(app != null) {
+                    app.stop();
 
-                renderAppStatus(httpServletResponse, app);
+                    mGaTracker.sendEvent("CheapCastService","AppStop", appName, null);
+
+                    if(mCallback != null && app.getReceivers().size() == 0)
+                        try {
+                            mCallback.onAppStopped(appName);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+
+                    renderAppStatus(httpServletResponse, app);
+                }
             } else if(httpServletRequest.getPathInfo().startsWith("/apps/") && httpServletRequest.getMethod().equals("POST")) {
                 String appName = httpServletRequest.getPathInfo().replace("/apps/","");
+
+
                 Log.d(LOG_TAG, String.format("POST /apps/%s",appName));
                 App app = mRegisteredApps.get(appName);
 
-                app.setLink("<link rel='run' href='web-1'/>");
-                app.setConnectionSvcURL(String.format("http://%s:8008/connection/%s", server, appName));
-                app.addProtocol("ramp");
-                app.setState("running");
+                if(app != null) {
 
-                StringBuffer jb = new StringBuffer();
-                String line = null;
-                try {
-                    BufferedReader reader = httpServletRequest.getReader();
-                    while ((line = reader.readLine()) != null)
-                        jb.append(line);
-                } catch (Exception e) { /*report an error*/ }
+                    if(mLastApp == null || !mLastApp.equals(app) || !app.getState().equals("running")) {
+                        mGaTracker.sendEvent("CheapCastService","AppStart", appName, null);
+                        app.setLink("<link rel='run' href='web-1'/>");
+                        app.setConnectionSvcURL(String.format("http://%s:8008/connection/%s", server, appName));
+                        app.addProtocol("ramp");
+                        app.setState("running");
 
-                Log.d(LOG_TAG, "Addtl. App params: "+ jb.toString());
-                String appUrl = app.getReceiverUrl().replace("$query", jb.toString());
-                /*Intent i = new Intent(Intent.ACTION_VIEW, null);
-                i.setComponent(new ComponentName("org.mozilla.firefox_beta",
-                        "org.mozilla.firefox_beta.App")); */
-                Intent i = new Intent(CheapCastService.this, CastActivity.class);
-                i.setData(Uri.parse(appUrl));
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                        String params = Utils.readerToString(httpServletRequest.getReader());
 
-                httpServletResponse.setContentType("text/html; charset=utf-8");
-                httpServletResponse.setHeader("Location", String.format("http://%s:8008/apps/%s/web-1", server, appName));
-                httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
+                        Log.d(LOG_TAG, "Addtl. App params: "+ params);
+                        String appUrl = app.getReceiverUrl().replace("$query", params);
+                        //Intent i = new Intent(Intent.ACTION_VIEW, null);
+                        //i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+                        //i.addCategory("android.intent.category.LAUNCHER");
+                        Intent i = new Intent(CheapCastService.this, CastActivity.class);
+                        i.setData(Uri.parse(appUrl));
+                        i.putExtra(Const.APP_EXTRA, app.getName());
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+
+                        mLastApp = app;
+
+                        httpServletResponse.setContentType("text/html; charset=utf-8");
+                        httpServletResponse.setHeader("Location", String.format("http://%s:8008/apps/%s/web-1", server, appName));
+                        httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
+                    } else {
+                        Log.d(LOG_TAG, String.format("App %s already started.", app.getName()));
+
+                        httpServletResponse.setContentType("text/html; charset=utf-8");
+                        httpServletResponse.setHeader("Location", String.format("http://%s:8008/apps/%s/web-2", server, appName));
+                        httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
+                    }
+
+                }
             } else if(httpServletRequest.getPathInfo().startsWith("/connection/") && httpServletRequest.getMethod().equals("POST")) {
                 String appName = httpServletRequest.getPathInfo().replace("/connection/","");
                 Log.d(LOG_TAG, String.format("POST /connection/%s?%s",appName,httpServletRequest.getQueryString()));
                 App app = mRegisteredApps.get(appName);
 
-                httpServletResponse.setHeader("Access-Control-Allow-Method", "POST, OPTIONS");
-                httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type");
-                httpServletResponse.setContentType("application/json; charset=utf-8");
-                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-                httpServletResponse.getWriter().print(String.format("{\"URL\":\"ws://%s:8008/session/%s?1\",\"pingInterval\":3}", server, appName));
+                if(app != null) {
+                    httpServletResponse.setHeader("Access-Control-Allow-Method", "POST, OPTIONS");
+                    httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type");
+                    httpServletResponse.setContentType("application/json; charset=utf-8");
+                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                    httpServletResponse.getWriter().print(String.format("{\"URL\":\"ws://%s:8008/session/%s?%d\",\"pingInterval\":3}", server, app.getRemotes().size(), appName));
+                }
+            } else if(httpServletRequest.getPathInfo().equals("/registerApp") && httpServletRequest.getMethod().equals("POST")) {
+
+                Log.d(LOG_TAG, "POST /registerApp/");
+
+                if(mPreferences.getBoolean("allow_custom_apps", false)) {
+                    String rawBody = Utils.readerToString(httpServletRequest.getReader());
+                    AppRegistration reg = mGson.fromJson(rawBody, AppRegistration.class);
+
+                    if(reg != null) {
+                        mGaTracker.sendEvent("CheapCastService","RegisterApp", reg.getAppName(),null);
+                        registerApp(new App(reg.getAppName(), reg.getAppUrl(), reg.getProtocols()));
+                        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                        httpServletResponse.setContentType("application/json; charset=utf-8");
+                        httpServletResponse.getWriter().print("{\"msg\":\"OK\"}");
+                    } else {
+                        httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    }
+                } else {
+                    httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                }
+
             } else {
                 Log.d(LOG_TAG,"Requested "+ httpServletRequest.getPathInfo());
                 Log.d(LOG_TAG,"The princess is in another castle");
                 httpServletResponse.setContentType("text/html");
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-                httpServletResponse.getWriter().println("<h1>Hello World</h1>");
+                httpServletResponse.getWriter().println("<h1>This is CheapCast :D</h1>");
+
+                if(mPreferences.getBoolean("allow_custom_apps", false)) {
+                    httpServletResponse.getWriter().println("<h3>Registered Apps:</h3>");
+                    httpServletResponse.getWriter().print("<ul>");
+                    for(App app : mRegisteredApps.values()) {
+                        httpServletResponse.getWriter().println(String.format("<li>%s - %s, Protocols: %s</li>", app.getName(), app.getReceiverUrl(), app.getProtocolList()));
+                    }
+                    httpServletResponse.getWriter().print("</ul>");
+                }
             }
 
             AbstractHttpConnection connection = AbstractHttpConnection.getCurrentConnection();

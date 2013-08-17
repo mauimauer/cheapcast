@@ -11,11 +11,15 @@ import android.view.*;
 import android.webkit.*;
 import android.widget.FrameLayout;
 import android.widget.VideoView;
+import at.maui.cheapcast.App;
+import at.maui.cheapcast.Const;
 import at.maui.cheapcast.R;
 import at.maui.cheapcast.service.CheapCastService;
 import at.maui.cheapcast.service.ICheapCastCallback;
 import at.maui.cheapcast.service.ICheapCastService;
 import at.maui.cheapcast.ws.WebSocketFactory;
+
+import java.io.IOException;
 
 
 public class CastActivity extends Activity {
@@ -24,7 +28,7 @@ public class CastActivity extends Activity {
     public static final String LOG_TAG_JS = "JS-CastActivity";
 
     private WebView mWebView;
-    private Runnable patchMusic;
+    private Runnable mPatch;
     private Handler mHandler = new Handler();
     private PowerManager mPowerManager;
     private PowerManager.WakeLock mWakeLock;
@@ -33,8 +37,6 @@ public class CastActivity extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         // Called when the connection with the service is established
         public void onServiceConnected(ComponentName className, IBinder service) {
-            // Following the example above for an AIDL interface,
-            // this gets an instance of the IRemoteInterface, which we can use to call on the service
             Log.d(LOG_TAG, "Connected to CheapCastService");
             mCheapCastService = ICheapCastService.Stub.asInterface(service);
             try {
@@ -49,6 +51,7 @@ public class CastActivity extends Activity {
         public void onServiceDisconnected(ComponentName className) {
             Log.d(LOG_TAG, "Disconnected from CheapCastService");
             mCheapCastService = null;
+            CastActivity.this.finish();
         }
     };
 
@@ -74,21 +77,27 @@ public class CastActivity extends Activity {
         setContentView(R.layout.activity_cast);
 
         mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        mWakeLock = mPowerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "cheapcast");
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "cheapcast");
         mWakeLock.acquire();
 
         mWebView = (WebView)findViewById(R.id.webView);
 
-        mWebView.getSettings().setAllowContentAccess(true);
-        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
-        mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+            mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            mWebView.getSettings().setAllowContentAccess(true);
+        }
+
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setGeolocationEnabled(true);
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setUseWideViewPort(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        mWebView.getSettings().setUserAgentString("Mozilla/5.0 (CrKey - 0.9.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1573.2 Safari/537.36");
+        mWebView.getSettings().setUserAgentString("Mozilla/5.0 (CrKey - 1.1.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1573.2 Safari/537.36");
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -104,15 +113,36 @@ public class CastActivity extends Activity {
             }
 
             @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                Log.d("Interceptor", url);
+                if(url.contains("cast_receiver.js")) {
+                    try {
+                        return new WebResourceResponse("text/javascript","utf-8", getAssets().open("cast_receiver.js"));
+                    } catch (IOException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                } else if(url.contains("eureka_opt")) {
+                    try {
+                        return new WebResourceResponse("text/javascript","utf-8", getAssets().open("eureka_opt.js"));
+                    } catch (IOException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                }   else if(url.contains("cv/receiver.html")) {
+                    try {
+                        return new WebResourceResponse("text/html","utf-8", getAssets().open("receiver.html"));
+                    } catch (IOException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                }
+
+                return super.shouldInterceptRequest(view, url);    //To change body of overridden methods use File | Settings | File Templates.
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url)
             {
                 Log.d(LOG_TAG,url+" finished");
-
                 injectWebsocket(view);
-
-                view.loadUrl("javascript:(function() { " +
-                        "if(skyjam) skyjam.cast.Player.BUFFERING_SPINNER_TIMEOUT_MS_ = 9000;"+
-                        "})()");
             }
         });
         mWebView.setWebChromeClient(new WebChromeClient() {
@@ -120,6 +150,30 @@ public class CastActivity extends Activity {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 Log.d(LOG_TAG_JS, consoleMessage.message()+", "+ consoleMessage.lineNumber());
+
+                // Ugly fix for broken autoplay
+                if(consoleMessage.message().contains("loadedmetadata")) {
+                    Log.d(LOG_TAG, "Audio patch");
+                    musicPatch(mWebView);
+                } else if(consoleMessage.message().contains("Dispatch OPEN event to ramp") || consoleMessage.message().contains("video added")) {
+                    Log.d(LOG_TAG, "Video patch 1");
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm) { itm.play(); console.log('play already video'); } })()");
+                        }
+                    },1500);
+                } else if(consoleMessage.message().contains("PLAY")) {
+                    Log.d(LOG_TAG, "Video patch 2");
+                    mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm) { itm.play(); console.log('play already video'); } })()");
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm) { itm.play(); console.log('play already video'); } })()");
+                        }
+                    },2500);
+                }
+
                 return super.onConsoleMessage(consoleMessage);    //To change body of overridden methods use File | Settings | File Templates.
             }
         });
@@ -129,35 +183,24 @@ public class CastActivity extends Activity {
                 return true;
             }
         });
+        mWebView.addJavascriptInterface(new WebSocketFactory(mWebView), "WebSocketFactory");
 
-
-        mHandler.postDelayed(new Runnable() {
+        mPatch = new Runnable() {
             @Override
             public void run() {
-                Log.d(LOG_TAG,"Play2!!!");
-                mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
-                mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].setAttribute('style','width: 100%; height:100%;'); })()");
-            }
-        }, 8000);
-
-        patchMusic = new Runnable() {
-            @Override
-            public void run() {
-                mWebView.loadUrl("javascript:(function() { " +
-                        "if(skyjam) skyjam.cast.Player.BUFFERING_SPINNER_TIMEOUT_MS_ = 99000;"+
-                        "})()");
-                mHandler.postDelayed(patchMusic, 2000);
+                if(mWebView != null){
+                    //mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm)itm.setAttribute('style','width: 100%; height:100%;'); })()");
+                    mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm) itm.setAttribute('style','width: 100%; height:100%;'); })()");
+                    //mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm) { itm.play(); console.log('play already video'); } })()");
+                    //mWebView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('audio')[0]; if(itm) { itm.setAttribute('poster',undefined); } })()");
+                    mHandler.postDelayed(mPatch, 2000);
+                }
             }
         };
-        mHandler.postDelayed(patchMusic, 2000);
-
-
-        mWebView.addJavascriptInterface(new WebSocketFactory(mWebView), "WebSocketFactory");
-        //mWebView.loadUrl("javascript:var output='This string is defined before html loaded.'");
+        mHandler.postDelayed(mPatch, 2000);
 
         Intent serviceIntent = new Intent(CastActivity.this, CheapCastService.class);
         bindService(serviceIntent, mConnection, 0);
-        //mWebView.loadUrl("file:///android_asset/test2.html");
     }
 
     public void load() {
@@ -166,14 +209,28 @@ public class CastActivity extends Activity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        App.getInstance().getTracker().sendView("/Cast/"+getIntent().getStringExtra(Const.APP_EXTRA));
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK)
+        if(keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME)
             finish();
 
         return super.onKeyDown(keyCode, event);    //To change body of overridden methods use File | Settings | File Templates.
     }
 
+    private void musicPatch(WebView webView) {
+        webView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('audio')[0]; if(itm) { itm.play(); console.log('play already'); } })()");
+        webView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('video')[0]; if(itm) { itm.play(); console.log('play already'); } })()");
+    }
+
     private void injectWebsocket(WebView webView) {
+        if(webView == null)
+            return;
+
         webView.loadUrl("javascript:(function() { " +
                 "var global = window;"+
                 "if(global.WebSocket) return;"+
@@ -193,21 +250,21 @@ public class CastActivity extends Activity {
                 "WebSocket.onopen = function (evt) { WebSocket.store[evt._target].readyState = 1; WebSocket.store[evt._target]['onopen'].call(global, evt); };" +
                 "WebSocket.onclose = function (evt) { WebSocket.store[evt._target].readyState = 3; WebSocket.store[evt._target]['onclose'].call(global, evt); };" +
                 "WebSocket.onerror = function (evt) { WebSocket.store[evt._target]['onerror'].call(global, evt); };" +
-                //"WebSocket.onreadystate = function (evt) { WebSocket.store[evt._target]['onreadystate'].call(global, evt); };" +
-                //"WebSocket.__handleEvent = function (evt) { WebSocket.store[evt._target]['__handleEvent'].call(global, evt); };" +
+
                 "WebSocket.prototype.send = function(data) { this.socket.send(data); return true; };" +
-                "WebSocket.prototype.close  = function() { WebSocket.store[evt._target].readyState = 2; this.socket.close(); };" +
+                "WebSocket.prototype.close  = function() { this.socket.close(); };" +
                 "WebSocket.prototype.getReadyState = function() { return this.socket.getReadyState(); };" +
-                //"WebSocket.prototype.addEventListener = function(type, listener, useCapture) { console.log('adel'); if (!(type in this.__events)) { this.__events[type] = []; } this.__events[type].push(listener); };" +
-                //"WebSocket.prototype.dispatchEvent = function(event) { console.log('disp'); var events = this.__events[event.type] || []; for (var i = 0; i < events.length; ++i) { events[i](event); } var handler = this['on' + event.type]; if (handler) handler.apply(this, [event]); };" +
-                //"WebSocket.prototype.removeEventListener = function(type, listener, useCapture) { console.log('rem'); if (!(type in this.__events)) return; var events = this.__events[type]; for (var i = events.length - 1; i >= 0; --i) { if (events[i] === listener) { events.splice(i, 1); break; } } };" +
                 "WebSocket.prototype.onopen = function(msg) { console.log('onopen not implemented.'); };" +
                 "WebSocket.prototype.onmessage = function(msg) { console.log('onmessage not implemented.'); };" +
                 "WebSocket.prototype.onerror = function(msg) { console.log('onerror not implemented.'); };" +
-                //"WebSocket.prototype.onreadystate = function(msg) { this.readyStatedd = parseInt(msg.data); };" +
                 "WebSocket.prototype.onclose  = function(msg) { console.log('onclose not implemented.'); };" +
-                //"WebSocket.prototype.__handleEvent  = function(msg) { console.log('onclose not implemented.'); };" +
                 "})()");
+
+        webView.loadUrl("javascript:(function() {" +
+                "document.addEventListener('DOMNodeInserted', function(event) { if (event.target.nodeName.toLowerCase() === \"video\"){ console.log('video added'); } }, false); "+
+                " })()");
+
+        webView.loadUrl("javascript:(function() { var itm = document.getElementsByTagName('audio')[0]; if(itm) { itm.addEventListener('loadedmetadata', function(evt) { console.log('loadedmetadata'); },false); } })()");
     }
 
     private ICheapCastCallback mCallback = new ICheapCastCallback.Stub() {
@@ -218,11 +275,13 @@ public class CastActivity extends Activity {
         }
     };
 
+
     @Override
     protected void onDestroy() {
+        Log.d(LOG_TAG, "onDestroy");
         super.onDestroy();
 
-        mHandler.removeCallbacks(patchMusic);
+        mHandler.removeCallbacks(mPatch);
 
         if(mWakeLock.isHeld()) {
             mWakeLock.release();
@@ -232,9 +291,15 @@ public class CastActivity extends Activity {
         if(mConnection != null)
             unbindService(mConnection);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         mWebView.stopLoading();
         mWebView.loadUrl("");
         mWebView.reload();
         mWebView = null;
+        finish();
     }
 }

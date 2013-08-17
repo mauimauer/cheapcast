@@ -111,7 +111,7 @@ public class SSDP extends Thread {
                         DatagramPacket response = new DatagramPacket(responsePayload.getBytes(), responsePayload.length(), new InetSocketAddress(dp.getAddress(),dp.getPort()));
                         mUnicastSocket.send(response);
 
-                        Log.d(LOG_TAG, "Responding to "+ dp.getAddress().getHostAddress());
+                        //Log.d(LOG_TAG, "Responding to "+ dp.getAddress().getHostAddress());
                     }
                 }
             } catch (IOException e) {

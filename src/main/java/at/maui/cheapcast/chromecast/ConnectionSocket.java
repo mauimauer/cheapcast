@@ -29,6 +29,11 @@ public class ConnectionSocket implements WebSocket, WebSocket.OnTextMessage, Web
         return mFrameConnection;
     }
 
+    public void close() {
+        if(mConnection != null)
+            mConnection.close();
+    }
+
     @Override
     public void onMessage(String message) {
         Log.d(LOG_TAG, "ConnectionSocket, Message: " + message);
@@ -40,8 +45,8 @@ public class ConnectionSocket implements WebSocket, WebSocket.OnTextMessage, Web
 
             ConnectionResponse response = new ConnectionResponse();
             response.setType("CHANNELREQUEST");
-            response.setRequestId(0);
-            response.setSenderId(0);
+            response.setRequestId(mApp.getRemotes().size());
+            response.setSenderId(mApp.getReceivers().size());
             try {
                 mConnection.sendMessage(mGson.toJson(response));
                 Log.d(LOG_TAG, "replied to REGISTER");
@@ -51,8 +56,8 @@ public class ConnectionSocket implements WebSocket, WebSocket.OnTextMessage, Web
         } else if(cmd.getType().equals("CHANNELRESPONSE")) {
             ConnectionResponse response = new ConnectionResponse();
             response.setType("NEWCHANNEL");
-            response.setRequestId(0);
-            response.setSenderId(0);
+            response.setRequestId(mApp.getRemotes().size());
+            response.setSenderId(mApp.getReceivers().size());
             response.setURL(String.format("ws://localhost:8008/receiver/%s", mApp.getName()));
             try {
                 mConnection.sendMessage(mGson.toJson(response));
@@ -74,8 +79,8 @@ public class ConnectionSocket implements WebSocket, WebSocket.OnTextMessage, Web
 
     @Override
     public void onClose(int i, String s) {
-        Log.d(LOG_TAG, "ConnectionSocket: onClose();");
 
+        Log.d(LOG_TAG, String.format("onClose(%d, %s)",i,s));
         if(mApp != null) {
             mApp.stop();
             mApp.setControlChannel(null);

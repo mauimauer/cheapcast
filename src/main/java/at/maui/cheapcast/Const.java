@@ -48,4 +48,14 @@ public class Const {
             "        <state>#state#</state>\n" +
             "        #link#\n" +
             "    </service>";
+
+    public static final String PAYPAL_USER = "sebastian@n-unity.de";
+    public static final String PAYPAL_CURRENCY_CODE = "EUR";
+    public static final String FLATTR_URL = "flattr.com/thing/3a3d7f62aac8b54f1cd3938824a28052";
+    public static final String FLATTR_PROJECT_URL = "https://github.com/mauimauer/cheapcast/";
+    public static final String APP_EXTRA = "at.maui.cheapcast.app";
+    public static final String ACTION_RESTART = "at.maui.cheapcast.RESTART_SERVICE";
+    public static final String ACTION_STOP = "at.maui.cheapcast.STOP_SERVICE";
+
+    public static final boolean PREF_START_ON_BOOT_DEFAULT = false;
 }

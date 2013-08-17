@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <EditTextPreference android:key="friendly_name" android:persistent="true" android:title="@string/device_friendly_name" android:summary="@string/device_friendly_name_summary" android:icon="@drawable/ic_friendlyname" android:defaultValue="@string/cheapcast"></EditTextPreference>
+    <CheckBoxPreference android:key="start_on_boot" android:persistent="true" android:title="@string/start_on_boot" android:summary="@string/start_on_boot_summary" android:icon="@drawable/ic_boot" android:defaultValue="false"></CheckBoxPreference>
+    <CheckBoxPreference android:key="allow_custom_apps" android:persistent="true" android:title="@string/custom_services" android:summary="@string/custom_services_summary" android:icon="@drawable/ic_custom_services" android:defaultValue="false"></CheckBoxPreference>
+    <CheckBoxPreference android:key="analytics" android:persistent="true" android:title="@string/analytics" android:summaryOn="@string/analytics_summary_on" android:summaryOff="@string/analytics_summary_off" android:icon="@drawable/ic_analytics" android:defaultValue="false"></CheckBoxPreference>
+    <Preference android:icon="@drawable/ic_donation" android:key="donate" android:title="@string/donate" android:summary="@string/donate_summary"></Preference>
+    <Preference android:icon="@drawable/ic_about" android:key="about" android:title="@string/about"></Preference>
 </PreferenceScreen>
