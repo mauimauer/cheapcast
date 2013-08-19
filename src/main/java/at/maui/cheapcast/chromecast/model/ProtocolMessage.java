@@ -16,14 +16,23 @@
 
 package at.maui.cheapcast.chromecast.model;
 
-public class Command {
-    private String type;
+public class ProtocolMessage {
+    private String protocol;
+    private ProtocolPayload payload;
 
-    public String getType() {
-        return type;
+    public String getProtocol() {
+        return protocol;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
+
+    public ProtocolPayload getPayload() {
+        return payload;
+    }
+
+    public void setPayload(ProtocolPayload payload) {
+        this.payload = payload;
     }
 }

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package at.maui.cheapcast.chromecast.model;
+package at.maui.cheapcast.chromecast.model.ramp;
 
-public class Command {
-    private String type;
+public class RampVolume extends RampMessage {
+    private double volume;
 
-    public String getType() {
-        return type;
+    public double getVolume() {
+        return volume;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 }

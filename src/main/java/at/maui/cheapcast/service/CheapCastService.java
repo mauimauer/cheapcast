@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Sebastian Mauer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * 	http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package at.maui.cheapcast.service;
 
 import android.app.Notification;
@@ -44,13 +60,6 @@ import java.io.IOException;
 import java.net.NetworkInterface;
 import java.util.HashMap;
 
-/**
- * Created with IntelliJ IDEA.
- * User: maui
- * Date: 07.08.13
- * Time: 01:03
- * To change this template use File | Settings | File Templates.
- */
 public class CheapCastService extends Service {
 
     public static final String LOG_TAG = "CheapCastService";
@@ -346,7 +355,7 @@ public class CheapCastService extends Service {
 
                 if(app != null) {
 
-                    if(mLastApp == null || !mLastApp.equals(app) || !app.getState().equals("running")) {
+                   // if(mLastApp == null || !mLastApp.equals(app) || !app.getState().equals("running")) {
                         mGaTracker.sendEvent("CheapCastService","AppStart", appName, null);
                         app.setLink("<link rel='run' href='web-1'/>");
                         app.setConnectionSvcURL(String.format("http://%s:8008/connection/%s", server, appName));
@@ -364,25 +373,27 @@ public class CheapCastService extends Service {
                         i.setData(Uri.parse(appUrl));
                         i.putExtra(Const.APP_EXTRA, app.getName());
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
+                        //if(mCallback == null) {
+                            startActivity(i);
+                        //}
 
                         mLastApp = app;
 
                         httpServletResponse.setContentType("text/html; charset=utf-8");
                         httpServletResponse.setHeader("Location", String.format("http://%s:8008/apps/%s/web-1", server, appName));
                         httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
-                    } else {
+                   /* } else {
                         Log.d(LOG_TAG, String.format("App %s already started.", app.getName()));
 
                         httpServletResponse.setContentType("text/html; charset=utf-8");
                         httpServletResponse.setHeader("Location", String.format("http://%s:8008/apps/%s/web-2", server, appName));
                         httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
-                    }
+                    }*/
 
                 }
             } else if(httpServletRequest.getPathInfo().startsWith("/connection/") && httpServletRequest.getMethod().equals("POST")) {
                 String appName = httpServletRequest.getPathInfo().replace("/connection/","");
-                Log.d(LOG_TAG, String.format("POST /connection/%s?%s",appName,httpServletRequest.getQueryString()));
+                Log.d(LOG_TAG, String.format("POST /connection/%s",appName));
                 App app = mRegisteredApps.get(appName);
 
                 if(app != null) {
@@ -390,7 +401,7 @@ public class CheapCastService extends Service {
                     httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type");
                     httpServletResponse.setContentType("application/json; charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-                    httpServletResponse.getWriter().print(String.format("{\"URL\":\"ws://%s:8008/session/%s?%d\",\"pingInterval\":3}", server, app.getRemotes().size(), appName));
+                    httpServletResponse.getWriter().print(String.format("{\"URL\":\"ws://%s:8008/session/%s?%d\",\"pingInterval\":3}", server, appName, app.getRemotes().size()));
                 }
             } else if(httpServletRequest.getPathInfo().equals("/registerApp") && httpServletRequest.getMethod().equals("POST")) {
 

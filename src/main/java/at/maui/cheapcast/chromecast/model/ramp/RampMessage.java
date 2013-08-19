@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package at.maui.cheapcast.chromecast.model;
+package at.maui.cheapcast.chromecast.model.ramp;
 
-public class Command {
-    private String type;
+import at.maui.cheapcast.chromecast.model.Command;
+import at.maui.cheapcast.chromecast.model.ProtocolPayload;
 
-    public String getType() {
-        return type;
+public class RampMessage extends Command implements ProtocolPayload {
+    private int cmdId;
+
+    public int getCmdId() {
+        return cmdId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCmdId(int cmdId) {
+        this.cmdId = cmdId;
     }
 }

@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package at.maui.cheapcast.chromecast.model;
+package at.maui.cheapcast.chromecast.model.syscontrol;
 
-public class Command {
-    private String type;
+import at.maui.cheapcast.chromecast.model.Command;
 
-    public String getType() {
-        return type;
+public class SetVolumeMessage extends Command {
+    private double level;
+
+    public double getLevel() {
+        return level;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLevel(double level) {
+        this.level = level;
     }
 }

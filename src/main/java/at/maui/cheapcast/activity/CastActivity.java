@@ -1,16 +1,29 @@
+/*
+ * Copyright 2013 Sebastian Mauer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * 	http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package at.maui.cheapcast.activity;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.os.*;
 import android.util.Log;
 import android.view.*;
 import android.webkit.*;
-import android.widget.FrameLayout;
-import android.widget.VideoView;
 import at.maui.cheapcast.App;
 import at.maui.cheapcast.Const;
 import at.maui.cheapcast.R;
@@ -115,25 +128,6 @@ public class CastActivity extends Activity {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
                 Log.d("Interceptor", url);
-                if(url.contains("cast_receiver.js")) {
-                    try {
-                        return new WebResourceResponse("text/javascript","utf-8", getAssets().open("cast_receiver.js"));
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                } else if(url.contains("eureka_opt")) {
-                    try {
-                        return new WebResourceResponse("text/javascript","utf-8", getAssets().open("eureka_opt.js"));
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                }   else if(url.contains("cv/receiver.html")) {
-                    try {
-                        return new WebResourceResponse("text/html","utf-8", getAssets().open("receiver.html"));
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                }
 
                 return super.shouldInterceptRequest(view, url);    //To change body of overridden methods use File | Settings | File Templates.
             }
@@ -280,6 +274,14 @@ public class CastActivity extends Activity {
     protected void onDestroy() {
         Log.d(LOG_TAG, "onDestroy");
         super.onDestroy();
+
+        if(mCheapCastService != null) {
+            try {
+                mCheapCastService.removeListener();
+            } catch (RemoteException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
 
         mHandler.removeCallbacks(mPatch);
 
