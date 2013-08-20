@@ -1,6 +1,7 @@
+
 *.iml
-target
+target/
 default.properties
-gen-external-apklibs
-.idea
-out
+gen-external-apklibs/
+.idea/
+out/
