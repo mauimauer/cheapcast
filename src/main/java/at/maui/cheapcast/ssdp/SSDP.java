@@ -17,7 +17,6 @@
 package at.maui.cheapcast.ssdp;
 
 import android.content.Context;
-import android.net.wifi.WifiManager;
 import android.util.Log;
 import at.maui.cheapcast.Installation;
 import at.maui.cheapcast.Utils;
@@ -61,16 +60,13 @@ public class SSDP extends Thread {
 
     private NetworkInterface mNetIf;
 
-    private WifiManager mWifiManager;
     private Context mContext;
 
     private boolean mRunning = false;
 
     public SSDP(Context ctx) throws IOException {
         mContext = ctx;
-        mWifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
-
-        mNetIf = Utils.getActiveNetworkInterface(mWifiManager);
+        mNetIf = Utils.getActiveNetworkInterface();
     }
 
     @Override

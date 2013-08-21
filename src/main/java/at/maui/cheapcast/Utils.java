@@ -18,7 +18,6 @@ package at.maui.cheapcast;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.net.wifi.WifiManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +30,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public class Utils {
-    public static NetworkInterface getActiveNetworkInterface(WifiManager manager) {
+    public static NetworkInterface getActiveNetworkInterface() {
 
         Enumeration<NetworkInterface> interfaces = null;
         try {
