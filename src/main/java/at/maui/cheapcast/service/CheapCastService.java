@@ -104,7 +104,7 @@ public class CheapCastService extends Service {
         Log.d(LOG_TAG, "onCreate()");
 
         mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-        mNetIf = Utils.getWifiNetworkInterface(mWifiManager);
+        mNetIf = Utils.getActiveNetworkInterface(mWifiManager);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mPreferences = getSharedPreferences("cheapcast", MODE_PRIVATE | MODE_MULTI_PROCESS);

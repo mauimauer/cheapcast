@@ -70,7 +70,7 @@ public class SSDP extends Thread {
         mContext = ctx;
         mWifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
 
-        mNetIf = Utils.getWifiNetworkInterface(mWifiManager);
+        mNetIf = Utils.getActiveNetworkInterface(mWifiManager);
     }
 
     @Override
