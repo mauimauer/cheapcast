@@ -18,7 +18,6 @@ package at.maui.cheapcast;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.net.wifi.WifiManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,41 +30,30 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public class Utils {
-    public static NetworkInterface getWifiNetworkInterface(WifiManager manager) {
+    public static NetworkInterface getActiveNetworkInterface() {
 
         Enumeration<NetworkInterface> interfaces = null;
         try {
-            //the WiFi network interface will be one of these.
             interfaces = NetworkInterface.getNetworkInterfaces();
         } catch (SocketException e) {
             return null;
         }
 
-        //We'll use the WiFiManager's ConnectionInfo IP address and compare it with
-        //the ips of the enumerated NetworkInterfaces to find the WiFi NetworkInterface.
-
-        //Wifi manager gets a ConnectionInfo object that has the ipAdress as an int
-        //It's endianness could be different as the one on java.net.InetAddress
-        //maybe this varies from device to device, the android API has no documentation on this method.
-        int wifiIP = manager.getConnectionInfo().getIpAddress();
-
-        //so I keep the same IP number with the reverse endianness
-        int reverseWifiIP = Integer.reverseBytes(wifiIP);
-
         while (interfaces.hasMoreElements()) {
-
             NetworkInterface iface = interfaces.nextElement();
-
-            //since each interface could have many InetAddresses...
             Enumeration<InetAddress> inetAddresses = iface.getInetAddresses();
-            while (inetAddresses.hasMoreElements()) {
-                InetAddress nextElement = inetAddresses.nextElement();
-                int byteArrayToInt = byteArrayToInt(nextElement.getAddress(),0);
 
-                //grab that IP in byte[] form and convert it to int, then compare it
-                //to the IP given by the WifiManager's ConnectionInfo. We compare
-                //in both endianness to make sure we get it.
-                if (byteArrayToInt == wifiIP || byteArrayToInt == reverseWifiIP) {
+            /* Check if we have a non-local address. If so, this is the active
+             * interface.
+             *
+             * This isn't a perfect heuristic: I have devices which this will
+             * still detect the wrong interface on, but it will handle the
+             * common cases of wifi-only and Ethernet-only.
+             */
+            while (inetAddresses.hasMoreElements()) {
+                InetAddress addr = inetAddresses.nextElement();
+
+                if (!(addr.isLoopbackAddress() || addr.isLinkLocalAddress())) {
                     return iface;
                 }
             }
@@ -80,7 +68,7 @@ public class Utils {
         while (addrs.hasMoreElements())
         {
             InetAddress addr = (InetAddress) addrs.nextElement();
-            if (addr instanceof Inet4Address)
+            if (addr instanceof Inet4Address && !addr.isLoopbackAddress())
                 return addr;
         }
         return null;
