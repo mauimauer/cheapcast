@@ -4,3 +4,7 @@ cheapcast
 =========
 
 It's CheapCast.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mauimauer/cheapcast/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
