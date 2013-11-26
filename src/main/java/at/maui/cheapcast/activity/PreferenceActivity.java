@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -28,19 +29,13 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import at.maui.cheapcast.App;
+import at.maui.cheapcast.Const;
 import at.maui.cheapcast.R;
 import at.maui.cheapcast.service.CheapCastService;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-/**
- * Created with IntelliJ IDEA.
- * User: maui
- * Date: 11.08.13
- * Time: 00:06
- * To change this template use File | Settings | File Templates.
- */
 public class PreferenceActivity extends SherlockPreferenceActivity {
 
     private static final String LOG_TAG = "PreferenceActivity";
@@ -94,7 +89,6 @@ public class PreferenceActivity extends SherlockPreferenceActivity {
     protected void onResume() {
         super.onStart();
         bindService(mServiceIntent, mConnection, 0);
-        App.getInstance().getTracker().sendView("/Preferences");
     }
 
     @Override
@@ -118,7 +112,11 @@ public class PreferenceActivity extends SherlockPreferenceActivity {
         } else if(preference.getKey().equals("analytics")) {
             CheckBoxPreference cb = (CheckBoxPreference) preference;
             App.getInstance().getGoogleAnalytics().setAppOptOut(cb.isChecked());
+        } else if(preference.getKey().equals("help")) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Const.SUPPORT_URL));
+            startActivity(browserIntent);
         }
+
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);    //To change body of overridden methods use File | Settings | File Templates.
     }

@@ -16,7 +16,10 @@
 
 package at.maui.cheapcast.chromecast;
 
+import android.os.RemoteException;
 import android.util.Log;
+import at.maui.cheapcast.chromecast.model.Sender;
+import at.maui.cheapcast.service.CheapCastService;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -26,6 +29,8 @@ public class App {
     public static final String LOG_TAG = "ChromeCast-App";
     private String mName, mState, mLink, mConnectionSvcURL, mReceiverUrl;
     private ArrayList<String> mProtocols;
+
+    private Sender mSender;
 
     private ConnectionSocket mControlChannel;
     private ArrayList<SessionSocket> mRemotes;
@@ -161,9 +166,18 @@ public class App {
         mRemotes.add(session);
     }
 
-    public void removeRemote(SessionSocket session) {
+    public void removeRemote(SessionSocket session, CheapCastService service) {
         mRemotes.remove(session);
         Log.d(LOG_TAG, String.format("%d SessionSockets remaining.", mRemotes.size()));
+
+        if(mRemotes.size() == 0 && (mName.equals("ChromeCast") || mReceivers.size() == 0)) {
+            try {
+                stop();
+                service.getCallback().onAppStopped(mName);
+            } catch (RemoteException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
     }
 
     public LinkedList<String> getMessageBuffer() {
@@ -182,5 +196,13 @@ public class App {
             return null;
         else
             return mReceivers.get(0);
+    }
+
+    public Sender getSender() {
+        return mSender;
+    }
+
+    public void setSender(Sender mSender) {
+        this.mSender = mSender;
     }
 }

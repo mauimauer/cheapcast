@@ -11,18 +11,9 @@
     <string name="analytics_summary_on">Don\'t send anonymous usage &amp; error data to Google Analytics</string>
     <string name="donate">Donate</string>
     <string name="donate_summary">Keep the Development of CheapCast running. Donate to my BeerFund</string>
+    <string name="help">Help and Support</string>
+    <string name="help_summary">Issues with CheapCast? Join our G+ community for support and help.</string>
     <string name="about">About</string>
-    <string name="donations__button_close">Close</string>
-    <string name="donations__flattr">Flattr</string>
-    <string name="donations__description">Do you find this application useful?\nSupport it\'s development by sending a donation to the developer!</string>
-    <string name="donations__flattr_description">Flattr takes 10 % as a monthly fee!</string>
-    <string name="donations__paypal">PayPal</string>
-    <string name="donations__paypal_description">You can choose how much you want to donate after clicking the button!</string>
-    <string name="donations__thanks_dialog_title">Thanks!</string>
-    <string name="donations__thanks_dialog">Thanks for donating!\nI really appreciate this!</string>
-    <string name="donations__alert_dialog_title">Error occurred</string>
-    <string name="donations__alert_dialog_no_browser">No browser was found to open a website!</string>
-    <string name="donations__donate_button">Donate!</string>
     <string-array name="about_tabs">
         <item>About</item>
         <item>Changelog</item>

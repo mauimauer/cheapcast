@@ -5,5 +5,6 @@
     <CheckBoxPreference android:key="allow_custom_apps" android:persistent="true" android:title="@string/custom_services" android:summary="@string/custom_services_summary" android:icon="@drawable/ic_custom_services" android:defaultValue="false"></CheckBoxPreference>
     <CheckBoxPreference android:key="analytics" android:persistent="true" android:title="@string/analytics" android:summaryOn="@string/analytics_summary_on" android:summaryOff="@string/analytics_summary_off" android:icon="@drawable/ic_analytics" android:defaultValue="false"></CheckBoxPreference>
     <Preference android:icon="@drawable/ic_donation" android:key="donate" android:title="@string/donate" android:summary="@string/donate_summary"></Preference>
+    <Preference android:icon="@drawable/ic_help" android:key="help" android:title="@string/help" android:summary="@string/help_summary"></Preference>
     <Preference android:icon="@drawable/ic_about" android:key="about" android:title="@string/about"></Preference>
 </PreferenceScreen>

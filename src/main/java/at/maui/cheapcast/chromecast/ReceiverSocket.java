@@ -50,13 +50,13 @@ public class ReceiverSocket implements WebSocket, WebSocket.OnTextMessage {
     public void onMessage(String s) {
         Log.d(LOG_TAG, "<<" + s);
 
-        if(s.contains("ping")) {
+        /*if(s.contains("ping")) {
             try {
                 send("[\"cm\",{\"type\":\"pong\"}]");
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Pong reply failed.", e);
             }
-        }
+        }*/
 
             for(SessionSocket session : mApp.getRemotes()) {
                 try {

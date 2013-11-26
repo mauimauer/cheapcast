@@ -37,9 +37,13 @@ import at.maui.cheapcast.Installation;
 import at.maui.cheapcast.R;
 import at.maui.cheapcast.Utils;
 import at.maui.cheapcast.activity.CastActivity;
+import at.maui.cheapcast.activity.ChromiumCastActivity;
 import at.maui.cheapcast.activity.PreferenceActivity;
 import at.maui.cheapcast.chromecast.*;
 import at.maui.cheapcast.chromecast.model.AppRegistration;
+import at.maui.cheapcast.chromecast.model.ChromeCastApp;
+import at.maui.cheapcast.chromecast.model.ConnectionRequest;
+import at.maui.cheapcast.chromecast.model.Sender;
 import at.maui.cheapcast.ssdp.SSDP;
 import com.google.analytics.tracking.android.ExceptionReporter;
 import com.google.analytics.tracking.android.GAServiceManager;
@@ -59,6 +63,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.NetworkInterface;
 import java.util.HashMap;
+import java.util.List;
 
 public class CheapCastService extends Service {
 
@@ -81,6 +86,8 @@ public class CheapCastService extends Service {
     private ICheapCastCallback mCallback;
     private App mLastApp;
 
+    private ChromeCastConfigClient mConfigClient;
+
     private final ICheapCastService.Stub mBinder = new ICheapCastService.Stub() {
         @Override
         public void addListener(ICheapCastCallback cb) throws RemoteException {
@@ -92,6 +99,10 @@ public class CheapCastService extends Service {
             mCallback = null;
         }
     };
+
+    public ICheapCastCallback getCallback() {
+        return mCallback;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -105,6 +116,8 @@ public class CheapCastService extends Service {
 
         mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
         mNetIf = Utils.getActiveNetworkInterface();
+
+        mConfigClient = new ChromeCastConfigClient();
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mPreferences = getSharedPreferences("cheapcast", MODE_PRIVATE | MODE_MULTI_PROCESS);
@@ -127,25 +140,50 @@ public class CheapCastService extends Service {
         mGaTracker.sendEvent("CheapCastService","ServiceStart", null,null);
 
         mRegisteredApps = new HashMap<String, App>();
-        registerApp(new App("ChromeCast", "https://www.gstatic.com/cv/receiver.html?$query"));
-        registerApp(new App("YouTube", "https://www.youtube.com/tv?$query"));
-        registerApp(new App("PlayMovies", "https://play.google.com/video/avi/eureka?$query", new String[]{"play-movies", "ramp"}));
-        registerApp(new App("GoogleMusic", "https://play.google.com/music/cast/player"));
+        mConfigClient.getApps(new ChromeCastConfigClient.ChromeCastConfigListener() {
+            @Override
+            public void onGotAppConfigurations(List<ChromeCastApp> apps) {
+                //To change body of implemented methods use File | Settings | File Templates.
 
-        registerApp(new App("GoogleCastSampleApp", "http://anzymrcvr.appspot.com/receiver/anzymrcvr.html"));
-        registerApp(new App("GoogleCastPlayer", "https://www.gstatic.com/eureka/html/gcp.html"));
-        registerApp(new App("Fling", "$query"));
-        registerApp(new App("TicTacToe", "http://www.gstatic.com/eureka/sample/tictactoe/tictactoe.html", new String[]{"com.google.chromecast.demo.tictactoe"}));
+                for(ChromeCastApp app : apps) {
+                    if(!app.isExternal()) {
+                        registerApp(new App(app.getAppName(), app.getUrl().replace("${POST_DATA}","$query")));
+                    }
+                }
+
+                registerApp(new App("ChromeCast", "https://www.gstatic.com/cv/receiver.html?$query"));
+                registerApp(new App("YouTube", "https://www.youtube.com/tv?$query"));
+                registerApp(new App("PlayMovies", "https://play.google.com/video/avi/eureka?$query", new String[]{"play-movies", "ramp"}));
+                registerApp(new App("GoogleMusic", "https://play.google.com/music/cast/player"));
+
+                registerApp(new App("GoogleCastSampleApp", "http://anzymrcvr.appspot.com/receiver/anzymrcvr.html"));
+                registerApp(new App("GoogleCastPlayer", "https://www.gstatic.com/eureka/html/gcp.html"));
+                registerApp(new App("Fling", "$query"));
+                registerApp(new App("TicTacToe", "http://www.gstatic.com/eureka/sample/tictactoe/tictactoe.html", new String[]{"com.google.chromecast.demo.tictactoe"}));
+            }
+        });
+
     }
 
     private void registerApp(App app) {
-        mRegisteredApps.put(app.getName(), app);
-        Log.d(LOG_TAG, String.format("Registered app: %s",app.getName()));
+        if(!mRegisteredApps.containsKey(app.getName())) {
+            mRegisteredApps.put(app.getName(), app);
+            Log.d(LOG_TAG, String.format("Registered app: %s (%s)",app.getName(), app.getReceiverUrl()));
+        }
     }
 
     public void renderAppStatus(HttpServletResponse httpServletResponse, App app) throws IOException {
 
-        String appDesc = Const.APP_INFO;
+        String appDesc = Const.APP_INFO_1;
+        if(app.getState().equals("running")) {
+            appDesc += Const.APP_SERVICE_DATA;
+        }
+        appDesc += Const.APP_INFO_2;
+        if(app.getState().equals("running")) {
+            appDesc += Const.APP_ACTIVITY_STATUS;
+        }
+        appDesc += Const.APP_INFO_3;
+
         appDesc = appDesc.replaceAll("#name#", app.getName());
         appDesc = appDesc.replaceAll("#connectionSvcURL#", app.getConnectionSvcURL());
         appDesc = appDesc.replaceAll("#protocols#", app.getProtocols());
@@ -281,6 +319,7 @@ public class CheapCastService extends Service {
     };
 
     private Handler mHttpHandler = new AbstractHandler() {
+
         @Override
         public void handle(String s, Request request, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {
             String server = Utils.getLocalV4Address(mNetIf).getHostAddress();
@@ -303,18 +342,10 @@ public class CheapCastService extends Service {
                 httpServletResponse.getWriter().print(deviceDesc);
             } else if(httpServletRequest.getPathInfo().equals("/apps") && httpServletRequest.getMethod().equals("GET")) {
 
-                App activeApp = null;
-                for(App app : mRegisteredApps.values()) {
-                    if(app.getState().equals("running")) {
-                        activeApp = app;
-                        break;
-                    }
-                }
-
-                if(activeApp != null) {
-                    Log.d(LOG_TAG, String.format("GET /apps: Redirecting to %s", activeApp.getName()));
+                if(mLastApp != null) {
+                    Log.d(LOG_TAG, String.format("GET /apps: Redirecting to %s", mLastApp.getName()));
                     httpServletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                    httpServletResponse.addHeader("Location", String.format("http://%s:8008/apps/%s", server, activeApp.getName()));
+                    httpServletResponse.addHeader("Location", String.format("http://%s:8008/apps/%s", server, mLastApp.getName()));
                 } else {
                     Log.d(LOG_TAG, String.format("GET /apps: SC_NO_CONTENT at /apps"));
                     httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -353,8 +384,7 @@ public class CheapCastService extends Service {
                 Log.d(LOG_TAG, String.format("POST /apps/%s",appName));
                 App app = mRegisteredApps.get(appName);
 
-                if(app != null) {
-
+                if(app != null && !app.getState().equals("running")) {
                    // if(mLastApp == null || !mLastApp.equals(app) || !app.getState().equals("running")) {
                         mGaTracker.sendEvent("CheapCastService","AppStart", appName, null);
                         app.setLink("<link rel='run' href='web-1'/>");
@@ -363,13 +393,15 @@ public class CheapCastService extends Service {
                         app.setState("running");
 
                         String params = Utils.readerToString(httpServletRequest.getReader());
+                        //params = params.replace("&idle=windowclose", "");
 
                         Log.d(LOG_TAG, "Addtl. App params: "+ params);
                         String appUrl = app.getReceiverUrl().replace("$query", params);
+
                         //Intent i = new Intent(Intent.ACTION_VIEW, null);
                         //i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
                         //i.addCategory("android.intent.category.LAUNCHER");
-                        Intent i = new Intent(CheapCastService.this, CastActivity.class);
+                        Intent i = new Intent(CheapCastService.this, ChromiumCastActivity.class);
                         i.setData(Uri.parse(appUrl));
                         i.putExtra(Const.APP_EXTRA, app.getName());
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -396,7 +428,10 @@ public class CheapCastService extends Service {
                 Log.d(LOG_TAG, String.format("POST /connection/%s",appName));
                 App app = mRegisteredApps.get(appName);
 
+                String rawBody = Utils.readerToString(httpServletRequest.getReader());
+                ConnectionRequest req = mGson.fromJson(rawBody, ConnectionRequest.class);
                 if(app != null) {
+                    app.setSender(req.getSenderId());
                     httpServletResponse.setHeader("Access-Control-Allow-Method", "POST, OPTIONS");
                     httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type");
                     httpServletResponse.setContentType("application/json; charset=utf-8");
@@ -443,7 +478,7 @@ public class CheapCastService extends Service {
 
             AbstractHttpConnection connection = AbstractHttpConnection.getCurrentConnection();
             String ct = connection.getResponseFields().getStringField("Content-Type");
-            if(ct.contains(";")) {
+            if(ct != null && ct.contains(";")) {
                 AbstractHttpConnection.getCurrentConnection().getResponseFields().put("Content-Type", ct.split(";")[0]);
             }
 

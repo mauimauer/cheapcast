@@ -5,18 +5,18 @@
 	<groupId>at.maui</groupId>
 	<artifactId>cheapcast</artifactId>
 	<version>0.3-BETA</version>
-	<packaging>apk</packaging>
+    <packaging>apk</packaging>
 	<name>cheapcast</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>4.1.1.4</platform.version>
+		<platform.version>4.4_r2</platform.version>
 		<android.plugin.version>3.6.0</android.plugin.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.google.android</groupId>
+			<groupId>android</groupId>
 			<artifactId>android</artifactId>
 			<version>${platform.version}</version>
 			<scope>provided</scope>
@@ -49,9 +49,10 @@
             <type>apklib</type>
         </dependency>
         <dependency>
-            <groupId>org.roboguice</groupId>
-            <artifactId>roboguice</artifactId>
-            <version>2.0</version>
+            <groupId>org.chromium</groupId>
+            <artifactId>android-chromium-shell</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>apklib</type>
         </dependency>
         <dependency>
             <groupId>com.jakewharton</groupId>

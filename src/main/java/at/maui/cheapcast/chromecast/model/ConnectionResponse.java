@@ -18,7 +18,8 @@ package at.maui.cheapcast.chromecast.model;
 
 public class ConnectionResponse {
     private String URL, type;
-    private int senderId, requestId;
+    private int requestId;
+    private Sender senderId;
 
     public String getURL() {
         return URL;
@@ -36,11 +37,11 @@ public class ConnectionResponse {
         this.type = type;
     }
 
-    public int getSenderId() {
+    public Sender getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(int senderId) {
+    public void setSenderId(Sender senderId) {
         this.senderId = senderId;
     }
 

@@ -70,13 +70,6 @@ public class SessionSocket implements WebSocket, WebSocket.OnTextMessage {
     public void onMessage(String s) {
         Log.d(LOG_TAG, "<<" + s);
 
-        if(s.contains("ping")) {
-            try {
-                send("[\"cm\",{\"type\":\"pong\"}]");
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-        } else {
 
             ProtocolMessage pm = mGson.fromJson(s, ProtocolMessage.class);
             if(pm != null && pm.getProtocol().equals("ramp")) {
@@ -97,7 +90,6 @@ public class SessionSocket implements WebSocket, WebSocket.OnTextMessage {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }
-        }
     }
 
     public void send(String s) throws IOException {
@@ -123,6 +115,6 @@ public class SessionSocket implements WebSocket, WebSocket.OnTextMessage {
     public void onClose(int i, String s) {
         Log.d(LOG_TAG, String.format("onClose(%d, %s)",i,s));
         mConnection = null;
-        mApp.removeRemote(this);
+        mApp.removeRemote(this, mService);
     }
 }

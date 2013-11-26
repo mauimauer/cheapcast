@@ -62,7 +62,7 @@ public class ConnectionSocket implements WebSocket, WebSocket.OnTextMessage, Web
             ConnectionResponse response = new ConnectionResponse();
             response.setType("CHANNELREQUEST");
             response.setRequestId(mApp.getRemotes().size());
-            response.setSenderId(mApp.getReceivers().size());
+            response.setSenderId(mApp.getSender());
             try {
                 mConnection.sendMessage(mGson.toJson(response));
                 Log.d(LOG_TAG, "replied to REGISTER");
@@ -73,7 +73,7 @@ public class ConnectionSocket implements WebSocket, WebSocket.OnTextMessage, Web
             ConnectionResponse response = new ConnectionResponse();
             response.setType("NEWCHANNEL");
             response.setRequestId(mApp.getRemotes().size());
-            response.setSenderId(mApp.getReceivers().size());
+            response.setSenderId(mApp.getSender());
             response.setURL(String.format("ws://localhost:8008/receiver/%s", mApp.getName()));
             try {
                 mConnection.sendMessage(mGson.toJson(response));
