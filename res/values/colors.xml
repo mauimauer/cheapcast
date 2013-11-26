@@ -2,4 +2,5 @@
 <resources>
     <color name="transparent">#FF000000</color>
     <color name="pressed_cheapcast">#4180c0</color>
+    <color name="white">#ffffff</color>
 </resources>
