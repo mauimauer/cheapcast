@@ -67,4 +67,19 @@ public class Const {
     public static final String ACTION_STOP = "at.maui.cheapcast.STOP_SERVICE";
 
     public static final boolean PREF_START_ON_BOOT_DEFAULT = false;
+    public static class Billing {
+        public static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmcpBqYTR+Q18iEbawAbaiSj5G2+Da8vVUNYyW8IhFWT3pUht2WqIRB/aZLhG+LCXVTyK2lZXuvetEnrFya8M77hRpnjE1phKP+kM0yI4X/wco4Q4LHOxAUgEfyK4GOGe0kGZ4MhMjlUOr0BPOTwtXiV88EokGGBT/zmW+f2FB+6m4nQ6AgOcfThIvfKLgGW1iSi+wK0PI1F2bSqa+4t8aqezlfS2yqny7ECB4XYU6KxP1yJUyZfrFM7RBu+up4mgthS9YDLov/OYlboA94hKLc0rltmaWbbB5ZLUnDGFjXabipYyLIQKbeHUEN+PKwTa8u3qn9dC1RuTiOYfKcT4GwIDAQAB";
+
+        public static final String DONATION_PREFIX = "donation.";
+
+        public static final String SKU_DONATION_1 = "donation.1";
+        public static final String SKU_DONATION_2 = "donation.2";
+        public static final String SKU_DONATION_3 = "donation.3";
+
+        public static final String[] ALL_SKUS = new String[]{
+                SKU_DONATION_1,
+                SKU_DONATION_2,
+                SKU_DONATION_3,
+        };
+    }
 }

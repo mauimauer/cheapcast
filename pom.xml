@@ -68,6 +68,12 @@
             <artifactId>jetty-server</artifactId>
             <version>8.1.12.v20130726</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.jberkel.pay.me</groupId>
+            <artifactId>library</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+            <type>apklib</type>
+        </dependency>
     </dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
