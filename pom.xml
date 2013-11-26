@@ -54,9 +54,9 @@
             <version>2.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.rtyley</groupId>
-            <artifactId>roboguice-sherlock</artifactId>
-            <version>1.5</version>
+            <groupId>com.jakewharton</groupId>
+            <artifactId>butterknife</artifactId>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>

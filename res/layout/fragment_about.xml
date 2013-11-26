@@ -18,6 +18,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/about_license"
                     android:id="@+id/textView" android:layout_marginTop="10dip"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/follow_me_on_gplus"
+                    android:id="@+id/followMe" android:background="@drawable/btn_g_signin"
+                    android:textColor="@color/white" android:paddingRight="10dip" android:paddingLeft="50dip"
+                    android:layout_marginTop="15dip"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

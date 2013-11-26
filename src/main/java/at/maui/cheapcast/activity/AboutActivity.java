@@ -28,28 +28,31 @@ import at.maui.cheapcast.R;
 import at.maui.cheapcast.fragment.AboutFragment;
 import at.maui.cheapcast.fragment.ChangelogFragment;
 import at.maui.cheapcast.fragment.ExtLibrariesFragment;
+import butterknife.InjectView;
+import butterknife.Views;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.viewpagerindicator.TitlePageIndicator;
-import roboguice.inject.InjectView;
 
 
-public class AboutActivity extends RoboSherlockFragmentActivity{
+public class AboutActivity extends SherlockFragmentActivity {
     private static String LOG_TAG = "CheapCast-AboutActivity";
 
     @InjectView(R.id.pager)
-    private ViewPager mViewPager;
+    ViewPager mViewPager;
 
     @InjectView(R.id.titles)
-    private TitlePageIndicator mIndicator;
+    TitlePageIndicator mIndicator;
 
-    private AboutPagerAdapter mViewPagerAdapter;
+    AboutPagerAdapter mViewPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_about);
+
+        Views.inject(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);

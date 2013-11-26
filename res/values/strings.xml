@@ -37,6 +37,7 @@
     <string name="restart_service">Restart Service</string>
     <string name="start_service">Start Service</string>
     <string name="custom_services">Custom Services</string>
+    <string name="follow_me_on_gplus">Follow me on Google+</string>
     <string name="custom_services_summary">DEV Only. Allow registration of custom apps with CheapCast</string>
 
     <!-- donation related -->

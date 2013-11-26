@@ -16,17 +16,40 @@
 
 package at.maui.cheapcast.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.Button;
+import at.maui.cheapcast.Const;
 import at.maui.cheapcast.R;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
+import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.Views;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.viewpagerindicator.TitlePageIndicator;
 
-public class AboutFragment extends RoboSherlockFragment {
+public class AboutFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_about, null);
+        View v = inflater.inflate(R.layout.fragment_about, null);
+        Views.inject(this, v);
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @OnClick(R.id.followMe)
+    public void followMe(Button button) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Const.PLUS_URL));
+        startActivity(browserIntent);
     }
 }

@@ -24,16 +24,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import at.maui.cheapcast.R;
 import at.maui.cheapcast.Utils;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
-import roboguice.inject.InjectView;
+import butterknife.InjectView;
+import butterknife.Views;
+import com.actionbarsherlock.app.SherlockFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class HtmlAssetFragment extends RoboSherlockFragment  {
+public abstract class HtmlAssetFragment extends SherlockFragment {
 
     @InjectView(R.id.content)
-    private TextView mContent;
+    TextView mContent;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -42,7 +43,9 @@ public abstract class HtmlAssetFragment extends RoboSherlockFragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_html, null);
+        View v = inflater.inflate(R.layout.fragment_html, null);
+        Views.inject(this, v);
+        return v;
     }
 
     @Override
